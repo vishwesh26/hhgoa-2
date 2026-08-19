@@ -1,0 +1,146 @@
+[
+  {
+    "doc_id": "vaani_lang_01_en",
+    "language": "en",
+    "title": "VAANI Supported Languages and Capabilities",
+    "text": "VAANI is an advanced voice-enabled multilingual adaptive RAG system built for HH Goa 2026. VAANI supports voice and text questions in English, Hindi (हिंदी), Marathi (मराठी), and code-mixed speech such as Hinglish and Marathi-English. It uses Sarvam AI for Indian accent speech recognition, Qdrant and Indic BM25 for hybrid search, FlashRank for reranking, and Google Gemini for grounded generation."
+  },
+  {
+    "doc_id": "vaani_lang_02_hi",
+    "language": "hi",
+    "title": "वाणी (VAANI) समर्थित भाषाएँ और क्षमताएँ",
+    "text": "वाणी (VAANI) एक अत्याधुनिक बहुभाषी वॉयस RAG प्रणाली है जो अंग्रेजी (English), हिंदी (Hindi), मराठी (Marathi) और कोड-मिक्स्ड भाषा (हिंग्लिश व मराठी-अंग्रेजी) में बातचीत और उत्तर देने में पूरी तरह सक्षम है। इसमें सर्वम एआई (Sarvam AI) वॉयस एसटीटी, क्यूड्रेंट (Qdrant) हाइब्रिड सर्च और गूगल जेमिनी का उपयोग करके सटीक और प्रामाणिक उत्तर दिए जाते हैं।"
+  },
+  {
+    "doc_id": "vaani_lang_03_mr",
+    "language": "mr",
+    "title": "वाणी (VAANI) समर्थित भाषा आणि वैशिष्ट्ये",
+    "text": "वाणी (VAANI) ही एक अत्याधुनिक व्हॉइस-सक्षम बहुभाषिक RAG प्रणाली आहे. ही प्रणाली इंग्रजी (English), हिंदी (Hindi), मराठी (Marathi) आणि मिश्र भाषा (उदा. हिंग्लिश किंवा मराठी-इंग्रजी) मध्ये विचारलेल्या प्रश्नांना समजून त्याच भाषेत अचूक आणि सत्य माहितीवर आधारित उत्तरे देते."
+  },
+  {
+    "doc_id": "hist_manhattan_01_en",
+    "language": "en",
+    "title": "Immediate Impact and Success of the Manhattan Project",
+    "text": "The immediate impact of the success of the Manhattan Project was the conclusion of World War II through the deployment of atomic weapons on Hiroshima and Nagasaki in August 1945, forcing Japan's surrender. The project's success instantly ushered humanity into the nuclear age, initiated the Cold War nuclear arms race between the United States and Soviet Union, and revolutionized global military strategy and nuclear physics research."
+  },
+  {
+    "doc_id": "hist_manhattan_02_hi",
+    "language": "hi",
+    "title": "मैनहट्टन प्रोजेक्ट का तात्कालिक प्रभाव और परिणाम",
+    "text": "मैनहट्टन प्रोजेक्ट (Manhattan Project) की सफलता का तात्कालिक प्रभाव अगस्त 1945 में हिरोशिमा और नागासाकी पर परमाणु बम गिराए जाने के बाद द्वितीय विश्व युद्ध की समाप्ति और जापान का आत्मसमर्पण था। इसने दुनिया को परमाणु युग में प्रवेश कराया और संयुक्त राज्य अमेरिका व सोवियत संघ के बीच शीत युद्ध कालीन परमाणु हथियारों की होड़ की शुरुआत की।"
+  },
+  {
+    "doc_id": "hist_manhattan_03_mr",
+    "language": "mr",
+    "title": "मॅनहॅटन प्रकल्पाचा तात्काळ परिणाम आणि यश",
+    "text": "मॅनहॅटन प्रोजेक्टच्या (Manhattan Project) यशाचा तात्काळ परिणाम म्हणजे ऑगस्ट १९४५ मध्ये हिरोशिमा आणि नागासाकीवरील अण्वस्त्र हल्ल्यामुळे दुसऱ्या महायुद्धाचा अंत झाला आणि जपानने बिनशर्त शरणागती पत्करली. या यशामुळे जगाने अणुयुगात प्रवेश केला आणि अमेरिका व सोव्हिएत युनियन यांच्यात शीतयुद्ध कालीन अण्वस्त्रांची शर्यत सुरू झाली."
+  },
+  {
+    "doc_id": "geo_manhattan_01_en",
+    "language": "en",
+    "title": "Location and Geography of Manhattan",
+    "text": "Manhattan is the most densely populated borough of New York City in the state of New York, located in the United States of America (USA). It is situated primarily on Manhattan Island at the mouth of the Hudson River, bordered by the East River and Harlem River."
+  },
+  {
+    "doc_id": "geo_manhattan_02_hi",
+    "language": "hi",
+    "title": "मैनहट्टन की भौगोलिक स्थिति",
+    "text": "मैनहट्टन (Manhattan) संयुक्त राज्य अमेरिका (USA) के न्यूयॉर्क राज्य में स्थित न्यूयॉर्क शहर का सबसे प्रमुख और सघन आबादी वाला बोरो (borough) है। यह मुख्य रूप से हडसन नदी के मुहाने पर मैनहट्टन द्वीप पर स्थित है।"
+  },
+  {
+    "doc_id": "geo_manhattan_03_mr",
+    "language": "mr",
+    "title": "मॅनहॅटनचे भौगोलिक स्थान",
+    "text": "मॅनहॅटन (Manhattan) हे युनायटेड स्टेट्स ऑफ अमेरिका (USA) मधील न्यूयॉर्क शहरातील सर्वात प्रसिद्ध आणि दाट लोकवस्ती असलेला भाग (बोरो) आहे. हे प्रामुख्याने हडसन नदीच्या काठावर वसलेले आहे."
+  },
+  {
+    "doc_id": "bio_photo_01_en",
+    "language": "en",
+    "title": "Process of Photosynthesis",
+    "text": "Photosynthesis is the process by which green plants, algae, and certain bacteria convert light energy, usually from the sun, into chemical energy stored in glucose. During photosynthesis, plants absorb carbon dioxide from the air and water from the soil, releasing oxygen as a vital byproduct. The chemical equation representing photosynthesis is 6CO2 + 6H2O + light energy yields C6H12O6 + 6O2. This process takes place within the chloroplasts of plant cells containing the pigment chlorophyll."
+  },
+  {
+    "doc_id": "bio_photo_02_hi",
+    "language": "hi",
+    "title": "प्रकाश संश्लेषण की प्रक्रिया",
+    "text": "प्रकाश संश्लेषण (Photosynthesis) वह जैव रासायनिक प्रक्रिया है जिसके द्वारा हरे पौधे सूर्य के प्रकाश की उपस्थिति में कार्बन डाइऑक्साइड और जल से ग्लूकोज और ऑक्सीजन का निर्माण करते हैं। यह प्रक्रिया मुख्य रूप से पौधों की पत्तियों में मौजूद क्लोरोप्लास्ट और क्लोरोफिल वर्णक द्वारा संचालित होती है। प्रकाश संश्लेषण का रासायनिक समीकरण 6CO2 + 6H2O + प्रकाश ऊर्जा = C6H12O6 + 6O2 है। इससे वायुमंडल में ऑक्सीजन का स्तर संतुलित रहता है।"
+  },
+  {
+    "doc_id": "bio_photo_03_mr",
+    "language": "mr",
+    "title": "प्रकाश संश्लेषण प्रक्रिया",
+    "text": "प्रकाश संश्लेषण (Photosynthesis) ही अशी जैविक प्रक्रिया आहे ज्याद्वारे हिरव्या वनस्पती सूर्यप्रकाशाची ऊर्जा वापरून हवेतील कार्बन डायऑक्साइड आणि जमिनीतील पाणी यांच्या मदतीने ग्लुकोज आणि ऑक्सिजन तयार करतात. ही प्रक्रिया वनस्पतींच्या पेशींमधील हरितलवके (Chloroplasts) आणि हरितद्रव्य (Chlorophyll) यांच्यामध्ये पार पडते. प्रकाश संश्लेषणाचे रासायनिक समीकरण 6CO2 + 6H2O + प्रकाश = C6H12O6 + 6O2 असे आहे. या प्रक्रियेमुळे पृथ्वीवरील सर्व सजीवांसाठी प्राणवायू उपलब्ध होतो."
+  },
+  {
+    "doc_id": "phys_sun_01_en",
+    "language": "en",
+    "title": "Time Taken for Sunlight to Reach Earth",
+    "text": "Sunlight travels at the speed of light in vacuum, which is approximately 299,792 kilometers per second (or about 186,282 miles per second). The average distance between the Sun and the Earth is approximately 149.6 million kilometers (93 million miles). Consequently, it takes approximately 8 minutes and 20 seconds (around 500 seconds) for light emitted from the Sun to reach the surface of the Earth."
+  },
+  {
+    "doc_id": "phys_sun_02_hi",
+    "language": "hi",
+    "title": "सूर्य के प्रकाश को पृथ्वी तक पहुँचने में लगने वाला समय",
+    "text": "सूर्य से पृथ्वी तक प्रकाश पहुँचने में लगभग 8 मिनट और 20 सेकंड (अर्थात लगभग 500 सेकंड) का समय लगता है। प्रकाश की गति निर्वात में लगभग 3,00,000 किलोमीटर प्रति सेकंड (299,792 किमी/सेकंड) होती है। सूर्य और पृथ्वी के बीच की औसत दूरी लगभग 14.96 करोड़ किलोमीटर (149.6 मिलियन किमी) है।"
+  },
+  {
+    "doc_id": "phys_sun_03_mr",
+    "language": "mr",
+    "title": "सूर्याचा प्रकाश पृथ्वीवर पोहोचण्यास लागणारा वेळ",
+    "text": "सूर्यापासून निघालेला प्रकाश पृथ्वीपर्यंत पोहोचायला सुमारे ८ मिनिटे २० सेकंद (म्हणजेच सुमारे ५०० सेकंद) एवढा वेळ लागतो. प्रकाशाचा वेग निर्वातामध्ये प्रति सेकंद सुमारे ३ लाख किलोमीटर (२९९,७९२ किमी/सेकंद) असतो. सूर्य आणि पृथ्वीमधील सरासरी अंतर अंदाजे १४.९६ कोटी किलोमीटर (१४९.६ दशलक्ष किमी) आहे."
+  },
+  {
+    "doc_id": "geo_river_01_en",
+    "language": "en",
+    "title": "Longest River in India",
+    "text": "The Ganga (Ganges) is the longest river flowing entirely within India, with a total length of approximately 2,525 kilometers (1,569 miles). It originates in the Himalayas at the Gangotri Glacier (Bhagirathi River) in Uttarakhand and flows through Uttarakhand, Uttar Pradesh, Bihar, and West Bengal before emptying into the Bay of Bengal. The Brahmaputra and Indus have larger total lengths but shorter stretches within Indian territory."
+  },
+  {
+    "doc_id": "geo_river_02_hi",
+    "language": "hi",
+    "title": "भारत की सबसे लंबी नदी",
+    "text": "गंगा नदी भारत की सबसे लंबी नदी है, जिसकी कुल लंबाई लगभग 2,525 किलोमीटर है। यह उत्तराखंड में हिमालय के गंगोत्री हिमनद (भागीरथी) से निकलती है और उत्तर प्रदेश, बिहार, पश्चिम बंगाल होते हुए बंगाल की खाड़ी में गिरती है। गंगा को भारत की राष्ट्रीय नदी और अत्यंत पवित्र माना जाता है।"
+  },
+  {
+    "doc_id": "geo_river_03_mr",
+    "language": "mr",
+    "title": "भारतातील सर्वात लांब नदी",
+    "text": "भारतात पूर्णपणे वाहणाऱ्या नद्यांमध्ये गंगा नदी ही सर्वात लांब नदी आहे. गंगा नदीची एकूण लांबी सुमारे २,५२५ किलोमीटर आहे. तिचा उगम उत्तराखंड राज्यातील हिमालयातील गंगोत्री हिमनदीतून (भागीरथी नदीच्या रूपात) होतो आणि ती उत्तराखंड, उत्तर प्रदेश, बिहार व पश्चिम बंगालमधून वाहत जाऊन बंगालच्या उपसागराला मिळते. महाराष्ट्रातील सर्वात मोठी नदी गोदावरी आहे, जिला दक्षिण गंगा म्हटले जाते."
+  },
+  {
+    "doc_id": "tech_ai_01_en",
+    "language": "en",
+    "title": "Retrieval-Augmented Generation Architecture",
+    "text": "Retrieval-Augmented Generation (RAG) is an advanced AI framework that improves the quality of language model responses by retrieving relevant facts from an external knowledge base before generating an answer. RAG pipelines combine semantic vector search, BM25 lexical keyword matching, cross-encoder rerankers, and strict fact-grounding guardrails to prevent hallucinations and maintain factual accuracy."
+  },
+  {
+    "doc_id": "tech_ai_02_hi",
+    "language": "hi",
+    "title": "रिट्रीवल-ऑगमेंटेड जनरेशन (RAG) तकनीक",
+    "text": "रिट्रीवल-ऑगमेंटेड जनरेशन (RAG) एक अत्याधुनिक कृत्रिम बुद्धिमत्ता (AI) प्रणाली है जो किसी बाहरी ज्ञानकोश से सटीक संदर्भ खोजकर भाषा मॉडल को प्रदान करती है। इसमें वेक्टर सर्च, BM25 कीवर्ड सर्च और रीरैंकिंग तकनीक शामिल होती है। RAG के माध्यम से मॉडल बिना किसी भ्रम (hallucination) के विश्वसनीय उत्तर तैयार करता है।"
+  },
+  {
+    "doc_id": "tech_ai_03_mr",
+    "language": "mr",
+    "title": "रिट्रीव्हल-ऑगमेंटेड जनरेशन (RAG) प्रणाली",
+    "text": "रिट्रीव्हल-ऑगमेंटेड जनरेशन (RAG) ही एक आधुनिक कृत्रिम बुद्धिमत्ता (AI) रचना आहे, जी भाषा मॉडेल्सना बाह्य डेटाबेसमधून अचूक माहिती शोधून सत्य माहितीवर आधारित उत्तरे तयार करण्यास मदत करते. यामध्ये व्हेक्टर सर्च, कीवर्ड मॅचिंग आणि रीरँकिंग तंत्रज्ञानाचा संगम असतो, ज्यामुळे चुकीची उत्तरे टाळली जातात."
+  },
+  {
+    "doc_id": "hist_ind_01_en",
+    "language": "en",
+    "title": "Indian Independence and Constitution",
+    "text": "India gained independence from British colonial rule on August 15, 1947. The Constitution of India was drafted by the Constituent Assembly under the chairmanship of Dr. B. R. Ambedkar and came into legal effect on January 26, 1950, celebrated nationwide as Republic Day. It is the longest written national constitution in the world."
+  },
+  {
+    "doc_id": "hist_ind_02_hi",
+    "language": "hi",
+    "title": "भारतीय स्वतंत्रता और संविधान",
+    "text": "भारत ने 15 अगस्त 1947 को ब्रिटिश शासन से स्वतंत्रता प्राप्त की थी। डॉ. भीमराव अंबेडकर की अध्यक्षता वाली प्रारूप समिति द्वारा भारत का संविधान तैयार किया गया, जो 26 जनवरी 1950 को लागू हुआ। इस दिन को पूरे देश में गणतंत्र दिवस के रूप में मनाया जाता है।"
+  },
+  {
+    "doc_id": "hist_ind_03_mr",
+    "language": "mr",
+    "title": "भारतीय स्वातंत्र्य आणि राज्यघटना",
+    "text": "भारताला १५ ऑगस्ट १९४७ रोजी ब्रिटिश राजवटीपासून स्वातंत्र्य मिळाले. डॉ. बाबासाहेब आंबेडकर यांच्या मसुदा समितीच्या अध्यक्षतेखाली भारताचे संविधान तयार करण्यात आले आणि ते २६ जानेवारी १९५० रोजी देशभरात लागू झाले. हा दिवस दरवर्षी प्रजासत्ताक दिन म्हणून साजरा केला जातो."
+  }
+]

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kinetic | Profile &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-container": "#c2c5fe", "surface-tint": "#bf0024", "error-container": "#ffdad6", "on-tertiary-container": "#f7f7ff", "secondary-fixed-dim": "#bfc2fb", "surface-container-high": "#ffe1e0", "on-primary": "#ffffff", "on-tertiary": "#ffffff", "inverse-surface": "#402b2a", "primary-fixed": "#ffdad8", "surface-dim": "#f5d2d0", "on-primary-container": "#fff6f5", "on-background": "#291616", surface: "#fff8f7", "surface-variant": "#fedad9", error: "#ba1a1a", "secondary-fixed": "#e0e0ff", secondary: "#575a8c", "on-tertiary-fixed-variant": "#3e4759", tertiary: "#505a6c", "tertiary-fixed": "#dae2f9", "surface-container-lowest": "#ffffff", "surface-bright": "#fff8f7", "on-error-container": "#93000a", "primary-container": "#e4002c", "surface-container": "#ffe9e8", "tertiary-container": "#697285", "on-secondary-fixed-variant": "#3f4273", "on-secondary": "#ffffff", "surface-container-highest": "#fedad9", primary: "#b60021", "on-primary-fixed": "#410006", outline: "#936e6c", "primary-fixed-dim": "#ffb3af", "on-secondary-container": "#4d5081", "on-surface": "#291616", "surface-container-low": "#fff0ef", "inverse-on-surface": "#ffedeb", "on-surface-variant": "#5e3f3d", background: "#fff8f7", "on-error": "#ffffff", "tertiary-fixed-dim": "#bdc6dc", "on-tertiary-fixed": "#121c2c", "inverse-primary": "#ffb3af", "on-primary-fixed-variant": "#930019", "on-secondary-fixed": "#131645", "outline-variant": "#e8bcb9"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"border-width-heavy": "4px", "border-width": "3px", xs: "8px", base: "4px", md: "24px", lg: "40px", sm: "16px", xl: "64px"}, fontFamily: {"label-caps": ["JetBrains Mono"], "body-md": ["Inter"], "headline-sm": ["Inter"], "data-mono": ["JetBrains Mono"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Jetbrains Mono"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-sm": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "data-mono": ["14px", {lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-lg-mobile": ["40px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "900"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["64px", {lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "900"}]}}}};</script>
+<style>
+        /* Neo-Brutalist Hard Offsets */
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #000000;
+        }
+        .brutal-shadow-active:active {
+            box-shadow: 0px 0px 0px 0px #000000;
+            transform: translate(4px, 4px);
+        }
+        
+        /* Form inputs to override tailwind forms slightly for brutalist look */
+        .brutal-input {
+            border: 3px solid #000;
+            border-radius: 0;
+            background-color: white;
+            padding: 12px;
+        }
+        .brutal-input:focus {
+            outline: none;
+            border-color: #ec0f31; /* Kinetic Red */
+            box-shadow: 4px 4px 0px 0px #ec0f31;
+        }
+        
+        /* Checkbox overrides */
+        .brutal-checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #000;
+            border-radius: 0;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+        }
+        .brutal-checkbox:checked {
+            background-color: #000;
+        }
+        .brutal-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Custom scrollbar for raw feel */
+        ::-webkit-scrollbar {
+            width: 12px;
+            border-left: 3px solid #000;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff8f7; /* background color */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden selection:bg-primary-container selection:text-white">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-white text-primary font-headline-md text-headline-md w-full h-20 border-b-border-width-heavy border-black flex justify-between items-center px-md sticky top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-black tracking-tighter text-black">KINETIC.AI</span>
+<!-- Contextual Navigation mapped to settings -->
+<nav class="hidden md:flex gap-md h-full items-center ml-lg">
+<a class="text-on-surface-variant h-full flex items-center px-base hover:bg-neon-yellow hover:text-black border-b-border-width border-transparent" href="#">Dashboard</a>
+<a class="text-black border-b-border-width border-black h-full flex items-center px-base active:translate-x-1 active:translate-y-1 transition-transform" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<!-- Search Icon (Search bar on left logic represented here minimally for layout) -->
+<button aria-label="Search" class="w-10 h-10 border-border-width border-black flex items-center justify-center hover:bg-neon-yellow hover:text-black brutal-shadow brutal-shadow-active bg-white">
+<span class="material-symbols-outlined">search</span>
+</button>
+<!-- Trailing Icons -->
+<div class="flex gap-base">
+<button aria-label="settings" class="w-10 h-10 border-border-width border-black flex items-center justify-center bg-black text-white hover:bg-neon-yellow hover:text-black transition-colors">
+<span class="material-symbols-outlined text-white hover:text-black">settings</span>
+</button>
+<button aria-label="help" class="w-10 h-10 border-border-width border-black flex items-center justify-center hover:bg-neon-yellow hover:text-black transition-colors bg-white">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button aria-label="account_circle" class="w-10 h-10 border-border-width border-black flex items-center justify-center hover:bg-neon-yellow hover:text-black transition-colors bg-white">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col md:flex-row mx-sm md:mx-xl my-md md:my-xl gap-md md:gap-xl">
+<!-- Profile Sidebar / Summary -->
+<aside class="w-full md:w-1/3 flex flex-col gap-md">
+<!-- Profile Avatar Block -->
+<div class="border-border-width-heavy border-black bg-white brutal-shadow p-0">
+<div class="border-b-border-width border-black p-md flex flex-col items-center justify-center bg-surface-container">
+<div class="w-32 h-32 border-border-width border-black brutal-shadow bg-white overflow-hidden mb-md">
+<img class="w-full h-full object-cover grayscale" data-alt="A stark, high-contrast black and white portrait of a person with a neutral expression, deeply shadowed, styled like a gritty ID badge photo in a modern brutalist context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBymW8TPbvqEz-hbiIXOn4ce-czctb4KvKRY8B4vsKh6SM5vDiHAV8FXuQm9gZInb2B81ScOjxpuTuLsPk4tUWRQvrvRC_bW07n4c1Uc8mDbKIfLX3zytBKd-LLBD4etqCZ8ZxhqdIhGYL8np7gFYCKVf8AGOKwJlSEEi8Whyt5QlVRLLhKVtZTAaRPf_CHeF8seOJhLBsJO2abd6h2ejOLf6mh2xtXW5P7xBpeGX2ALKSM5D2KBR8wwQ"/>
+</div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-center">OPERATOR 04</h2>
+<span class="font-data-mono text-data-mono text-on-surface-variant mt-base">SYS_ADMIN</span>
+</div>
+<div class="p-md flex flex-col gap-sm">
+<div class="flex justify-between border-b-border-width border-black pb-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">STATUS</span>
+<span class="font-data-mono text-data-mono font-bold text-tertiary">ONLINE</span>
+</div>
+<div class="flex justify-between border-b-border-width border-black pb-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">LAST LOGIN</span>
+<span class="font-data-mono text-data-mono">08:42:11 GMT</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SECURITY CLEARANCE</span>
+<span class="font-data-mono text-data-mono bg-black text-white px-xs">LEVEL 5</span>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex flex-col gap-xs">
+<button class="w-full bg-white border-border-width border-black p-sm flex items-center justify-between brutal-shadow brutal-shadow-active hover:bg-surface-variant transition-colors group">
+<span class="font-label-caps text-label-caps font-bold">EXPORT LOGS</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">download</span>
+</button>
+<button class="w-full bg-white border-border-width border-black p-sm flex items-center justify-between brutal-shadow brutal-shadow-active hover:bg-error-container hover:text-error transition-colors group">
+<span class="font-label-caps text-label-caps font-bold">FORCE DISCONNECT</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">power_settings_new</span>
+</button>
+</div>
+</aside>
+<!-- Settings Form Area -->
+<section class="w-full md:w-2/3 flex flex-col gap-lg">
+<div class="border-border-width-heavy border-black bg-white brutal-shadow">
+<!-- Section Header -->
+<div class="border-b-border-width-heavy border-black bg-black text-white p-sm px-md flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<h2 class="font-headline-sm text-headline-sm font-bold m-0 leading-none">IDENTITY PARAMS</h2>
+</div>
+<!-- Form Body -->
+<div class="p-md md:p-lg grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps">FULL NAME</label>
+<input class="brutal-input font-data-mono text-data-mono w-full" type="text" value="J. DOE"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps">HANDLE / CALLSIGN</label>
+<input class="brutal-input font-data-mono text-data-mono w-full bg-surface-container" readonly="" type="text" value="OPERATOR 04"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-caps text-label-caps">CONTACT EMAIL</label>
+<input class="brutal-input font-data-mono text-data-mono w-full" type="email" value="op04@kinetic.ai.sys"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-caps text-label-caps">BIOMETRIC AUTH KEY</label>
+<div class="flex gap-sm">
+<input class="brutal-input font-data-mono text-data-mono w-full" disabled="" type="password" value="****************"/>
+<button class="border-border-width border-black bg-surface px-md font-label-caps text-label-caps brutal-shadow brutal-shadow-active hover:bg-[#d14648] hover:text-white whitespace-nowrap">RESET</button>
+</div>
+</div>
+</div>
+</div>
+<div class="border-border-width-heavy border-black bg-white brutal-shadow">
+<!-- Section Header -->
+<div class="border-b-border-width-heavy border-black bg-black text-white p-sm px-md flex items-center gap-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span>
+<h2 class="font-headline-sm text-headline-sm font-bold m-0 leading-none">SYSTEM PREFERENCES</h2>
+</div>
+<!-- Form Body -->
+<div class="p-md md:p-lg flex flex-col gap-md">
+<div class="flex items-center justify-between border-b-border-width border-black pb-sm">
+<div>
+<span class="font-label-caps text-label-caps block mb-1">TERMINAL VERBOSITY</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Level of detail in system logs</span>
+</div>
+<select class="brutal-input font-data-mono text-data-mono min-w-[150px] cursor-pointer appearance-none rounded-none">
+<option>MINIMAL</option>
+<option selected="">STANDARD</option>
+<option>VERBOSE</option>
+<option>DEBUG</option>
+</select>
+</div>
+<div class="flex items-center justify-between border-b-border-width border-black pb-sm">
+<div>
+<span class="font-label-caps text-label-caps block mb-1">AUTO-DISCONNECT</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Terminate session after idle time</span>
+</div>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="brutal-checkbox" type="checkbox"/>
+<span class="font-data-mono text-data-mono">ENABLED</span>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-caps text-label-caps block mb-1">HAPTIC FEEDBACK</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">Physical response on interface actions</span>
+</div>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="brutal-checkbox" type="checkbox"/>
+<span class="font-data-mono text-data-mono">DISABLED</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Save Actions -->
+<div class="flex justify-end gap-md mt-sm">
+<button class="bg-white border-border-width border-black px-lg py-sm font-headline-sm text-headline-sm font-bold brutal-shadow brutal-shadow-active hover:bg-[#d14648] hover:text-white transition-colors">
+                    REVERT
+                </button>
+<button class="bg-[#39ff14] text-black border-border-width border-black px-lg py-sm font-headline-sm text-headline-sm font-bold brutal-shadow brutal-shadow-active hover:bg-primary hover:text-white transition-colors">
+                    COMMIT CHANGES
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-black text-white font-data-mono text-data-mono w-full py-base border-t-border-width-heavy border-black flex justify-between items-center px-md mt-auto">
+<span class="font-bold text-white">© 2024 KINETIC.AI | SYSTEM STATUS: OPTIMAL</span>
+<div class="flex gap-md">
+<a class="text-white hover:text-[#39ff14]" href="#">Changelog</a>
+<a class="text-white hover:text-[#39ff14]" href="#">Security</a>
+<a class="text-white hover:text-[#39ff14]" href="#">Terms</a>
+</div>
+</footer>
+</body></html>

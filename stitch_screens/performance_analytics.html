@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KINETIC.AI - Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-container": "#c2c5fe", "surface-tint": "#bf0024", "error-container": "#ffdad6", "on-tertiary-container": "#f7f7ff", "secondary-fixed-dim": "#bfc2fb", "surface-container-high": "#ffe1e0", "on-primary": "#ffffff", "on-tertiary": "#ffffff", "inverse-surface": "#402b2a", "primary-fixed": "#ffdad8", "surface-dim": "#f5d2d0", "on-primary-container": "#fff6f5", "on-background": "#291616", surface: "#fff8f7", "surface-variant": "#fedad9", error: "#ba1a1a", "secondary-fixed": "#e0e0ff", secondary: "#575a8c", "on-tertiary-fixed-variant": "#3e4759", tertiary: "#505a6c", "tertiary-fixed": "#dae2f9", "surface-container-lowest": "#ffffff", "surface-bright": "#fff8f7", "on-error-container": "#93000a", "primary-container": "#e4002c", "surface-container": "#ffe9e8", "tertiary-container": "#697285", "on-secondary-fixed-variant": "#3f4273", "on-secondary": "#ffffff", "surface-container-highest": "#fedad9", primary: "#b60021", "on-primary-fixed": "#410006", outline: "#936e6c", "primary-fixed-dim": "#ffb3af", "on-secondary-container": "#4d5081", "on-surface": "#291616", "surface-container-low": "#fff0ef", "inverse-on-surface": "#ffedeb", "on-surface-variant": "#5e3f3d", background: "#fff8f7", "on-error": "#ffffff", "tertiary-fixed-dim": "#bdc6dc", "on-tertiary-fixed": "#121c2c", "inverse-primary": "#ffb3af", "on-primary-fixed-variant": "#930019", "on-secondary-fixed": "#131645", "outline-variant": "#e8bcb9"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"border-width-heavy": "4px", "border-width": "3px", xs: "8px", base: "4px", md: "24px", lg: "40px", sm: "16px", xl: "64px"}, fontFamily: {"label-caps": ["JetBrains Mono"], "body-md": ["Inter"], "headline-sm": ["Inter"], "data-mono": ["JetBrains Mono"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Jetbrains Mono"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-sm": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "data-mono": ["14px", {lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-lg-mobile": ["40px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "900"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["64px", {lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "900"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Brutalist Hard Shadows */
+        .brutal-shadow {
+            box-shadow: 4px 4px 0px 0px #000000;
+        }
+        .brutal-shadow-hover:hover {
+            box-shadow: 6px 6px 0px 0px #000000;
+            transform: translate(-2px, -2px);
+            transition: all 0.1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface dark:bg-black text-primary dark:text-neon-green font-label-caps text-label-caps border-r-border-width-heavy border-black dark:border-white h-screen w-64 flex flex-col hidden md:flex shrink-0 z-20 sticky top-0">
+<div class="p-md border-b-border-width border-black dark:border-white">
+<h1 class="font-headline-sm text-headline-sm font-black text-black dark:text-white uppercase tracking-tighter">KINETIC</h1>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-1">V2.0.4-STABLE</p>
+</div>
+<div class="p-sm border-b-border-width border-black dark:border-white">
+<button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-xs border-border-width border-black brutal-shadow-hover uppercase">
+                NEW DATA SOURCE
+            </button>
+</div>
+<ul class="flex-grow flex flex-col pt-xs">
+<li>
+<a class="flex items-center px-md py-sm text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="sensors">sensors</span>
+                    Live Stream
+                </a>
+</li>
+<li>
+<a class="flex items-center px-md py-sm bg-neon-green text-black font-bold border-y-border-width border-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="monitoring">monitoring</span>
+                    Analytics
+                </a>
+</li>
+<li>
+<a class="flex items-center px-md py-sm text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="database">database</span>
+                    Sources
+                </a>
+</li>
+<li>
+<a class="flex items-center px-md py-sm text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="memory">memory</span>
+                    Models
+                </a>
+</li>
+</ul>
+<div class="border-t-border-width-heavy border-black dark:border-white mt-auto">
+<a class="flex items-center px-md py-sm text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="menu_book">menu_book</span>
+                Docs
+            </a>
+<a class="flex items-center px-md py-sm text-on-surface dark:text-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100" href="#">
+<span class="material-symbols-outlined mr-xs" data-icon="code">code</span>
+                API
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col min-w-0">
+<!-- TopNavBar (Shared Component - Web variant header) -->
+<header class="bg-white dark:bg-black text-primary dark:text-neon-green border-b-border-width-heavy border-black dark:border-white w-full h-20 flex justify-between items-center px-md shrink-0 z-10 sticky top-0">
+<div class="flex items-center">
+<div class="md:hidden font-headline-md text-headline-md font-black tracking-tighter text-black dark:text-white uppercase mr-md">
+                    KINETIC.AI
+                </div>
+<div class="hidden md:block font-headline-sm text-headline-sm font-bold text-black uppercase">
+                    RAG Engine Performance
+                </div>
+</div>
+<div class="flex items-center space-x-sm">
+<button class="p-xs text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform border-border-width border-transparent hover:border-black rounded-none">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-xs text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform border-border-width border-transparent hover:border-black rounded-none">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="p-xs text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform border-border-width border-transparent hover:border-black rounded-none">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-md md:p-xl flex-grow flex flex-col gap-md">
+<!-- Brutalist KPI Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-0 border-border-width-heavy border-black bg-surface-bright">
+<!-- P50 Card -->
+<div class="p-md border-b-border-width md:border-b-0 md:border-r-border-width border-black flex flex-col justify-center items-start group hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-on-primary-container mb-xs uppercase">P50 Latency</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-black tracking-tighter">
+                        14<span class="text-headline-md font-bold ml-1 text-primary group-hover:text-on-primary">ms</span>
+</div>
+</div>
+<!-- P99 Card -->
+<div class="p-md border-b-border-width md:border-b-0 md:border-r-border-width border-black flex flex-col justify-center items-start bg-secondary-container text-on-secondary-container">
+<div class="font-label-caps text-label-caps mb-xs uppercase text-on-secondary-container font-bold">P99 Latency (Critical)</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-black tracking-tighter">
+                        1.2<span class="text-headline-md font-bold ml-1 text-on-secondary-container">s</span>
+</div>
+</div>
+<!-- Total Queries Card -->
+<div class="p-md flex flex-col justify-center items-start hover:bg-surface-variant transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-xs uppercase">Total Queries (24h)</div>
+<div class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-black tracking-tighter">
+                        8.4<span class="text-headline-md font-bold ml-1 text-tertiary">M</span>
+</div>
+</div>
+</section>
+<!-- Technical Log Table -->
+<section class="mt-sm flex flex-col border-border-width-heavy border-black bg-surface-bright">
+<div class="border-b-border-width border-black p-xs bg-surface-container-high flex justify-between items-center">
+<h2 class="font-label-caps text-label-caps uppercase font-bold text-on-surface">Recent Vector Searches</h2>
+<span class="font-data-mono text-data-mono text-xs bg-black text-white px-2 py-1 uppercase">Live</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-black text-white font-data-mono text-data-mono uppercase">
+<th class="border-b-border-width border-r-border-width border-black p-xs font-bold">Timestamp</th>
+<th class="border-b-border-width border-r-border-width border-black p-xs font-bold">Query Hash</th>
+<th class="border-b-border-width border-r-border-width border-black p-xs font-bold">Nodes Retrieved</th>
+<th class="border-b-border-width border-black p-xs font-bold text-right">Process Time</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono text-on-surface">
+<tr class="hover:bg-primary-container hover:text-on-primary-container transition-colors group">
+<td class="border-b-border-width border-r-border-width border-black p-xs">14:02:41.002</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">0x8F9A...C12</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">12</td>
+<td class="border-b-border-width border-black p-xs text-right font-bold text-secondary group-hover:text-on-primary-container">42ms</td>
+</tr>
+<tr class="hover:bg-primary-container hover:text-on-primary-container transition-colors group">
+<td class="border-b-border-width border-r-border-width border-black p-xs">14:02:40.891</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">0x3B2E...99A</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">8</td>
+<td class="border-b-border-width border-black p-xs text-right font-bold">18ms</td>
+</tr>
+<tr class="hover:bg-primary-container hover:text-on-primary-container transition-colors group bg-error-container text-on-error-container">
+<td class="border-b-border-width border-r-border-width border-black p-xs">14:02:39.110</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">0x77DA...0F4</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">45</td>
+<td class="border-b-border-width border-black p-xs text-right font-bold text-error group-hover:text-on-primary-container">1.04s</td>
+</tr>
+<tr class="hover:bg-primary-container hover:text-on-primary-container transition-colors group">
+<td class="border-b-border-width border-r-border-width border-black p-xs">14:02:38.005</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">0x11AA...BB3</td>
+<td class="border-b-border-width border-r-border-width border-black p-xs">10</td>
+<td class="border-b-border-width border-black p-xs text-right font-bold">22ms</td>
+</tr>
+<tr class="hover:bg-primary-container hover:text-on-primary-container transition-colors group">
+<td class="border-r-border-width border-black p-xs">14:02:37.452</td>
+<td class="border-r-border-width border-black p-xs">0x99FF...D44</td>
+<td class="border-r-border-width border-black p-xs">5</td>
+<td class="border-black p-xs text-right font-bold">11ms</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="bg-black dark:bg-white text-white dark:text-black font-data-mono text-data-mono border-t-border-width-heavy border-black dark:border-white w-full py-base flex justify-between items-center px-md mt-auto shrink-0 z-10">
+<div class="font-bold text-white dark:text-black">
+                © 2024 KINETIC.AI | SYSTEM STATUS: OPTIMAL
+            </div>
+<div class="flex space-x-md">
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Changelog</a>
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Security</a>
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Terms</a>
+</div>
+</footer>
+</main>
+</body></html>

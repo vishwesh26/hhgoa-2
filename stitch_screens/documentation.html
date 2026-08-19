@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KINETIC.AI | RAG Engine Documentation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-container": "#c2c5fe", "surface-tint": "#bf0024", "error-container": "#ffdad6", "on-tertiary-container": "#f7f7ff", "secondary-fixed-dim": "#bfc2fb", "surface-container-high": "#ffe1e0", "on-primary": "#ffffff", "on-tertiary": "#ffffff", "inverse-surface": "#402b2a", "primary-fixed": "#ffdad8", "surface-dim": "#f5d2d0", "on-primary-container": "#fff6f5", "on-background": "#291616", surface: "#fff8f7", "surface-variant": "#fedad9", error: "#ba1a1a", "secondary-fixed": "#e0e0ff", secondary: "#575a8c", "on-tertiary-fixed-variant": "#3e4759", tertiary: "#505a6c", "tertiary-fixed": "#dae2f9", "surface-container-lowest": "#ffffff", "surface-bright": "#fff8f7", "on-error-container": "#93000a", "primary-container": "#e4002c", "surface-container": "#ffe9e8", "tertiary-container": "#697285", "on-secondary-fixed-variant": "#3f4273", "on-secondary": "#ffffff", "surface-container-highest": "#fedad9", primary: "#b60021", "on-primary-fixed": "#410006", outline: "#936e6c", "primary-fixed-dim": "#ffb3af", "on-secondary-container": "#4d5081", "on-surface": "#291616", "surface-container-low": "#fff0ef", "inverse-on-surface": "#ffedeb", "on-surface-variant": "#5e3f3d", background: "#fff8f7", "on-error": "#ffffff", "tertiary-fixed-dim": "#bdc6dc", "on-tertiary-fixed": "#121c2c", "inverse-primary": "#ffb3af", "on-primary-fixed-variant": "#930019", "on-secondary-fixed": "#131645", "outline-variant": "#e8bcb9"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"border-width-heavy": "4px", "border-width": "3px", xs: "8px", base: "4px", md: "24px", lg: "40px", sm: "16px", xl: "64px"}, fontFamily: {"label-caps": ["JetBrains Mono"], "body-md": ["Inter"], "headline-sm": ["Inter"], "data-mono": ["JetBrains Mono"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Jetbrains Mono"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-sm": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "data-mono": ["14px", {lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-lg-mobile": ["40px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "900"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["64px", {lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "900"}]}}}};</script>
+<style>
+        /* Brutalist Resets */
+        * { box-sizing: border-box; }
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        .brutalist-border { border: 3px solid black; }
+        .brutalist-border-heavy { border: 4px solid black; }
+        .brutalist-shadow { box-shadow: 4px 4px 0px 0px black; }
+        .brutalist-shadow-hover:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px 0px black; transition: all 0.1s ease-in-out; }
+        .brutalist-shadow-active:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px black; }
+        
+        /* Utility overrides to ensure strict styling */
+        .rounded-none { border-radius: 0px !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Top Navigation Container -->
+<header class="w-full h-20 bg-white border-b-[4px] border-black flex justify-between items-center px-md">
+<!-- Brand -->
+<div class="font-headline-md text-headline-md font-black tracking-tighter text-black flex items-center gap-2">
+<span>KINETIC.AI</span>
+</div>
+<!-- Trailing Actions -->
+<div class="hidden md:flex gap-4">
+<button class="w-10 h-10 border-[3px] border-black flex items-center justify-center rounded-none bg-surface-container hover:bg-primary-container hover:text-white transition-colors brutalist-shadow-hover">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="w-10 h-10 border-[3px] border-black flex items-center justify-center rounded-none bg-surface-container hover:bg-primary-container hover:text-white transition-colors brutalist-shadow-hover">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="w-10 h-10 border-[3px] border-black flex items-center justify-center rounded-none bg-surface-container hover:bg-primary-container hover:text-white transition-colors brutalist-shadow-hover">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 flex-col md:flex-row overflow-hidden relative">
+<!-- Side Navigation Bar -->
+<nav class="h-auto md:h-full w-full md:w-64 bg-surface border-b-[4px] md:border-b-0 md:border-r-[4px] border-black flex flex-col z-10">
+<div class="p-4 border-b-[3px] border-black bg-white">
+<h2 class="font-headline-sm text-headline-sm font-black text-black">KINETIC</h2>
+<p class="font-data-mono text-data-mono text-on-surface-variant">V2.0.4-STABLE</p>
+</div>
+<div class="p-4 border-b-[3px] border-black bg-surface">
+<button class="w-full bg-primary text-white font-label-caps text-label-caps py-2 border-[3px] border-black brutalist-shadow-hover uppercase">
+                    NEW DATA SOURCE
+                </button>
+</div>
+<ul class="flex-1 overflow-y-auto m-0 p-0 list-none">
+<li class="border-b-[3px] border-black">
+<a class="flex items-center gap-3 p-4 text-on-surface hover:bg-primary-container hover:text-white transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">sensors</span>
+                        Live Stream
+                    </a>
+</li>
+<li class="border-b-[3px] border-black">
+<a class="flex items-center gap-3 p-4 text-on-surface hover:bg-primary-container hover:text-white transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+                        Analytics
+                    </a>
+</li>
+<li class="border-b-[3px] border-black">
+<a class="flex items-center gap-3 p-4 text-on-surface hover:bg-primary-container hover:text-white transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">database</span>
+                        Sources
+                    </a>
+</li>
+<li class="border-b-[3px] border-black bg-primary text-white font-bold">
+<a class="flex items-center gap-3 p-4 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">memory</span>
+                        Models
+                    </a>
+</li>
+</ul>
+<div class="mt-auto border-t-[3px] border-black bg-surface">
+<ul class="m-0 p-0 list-none">
+<li class="border-b-[3px] border-black">
+<a class="flex items-center gap-3 p-4 text-on-surface hover:bg-primary-container hover:text-white transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                            Docs
+                        </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-4 text-on-surface hover:bg-primary-container hover:text-white transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined">code</span>
+                            API
+                        </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-surface-container-low p-sm md:p-xl">
+<div class="max-w-5xl mx-auto flex flex-col gap-8">
+<!-- Page Header -->
+<div class="border-[4px] border-black bg-white p-6 md:p-10 brutalist-shadow">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-black text-black mb-4 uppercase">RAG Engine Architecture</h1>
+<p class="font-body-lg text-body-lg text-on-surface max-w-3xl">
+                        A detailed breakdown of the Retrieval-Augmented Generation pipeline. Understanding vector embeddings, semantic search, and context injection for large language models.
+                    </p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
+<!-- Intro Block (Span 8) -->
+<div class="col-span-1 md:col-span-8 border-[4px] border-black bg-surface p-0 brutalist-shadow flex flex-col">
+<div class="border-b-[3px] border-black bg-black p-3">
+<h3 class="font-label-caps text-label-caps text-white uppercase tracking-wider">01. INGESTION &amp; EMBEDDING</h3>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<p class="font-body-md text-body-md">
+                                Raw unstructured text is ingested and passed through the primary embedding model (default: text-embedding-ada-002). This process converts semantic meaning into high-dimensional vector representations.
+                            </p>
+<div class="border-[3px] border-black bg-surface-variant p-4 overflow-x-auto">
+<pre class="font-data-mono text-data-mono text-on-surface whitespace-pre-wrap">def generate_embedding(text: str) -&gt; List[float]:
+    response = client.embeddings.create(
+        input=text,
+        model="text-embedding-3-large"
+    )
+    return response.data[0].embedding
+                                </pre>
+</div>
+</div>
+</div>
+<!-- Side Stats (Span 4) -->
+<div class="col-span-1 md:col-span-4 border-[4px] border-black bg-primary-container text-white p-6 brutalist-shadow flex flex-col justify-between">
+<div>
+<h4 class="font-label-caps text-label-caps text-on-primary uppercase mb-2">SYSTEM LATENCY</h4>
+<div class="font-headline-md text-headline-md font-black">42ms</div>
+<p class="font-data-mono text-data-mono mt-1 opacity-90">P95 retrieval time</p>
+</div>
+<div class="mt-8 pt-4 border-t-[3px] border-black">
+<h4 class="font-label-caps text-label-caps text-on-primary uppercase mb-2">VECTOR DIMENSIONS</h4>
+<div class="font-headline-md text-headline-md font-black">1536</div>
+<p class="font-data-mono text-data-mono mt-1 opacity-90">Dense representation</p>
+</div>
+</div>
+<!-- Middle Block (Span 12) -->
+<div class="col-span-1 md:col-span-12 border-[4px] border-black bg-white brutalist-shadow">
+<div class="border-b-[3px] border-black bg-black p-3 flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-white uppercase tracking-wider">02. SEMANTIC SEARCH LOGIC</h3>
+<span class="font-data-mono text-data-mono text-tertiary-fixed bg-tertiary px-2 py-1 border-[1px] border-white">COSINE SIMILARITY</span>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<p class="font-body-md text-body-md mb-4">
+                                    When a user queries the system, the query is embedded into the same vector space. The engine calculates the cosine similarity between the query vector and all stored document vectors, retrieving the top-K closest matches.
+                                </p>
+<ul class="list-none p-0 m-0 space-y-2 font-data-mono text-data-mono">
+<li class="flex items-center gap-2">
+<div class="w-4 h-4 bg-black border-[2px] border-black"></div>
+<span>Query Encoding (10ms)</span>
+</li>
+<li class="flex items-center gap-2">
+<div class="w-4 h-4 bg-primary border-[2px] border-black"></div>
+<span>ANN Index Search (15ms)</span>
+</li>
+<li class="flex items-center gap-2">
+<div class="w-4 h-4 bg-secondary-container border-[2px] border-black"></div>
+<span>Cross-Encoder Reranking (17ms)</span>
+</li>
+</ul>
+</div>
+<div class="border-[3px] border-black bg-surface-container p-4">
+<!-- Abstract visual representation instead of image -->
+<div class="w-full h-full min-h-[150px] flex items-center justify-center flex-col gap-2 relative">
+<div class="w-3/4 h-8 bg-black flex items-center px-2 text-white font-data-mono text-[10px]">QUERY VECTOR</div>
+<div class="flex gap-2 items-center text-black font-black text-xl">↓</div>
+<div class="flex gap-2 w-full justify-center">
+<div class="w-1/3 h-12 border-[3px] border-black bg-primary"></div>
+<div class="w-1/3 h-12 border-[3px] border-black bg-surface"></div>
+<div class="w-1/3 h-12 border-[3px] border-black bg-secondary-container"></div>
+</div>
+<div class="absolute bottom-2 right-2 font-label-caps text-[10px] uppercase">Vector Space Diagram</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Config Table (Span 12) -->
+<div class="col-span-1 md:col-span-12 border-[4px] border-black bg-white brutalist-shadow mb-8">
+<div class="border-b-[3px] border-black bg-black p-3">
+<h3 class="font-label-caps text-label-caps text-white uppercase tracking-wider">03. CONFIGURATION PARAMETERS</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse font-data-mono text-data-mono">
+<thead>
+<tr>
+<th class="p-3 border-b-[3px] border-r-[3px] border-black bg-surface-container">PARAMETER</th>
+<th class="p-3 border-b-[3px] border-r-[3px] border-black bg-surface-container">DEFAULT</th>
+<th class="p-3 border-b-[3px] border-black bg-surface-container">DESCRIPTION</th>
+</tr>
+</thead>
+<tbody>
+<tr class="hover:bg-surface-variant transition-colors border-b-[3px] border-black">
+<td class="p-3 border-r-[3px] border-black font-bold">chunk_size</td>
+<td class="p-3 border-r-[3px] border-black">512 tokens</td>
+<td class="p-3">Maximum length of text chunks for embedding</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors border-b-[3px] border-black bg-surface-dim">
+<td class="p-3 border-r-[3px] border-black font-bold">chunk_overlap</td>
+<td class="p-3 border-r-[3px] border-black">50 tokens</td>
+<td class="p-3">Overlap between consecutive chunks to preserve context</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors border-b-[3px] border-black">
+<td class="p-3 border-r-[3px] border-black font-bold">top_k</td>
+<td class="p-3 border-r-[3px] border-black">5</td>
+<td class="p-3">Number of documents to retrieve per query</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors">
+<td class="p-3 border-r-[3px] border-black font-bold">similarity_threshold</td>
+<td class="p-3 border-r-[3px] border-black">0.78</td>
+<td class="p-3">Minimum cosine similarity score for relevance</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer Container -->
+<footer class="w-full py-base bg-black border-t-[4px] border-black flex justify-between items-center px-md mt-auto">
+<div class="font-data-mono text-data-mono text-white flex gap-4">
+<span>© 2024 KINETIC.AI | SYSTEM STATUS: OPTIMAL</span>
+</div>
+<div class="hidden md:flex gap-6 font-data-mono text-data-mono text-white">
+<a class="hover:text-primary transition-colors" href="#">Changelog</a>
+<a class="hover:text-primary transition-colors" href="#">Security</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</footer>
+</body></html>

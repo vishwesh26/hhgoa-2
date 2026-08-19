@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.8.4
+    container_name: vaani-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./data/qdrant_storage:/qdrant/storage
+    restart: unless-stopped
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+
+  vaani-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vaani-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - SARVAM_API_KEY=${SARVAM_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=gemini-3.1-pro-preview
+      - QDRANT_USE_EMBEDDED=false
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    depends_on:
+      - qdrant
+    restart: unless-stopped

@@ -1,0 +1,108 @@
+<!DOCTYPE html><html class="stitch-anim-fade-in" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Voice RAG Engine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"secondary-container": "#c2c5fe", "surface-tint": "#bf0024", "error-container": "#ffdad6", "on-tertiary-container": "#f7f7ff", "secondary-fixed-dim": "#bfc2fb", "surface-container-high": "#ffe1e0", "on-primary": "#ffffff", "on-tertiary": "#ffffff", "inverse-surface": "#402b2a", "primary-fixed": "#ffdad8", "surface-dim": "#f5d2d0", "on-primary-container": "#fff6f5", "on-background": "#291616", surface: "#fff8f7", "surface-variant": "#fedad9", error: "#ba1a1a", "secondary-fixed": "#e0e0ff", secondary: "#575a8c", "on-tertiary-fixed-variant": "#3e4759", tertiary: "#505a6c", "tertiary-fixed": "#dae2f9", "surface-container-lowest": "#ffffff", "surface-bright": "#fff8f7", "on-error-container": "#93000a", "primary-container": "#e4002c", "surface-container": "#ffe9e8", "tertiary-container": "#697285", "on-secondary-fixed-variant": "#3f4273", "on-secondary": "#ffffff", "surface-container-highest": "#fedad9", primary: "#b60021", "on-primary-fixed": "#410006", outline: "#936e6c", "primary-fixed-dim": "#ffb3af", "on-secondary-container": "#4d5081", "on-surface": "#291616", "surface-container-low": "#fff0ef", "inverse-on-surface": "#ffedeb", "on-surface-variant": "#5e3f3d", background: "#fff8f7", "on-error": "#ffffff", "tertiary-fixed-dim": "#bdc6dc", "on-tertiary-fixed": "#121c2c", "inverse-primary": "#ffb3af", "on-primary-fixed-variant": "#930019", "on-secondary-fixed": "#131645", "outline-variant": "#e8bcb9", "neon-green": "#39ff14", "neon-yellow": "#eaff00"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"border-width-heavy": "4px", "border-width": "3px", xs: "8px", base: "4px", md: "24px", lg: "40px", sm: "16px", xl: "64px"}, fontFamily: {"label-caps": ["JetBrains Mono"], "body-md": ["Inter"], "headline-sm": ["Inter"], "data-mono": ["JetBrains Mono"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], headline: ["Inter"], display: ["Inter"], body: ["Inter"], label: ["Jetbrains Mono"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1.2", fontWeight: "700"}], "body-md": ["16px", {lineHeight: "1.5", fontWeight: "400"}], "headline-sm": ["24px", {lineHeight: "1.3", fontWeight: "700"}], "data-mono": ["14px", {lineHeight: "1.4", letterSpacing: "-0.01em", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "1.6", fontWeight: "400"}], "headline-lg-mobile": ["40px", {lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "900"}], "headline-md": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "800"}], "headline-lg": ["64px", {lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "900"}]}}}};</script>
+<style>
+        .hard-shadow {
+            box-shadow: 4px 4px 0px 0px #000000;
+        }
+        .hard-shadow:active {
+            box-shadow: 0px 0px 0px 0px #000000;
+            transform: translate(4px, 4px);
+        }
+    </style>
+</head>
+<body class="bg-surface dark:bg-black text-on-surface dark:text-white font-body-md h-screen flex flex-col overflow-hidden">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-black w-full h-20 border-b-border-width-heavy border-black dark:border-white flat no shadows flex justify-between items-center px-md w-full shrink-0">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-black tracking-tighter text-black dark:text-white">KINETIC.AI</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 border-border-width border-black dark:border-white text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 border-border-width border-black dark:border-white text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="p-2 border-border-width border-black dark:border-white text-on-surface-variant dark:text-surface-variant hover:bg-neon-yellow dark:hover:bg-neon-green hover:text-black active:translate-x-1 active:translate-y-1 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full bg-surface dark:bg-black border-r-border-width-heavy border-black dark:border-white w-64 shrink-0">
+<div class="p-md border-b-border-width border-black dark:border-white">
+<h2 class="font-headline-sm text-headline-sm font-black text-black dark:text-white">KINETIC</h2>
+<p class="font-label-caps text-label-caps text-primary mt-2">V2.0.4-STABLE</p>
+<button class="w-full mt-4 py-2 border-border-width border-black bg-primary-container text-white font-bold font-label-caps text-label-caps hard-shadow transition-transform">NEW DATA SOURCE</button>
+</div>
+<nav class="flex-1 overflow-y-auto">
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+                    Live Stream
+                </a>
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                    Analytics
+                </a>
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+                    Sources
+                </a>
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+                    Models
+                </a>
+</nav>
+<div class="mt-auto border-t-border-width-heavy border-black dark:border-white">
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white border-b-border-width border-black dark:border-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                    Docs
+                </a>
+<a class="flex items-center gap-xs px-md py-4 text-on-surface dark:text-white hover:bg-neon-yellow dark:hover:bg-primary-container hover:text-black transition-colors duration-100 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+                    API
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col bg-surface dark:bg-black p-xl overflow-hidden relative text-black">
+<div class="absolute top-md right-md border-border-width border-black bg-black text-white px-4 py-2 font-data-mono text-data-mono flex items-center gap-2"><div class="w-3 h-3 bg-primary-container rounded-full animate-pulse"></div>SYSTEM READY</div>
+<div class="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full gap-xl">
+<!-- Response Box -->
+<div class="w-full bg-white dark:bg-black border-border-width-heavy border-black dark:border-white p-lg min-h-[300px] flex flex-col justify-end">
+<p class="font-data-mono text-data-mono text-on-surface-variant dark:text-surface-variant mb-4 opacity-50">&gt; AWAITING INPUT...</p>
+</div>
+<!-- Record Button -->
+<div class="flex flex-col items-center gap-md w-full">
+    <button class="w-32 h-32 rounded-full border-border-width-heavy border-black bg-primary flex items-center justify-center hover:bg-surface-tint hard-shadow transition-transform">
+        <span class="material-symbols-outlined text-white text-[64px]" data-icon="mic" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">mic</span>
+    </button>
+    <div class="w-full max-w-xl">
+        <input type="text" placeholder="Type your message if the mic is unavailable..." class="w-full p-md border-border-width-heavy border-black bg-white text-black font-data-mono text-data-mono hard-shadow focus:outline-none focus:ring-2 focus:ring-neon-green">
+    </div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-black dark:bg-white w-full py-base border-t-border-width-heavy border-black dark:border-white flat no shadows flex justify-between items-center px-md w-full mt-auto shrink-0">
+<span class="font-data-mono text-data-mono font-bold text-white dark:text-black">© 2024 KINETIC.AI | SYSTEM STATUS: OPTIMAL</span>
+<div class="flex gap-md font-data-mono text-data-mono">
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Changelog</a>
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Security</a>
+<a class="text-white dark:text-black hover:text-neon-green transition-colors" href="#">Terms</a>
+</div>
+</footer>
+
+
+</body></html>
