@@ -10,9 +10,11 @@ export const BenchmarkDashboard: React.FC = () => {
     setLoadingReport(true);
     try {
       const res = await fetch('/api/benchmark/results');
-      const data = await res.json();
-      if (data.status === 'success') {
-        setReport(data.data);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === 'success') {
+          setReport(data.data);
+        }
       }
     } catch (e) {
       console.error('Failed to load benchmark report:', e);

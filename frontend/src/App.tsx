@@ -15,8 +15,10 @@ export const App: React.FC = () => {
   // Fetch benchmark data on load
   useEffect(() => {
     fetch('/api/benchmark/results')
-      .then((res) => res.json())
-      .then((data) => setBenchmarkData(data))
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setBenchmarkData(data);
+      })
       .catch(() => {});
   }, []);
 
@@ -29,14 +31,24 @@ export const App: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
       });
-      const data = await res.json();
-      if (res.ok) {
-        setResponse(data);
-      } else {
-        setErrorMessage(data.detail || 'Query execution failed.');
+      if (!res.ok) {
+        let errText = `Server responded with status ${res.status}`;
+        try {
+          const errJson = await res.json();
+          errText = errJson.detail || errJson.message || errText;
+        } catch {
+          const raw = await res.text().catch(() => '');
+          if (raw) errText = raw.slice(0, 200);
+        }
+        setErrorMessage(errText);
+        return;
       }
+      const data = await res.json();
+      setResponse(data);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Network error connecting to VAANI backend.');
+      setErrorMessage(
+        err.message || 'Unable to connect to backend server. Make sure FastAPI is running on port 8000.'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -53,14 +65,24 @@ export const App: React.FC = () => {
         method: 'POST',
         body: formData,
       });
-      const data = await res.json();
-      if (res.ok) {
-        setResponse(data);
-      } else {
-        setErrorMessage(data.detail || 'Voice processing failed.');
+      if (!res.ok) {
+        let errText = `Voice processing failed (status ${res.status})`;
+        try {
+          const errJson = await res.json();
+          errText = errJson.detail || errJson.message || errText;
+        } catch {
+          const raw = await res.text().catch(() => '');
+          if (raw) errText = raw.slice(0, 200);
+        }
+        setErrorMessage(errText);
+        return;
       }
+      const data = await res.json();
+      setResponse(data);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Network error during voice query processing.');
+      setErrorMessage(
+        err.message || 'Unable to reach voice backend. Make sure FastAPI is running on port 8000.'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -70,8 +92,10 @@ export const App: React.FC = () => {
     setBenchmarkLoading(true);
     try {
       const res = await fetch('/api/benchmark/run', { method: 'POST' });
-      const data = await res.json();
-      setBenchmarkData(data);
+      if (res.ok) {
+        const data = await res.json();
+        setBenchmarkData(data);
+      }
     } catch (err) {
       console.error(err);
     } finally {

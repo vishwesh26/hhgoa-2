@@ -1,5 +1,13 @@
 {
+  "name": "vaani-voice-rag",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview"
+  },
   "dependencies": {
     "ngrok": "^5.0.0-beta.2"
   }
 }
+

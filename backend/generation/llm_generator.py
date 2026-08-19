@@ -47,7 +47,12 @@ class GroundedLLMGenerator:
 
             # Try primary model first (gemini-2.5-flash / gemini-2.5-pro)
             import asyncio
-            for model_candidate in [self.model_name, self.fallback_model, "gemini-2.5-flash", "gemini-2.5-pro"]:
+            candidates = []
+            for m in [self.model_name, self.fallback_model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]:
+                if m and m not in candidates:
+                    candidates.append(m)
+
+            for model_candidate in candidates:
                 try:
                     model = genai.GenerativeModel(
                         model_name=model_candidate,
