@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     LLM_TIMEOUT_SECONDS: float = 8.0
     MAX_GENERATION_TOKENS: int = 80
     TEMPERATURE: float = 0.0
-    ANSWER_GENERATION_MODE: str = "generative"  # 'generative', 'extractive_first', 'extractive'
+    ANSWER_GENERATION_MODE: str = "extractive_first"  # 'generative', 'extractive_first', 'extractive'
 
     # Qdrant Vector Database
     QDRANT_HOST: str = "localhost"
@@ -41,18 +41,18 @@ class Settings(BaseSettings):
 
     # Reranker Settings
     RERANKER_MODEL_NAME: str = "ms-marco-MiniLM-L-12-v2"
-    RERANKER_TOP_K: int = 5
+    RERANKER_TOP_K: int = 3
     FINAL_CONTEXT_K: int = 2
-    RERANKER_TIMEOUT_SECONDS: float = 2.0
+    RERANKER_TIMEOUT_SECONDS: float = 1.0
 
     # Lexical / BM25 Search
     BM25_INDEX_DIR: str = "./data/bm25_indices"
-    BM25_TOP_K: int = 20
+    BM25_TOP_K: int = 10
     BM25_K1: float = 1.5
     BM25_B: float = 0.75
 
     # Hybrid Search & RRF Parameters
-    VECTOR_TOP_K: int = 20
+    VECTOR_TOP_K: int = 10
     RRF_K: int = 60
     DEFAULT_VECTOR_WEIGHT: float = 0.15
     DEFAULT_BM25_WEIGHT: float = 0.85
