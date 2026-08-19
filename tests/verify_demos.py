@@ -1,5 +1,10 @@
 import sys
+import os
+from pathlib import Path
 import asyncio
+
+# Ensure project root is in sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 # Ensure Windows terminal outputs UTF-8 Indic scripts cleanly
 if hasattr(sys.stdout, "reconfigure"):
