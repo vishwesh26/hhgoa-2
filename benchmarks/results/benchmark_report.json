@@ -1,37 +1,37 @@
 {
-  "timestamp": "2026-08-19 22:28:34",
+  "timestamp": "2026-08-19 23:27:04",
   "queries_tested": 50,
   "latency_metrics": {
     "rag_pipeline": {
-      "p50_ms": 2232.84,
-      "p70_ms": 2658.16,
-      "p90_ms": 17883.71,
-      "p100_ms": 37722.52,
-      "mean_ms": 6012.36,
+      "p50_ms": 59.61,
+      "p70_ms": 98.46,
+      "p90_ms": 128.27,
+      "p100_ms": 295.11,
+      "mean_ms": 78.6,
       "min_ms": 0.0,
-      "max_ms": 37722.52
+      "max_ms": 295.11
     },
     "total_system": {
-      "p50_ms": 2229.05,
-      "p70_ms": 2630.58,
-      "p100_ms": 27846.59,
-      "mean_ms": 5000.97
+      "p50_ms": 57.4,
+      "p70_ms": 92.95,
+      "p100_ms": 197.71,
+      "mean_ms": 67.45
     },
     "stage_breakdown_p50_ms": {
       "queryAnalysis": 0.02,
-      "vectorSearch": 3.67,
-      "bm25Search": 3.68,
+      "vectorSearch": 2.35,
+      "bm25Search": 2.37,
       "fusion": 0.04,
-      "reranking": 454.31,
-      "generation": 1878.57,
-      "grounding": 0.34
+      "reranking": 47.91,
+      "generation": 0.26,
+      "grounding": 0.2
     }
   },
   "retrieval_quality": {
     "recall_at_1_pct": 73.91,
-    "recall_at_3_pct": 91.3,
-    "recall_at_5_pct": 91.3,
-    "mrr": 0.819
+    "recall_at_3_pct": 86.96,
+    "recall_at_5_pct": 86.96,
+    "mrr": 0.804
   },
   "guardrail_quality": {
     "grounded_answers_pct": 96.0,

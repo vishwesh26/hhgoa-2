@@ -25,13 +25,21 @@ def process_and_chunk_corpus() -> Dict[str, List[Dict[str, Any]]]:
     with open(RAW_DATA_PATH, "r", encoding="utf-8") as f:
         docs = json.load(f)
 
+    # If Marathi parquet corpus exists, merge it into the dataset
+    marathi_parquet_path = DATA_DIR / "marathi_parquet_corpus.json"
+    if marathi_parquet_path.exists():
+        with open(marathi_parquet_path, "r", encoding="utf-8") as f:
+            marathi_docs = json.load(f)
+            docs.extend(marathi_docs)
+            print(f"[INFO] Merged {len(marathi_docs)} Marathi documents from parquet corpus.")
+
     chunker = MultiStrategyChunker()
     all_sentence_chunks = []
     all_sliding_chunks = []
     all_semantic_chunks = []
     all_chunks_combined = []
 
-    print(f"[INFO] Processing {len(docs)} documents through 4 chunking strategies...")
+    print(f"[INFO] Processing {len(docs)} total documents through 4 chunking strategies...")
 
     for doc in docs:
         doc_id = doc["doc_id"]

@@ -28,6 +28,9 @@ wheels/
 .venv/
 venv/
 
+# Large datasets
+*.parquet
+
 # Environment Variables & Secrets
 .env
 .env.local
