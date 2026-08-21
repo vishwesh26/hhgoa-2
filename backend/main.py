@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from backend.config import settings
@@ -12,10 +13,33 @@ from backend.api.routes_benchmark import router as benchmark_router
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
-    description="Voice-Enabled Multilingual Adaptive RAG Engine (HH Goa 2026)"
+    description="Voice-Enabled Adaptive RAG Engine (HH Goa 2026)"
 )
 
-# CORS Configuration - Echo origin to fully allow Vercel and localhost cross-origin requests
+# Custom HTTP Middleware guaranteeing CORS headers on every response, OPTIONS preflight, and error
+@app.middleware("http")
+async def cors_middleware(request: Request, call_next):
+    origin = request.headers.get("origin", "*")
+    if request.method == "OPTIONS":
+        response = Response(status_code=200)
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
+
+    try:
+        response = await call_next(request)
+    except Exception as exc:
+        response = JSONResponse(status_code=500, content={"detail": str(exc)})
+
+    response.headers["Access-Control-Allow-Origin"] = origin
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    return response
+
+# Also register standard CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origin_regex=r".*",
