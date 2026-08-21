@@ -4,45 +4,35 @@ import { PerformanceAnalytics } from './components/PerformanceAnalytics';
 import { DocumentationView } from './components/DocumentationView';
 import { ProfileSettings } from './components/ProfileSettings';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+
 export const App: React.FC = () => {
   const [activeScreen, setActiveScreen] = useState<'dashboard' | 'analytics' | 'docs' | 'settings'>('dashboard');
-  const [apiUrl, setApiUrl] = useState<string>(() => {
-    return localStorage.getItem('kinetic_api_url') || import.meta.env.VITE_API_BASE_URL || '';
-  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [benchmarkLoading, setBenchmarkLoading] = useState<boolean>(false);
 
-  const handleApiUrlChange = (newUrl: string) => {
-    const formatted = newUrl.trim().replace(/\/+$/, '');
-    setApiUrl(formatted);
-    localStorage.setItem('kinetic_api_url', formatted);
-  };
-
-  // Fetch benchmark data on load or when apiUrl changes
+  // Fetch benchmark data on load
   useEffect(() => {
-    fetch(`${apiUrl}/api/benchmark/results`)
+    fetch(`${API_BASE_URL}/api/benchmark/results`)
       .then((res) => res.json())
       .then((data) => setBenchmarkData(data))
       .catch(() => {});
-  }, [apiUrl]);
+  }, []);
 
   const handleQuerySubmit = async (query: string) => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const res = await fetch(`${apiUrl}/api/rag/query`, {
+      const res = await fetch(`${API_BASE_URL}/api/rag/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
       });
       if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error('Backend endpoint returned 404. If deployed on Vercel, please set your live backend URL (e.g. ngrok tunnel) in the Configuration/Settings tab.');
-        }
-        const errorData = await res.json().catch(() => ({ detail: `Server error (${res.status})` }));
+        const errorData = await res.json().catch(() => ({ detail: `Server returned status ${res.status}` }));
         throw new Error(errorData.detail || `Query execution failed (${res.status}).`);
       }
       const data = await res.json();
@@ -61,22 +51,19 @@ export const App: React.FC = () => {
       const formData = new FormData();
       formData.append('file', audioBlob, filename);
 
-      const res = await fetch(`${apiUrl}/api/voice/query`, {
+      const res = await fetch(`${API_BASE_URL}/api/voice/query`, {
         method: 'POST',
         body: formData,
       });
       if (!res.ok) {
-        if (res.status === 404) {
-          throw new Error('Backend endpoint returned 404. If deployed on Vercel, please set your live backend URL (e.g. ngrok tunnel) in the Configuration/Settings tab.');
-        }
-        const errorData = await res.json().catch(() => ({ detail: `Voice server error (${res.status})` }));
+        const errorData = await res.json().catch(() => ({ detail: `Voice server returned status ${res.status}` }));
         throw new Error(errorData.detail || `Voice processing failed (${res.status}).`);
       }
       const data = await res.json();
       setResponse(data);
     } catch (err: any) {
       setErrorMessage(
-        err.message || 'Unable to reach voice backend. Make sure FastAPI is running on port 8000.'
+        err.message || 'Unable to reach voice backend. Please verify backend connection.'
       );
     } finally {
       setIsLoading(false);
@@ -86,7 +73,7 @@ export const App: React.FC = () => {
   const handleRunBenchmark = async () => {
     setBenchmarkLoading(true);
     try {
-      const res = await fetch(`${apiUrl}/api/benchmark/run`, { method: 'POST' });
+      const res = await fetch(`${API_BASE_URL}/api/benchmark/run`, { method: 'POST' });
       const data = await res.json();
       setBenchmarkData(data);
     } catch (err) {
@@ -113,26 +100,6 @@ export const App: React.FC = () => {
               VOICE RAG V2.0
             </span>
           </div>
-        </div>
-
-        {/* Quick Backend URL Connection Bar */}
-        <div className="hidden md:flex items-center gap-2 font-mono text-xs">
-          <span className="font-bold flex items-center gap-1 text-slate-700">
-            <span className="material-symbols-outlined text-sm text-primary">cloud_sync</span>
-            Backend URL:
-          </span>
-          <input
-            type="text"
-            value={apiUrl}
-            onChange={(e) => handleApiUrlChange(e.target.value)}
-            placeholder="e.g. https://xxxx.onrender.com or https://xxxx.ngrok-free.app"
-            className="w-64 lg:w-80 p-1.5 border-2 border-black font-mono text-xs bg-surface focus:outline-none focus:ring-2 focus:ring-primary font-bold"
-          />
-          <span className={`px-2 py-1 border-2 border-black font-bold text-[10px] ${
-            apiUrl ? 'bg-neon-green text-black' : 'bg-neon-yellow text-black'
-          }`}>
-            {apiUrl ? 'CONNECTED' : 'DEFAULT'}
-          </span>
         </div>
 
         {/* Top Action Icons */}
@@ -263,9 +230,7 @@ export const App: React.FC = () => {
 
           {activeScreen === 'docs' && <DocumentationView />}
 
-          {activeScreen === 'settings' && (
-            <ProfileSettings apiUrl={apiUrl} onApiUrlChange={handleApiUrlChange} />
-          )}
+          {activeScreen === 'settings' && <ProfileSettings />}
         </main>
       </div>
 

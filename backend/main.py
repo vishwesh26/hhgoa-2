@@ -15,13 +15,14 @@ app = FastAPI(
     description="Voice-Enabled Multilingual Adaptive RAG Engine (HH Goa 2026)"
 )
 
-# CORS Configuration
+# CORS Configuration - Echo origin to fully allow Vercel and localhost cross-origin requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origin_regex=r".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Register API Routers
