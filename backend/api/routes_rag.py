@@ -22,6 +22,7 @@ class TextQueryRequest(BaseModel):
 
 
 @router.post("/query")
+@router.post("/query/")
 async def query_rag(
     request: TextQueryRequest,
     orchestrator: RAGOrchestrator = Depends(get_orchestrator)

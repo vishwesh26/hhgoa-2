@@ -11,6 +11,7 @@ BENCHMARK_REPORT_PATH = Path("./benchmarks/results/benchmark_report.json")
 
 
 @router.get("/results")
+@router.get("/results/")
 async def get_benchmark_results() -> Dict[str, Any]:
     """
     Returns the latest benchmark report containing real P50, P70, P100 latencies and quality metrics.
@@ -30,6 +31,7 @@ async def get_benchmark_results() -> Dict[str, Any]:
 
 
 @router.post("/run")
+@router.post("/run/")
 async def trigger_benchmark(
     background_tasks: BackgroundTasks,
     sample_size: int = 50,

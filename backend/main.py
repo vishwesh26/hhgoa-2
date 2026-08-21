@@ -31,10 +31,22 @@ app.include_router(rag_router)
 app.include_router(voice_router)
 app.include_router(benchmark_router)
 
+
+@app.get("/")
+@app.get("/health")
+async def root_health():
+    return {
+        "status": "healthy",
+        "app": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+        "docs": "/docs"
+    }
+
+
 # Mount frontend build static directory if available
 FRONTEND_DIST = Path("./frontend/dist")
 if FRONTEND_DIST.exists():
-    app.mount("/", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")
+    app.mount("/app", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")
 
 
 @app.on_event("startup")

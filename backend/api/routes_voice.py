@@ -14,6 +14,7 @@ class Base64VoiceRequest(BaseModel):
 
 
 @router.post("/query")
+@router.post("/query/")
 async def voice_query_upload(
     file: UploadFile = File(...),
     orchestrator: RAGOrchestrator = Depends(get_orchestrator)
