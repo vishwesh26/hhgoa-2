@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 
-export const ProfileSettings: React.FC = () => {
+interface ProfileSettingsProps {
+  apiUrl: string;
+  onApiUrlChange: (url: string) => void;
+}
+
+export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ apiUrl, onApiUrlChange }) => {
+  const [localApiUrl, setLocalApiUrl] = useState(apiUrl);
   const [sarvamModel, setSarvamModel] = useState('saarika:v2.5');
   const [geminiModel, setGeminiModel] = useState('gemini-2.5-flash');
   const [generationMode, setGenerationMode] = useState<'generative' | 'extractive_first'>('generative');
@@ -8,6 +14,7 @@ export const ProfileSettings: React.FC = () => {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    onApiUrlChange(localApiUrl.trim().replace(/\/+$/, ''));
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };
@@ -25,7 +32,7 @@ export const ProfileSettings: React.FC = () => {
             </h2>
           </div>
           <p className="font-mono text-xs text-slate-600">
-            Configure STT models, LLM parameters, generation modes, and vector storage.
+            Configure backend URL, STT models, LLM parameters, generation modes, and vector storage.
           </p>
         </div>
 
@@ -43,8 +50,30 @@ export const ProfileSettings: React.FC = () => {
           
           <div className="bg-white border-4 border-black p-6 hard-shadow flex flex-col gap-5">
             <h3 className="font-headline font-black text-lg uppercase tracking-tight flex items-center gap-2 border-b-2 border-black pb-2">
+              <span className="material-symbols-outlined text-primary">link</span>
+              1. Backend Connection URL
+            </h3>
+
+            {/* Backend API URL */}
+            <div className="flex flex-col gap-2">
+              <label className="font-mono text-xs font-bold uppercase tracking-wider text-slate-700">
+                FastAPI Backend Endpoint URL:
+              </label>
+              <input
+                type="text"
+                value={localApiUrl}
+                onChange={(e) => setLocalApiUrl(e.target.value)}
+                placeholder="e.g. https://xxxx.ngrok-free.app or http://localhost:8000"
+                className="p-3 bg-surface border-2 border-black font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary font-bold"
+              />
+              <span className="font-mono text-[11px] text-slate-500">
+                When deployed on Vercel, paste your live backend URL (e.g. ngrok tunnel) here so the frontend can connect without 404 errors.
+              </span>
+            </div>
+
+            <h3 className="font-headline font-black text-lg uppercase tracking-tight flex items-center gap-2 border-b-2 border-black pb-2 mt-2">
               <span className="material-symbols-outlined text-primary">key</span>
-              1. API Keys & Models
+              2. Models & Generation
             </h3>
 
             {/* Sarvam STT */}

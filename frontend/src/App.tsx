@@ -4,39 +4,49 @@ import { PerformanceAnalytics } from './components/PerformanceAnalytics';
 import { DocumentationView } from './components/DocumentationView';
 import { ProfileSettings } from './components/ProfileSettings';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-
 export const App: React.FC = () => {
   const [activeScreen, setActiveScreen] = useState<'dashboard' | 'analytics' | 'docs' | 'settings'>('dashboard');
+  const [apiUrl, setApiUrl] = useState<string>(() => {
+    return localStorage.getItem('kinetic_api_url') || import.meta.env.VITE_API_BASE_URL || '';
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [benchmarkLoading, setBenchmarkLoading] = useState<boolean>(false);
 
-  // Fetch benchmark data on load
+  const handleApiUrlChange = (newUrl: string) => {
+    const formatted = newUrl.trim().replace(/\/+$/, '');
+    setApiUrl(formatted);
+    localStorage.setItem('kinetic_api_url', formatted);
+  };
+
+  // Fetch benchmark data on load or when apiUrl changes
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/benchmark/results`)
+    fetch(`${apiUrl}/api/benchmark/results`)
       .then((res) => res.json())
       .then((data) => setBenchmarkData(data))
       .catch(() => {});
-  }, []);
+  }, [apiUrl]);
 
   const handleQuerySubmit = async (query: string) => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/rag/query`, {
+      const res = await fetch(`${apiUrl}/api/rag/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
       });
-      const data = await res.json();
-      if (res.ok) {
-        setResponse(data);
-      } else {
-        setErrorMessage(data.detail || 'Query execution failed.');
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error('Backend endpoint returned 404. If deployed on Vercel, please set your live backend URL (e.g. ngrok tunnel) in the Configuration/Settings tab.');
+        }
+        const errorData = await res.json().catch(() => ({ detail: `Server error (${res.status})` }));
+        throw new Error(errorData.detail || `Query execution failed (${res.status}).`);
       }
+      const data = await res.json();
+      setResponse(data);
     } catch (err: any) {
       setErrorMessage(err.message || 'Network error connecting to backend.');
     } finally {
@@ -51,16 +61,19 @@ export const App: React.FC = () => {
       const formData = new FormData();
       formData.append('file', audioBlob, filename);
 
-      const res = await fetch(`${API_BASE_URL}/api/voice/query`, {
+      const res = await fetch(`${apiUrl}/api/voice/query`, {
         method: 'POST',
         body: formData,
       });
-      const data = await res.json();
-      if (res.ok) {
-        setResponse(data);
-      } else {
-        setErrorMessage(data.detail || 'Voice processing failed.');
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error('Backend endpoint returned 404. If deployed on Vercel, please set your live backend URL (e.g. ngrok tunnel) in the Configuration/Settings tab.');
+        }
+        const errorData = await res.json().catch(() => ({ detail: `Voice server error (${res.status})` }));
+        throw new Error(errorData.detail || `Voice processing failed (${res.status}).`);
       }
+      const data = await res.json();
+      setResponse(data);
     } catch (err: any) {
       setErrorMessage(err.message || 'Network error during voice query processing.');
     } finally {
@@ -71,7 +84,7 @@ export const App: React.FC = () => {
   const handleRunBenchmark = async () => {
     setBenchmarkLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/benchmark/run`, { method: 'POST' });
+      const res = await fetch(`${apiUrl}/api/benchmark/run`, { method: 'POST' });
       const data = await res.json();
       setBenchmarkData(data);
     } catch (err) {
@@ -228,7 +241,9 @@ export const App: React.FC = () => {
 
           {activeScreen === 'docs' && <DocumentationView />}
 
-          {activeScreen === 'settings' && <ProfileSettings />}
+          {activeScreen === 'settings' && (
+            <ProfileSettings apiUrl={apiUrl} onApiUrlChange={handleApiUrlChange} />
+          )}
         </main>
       </div>
 
