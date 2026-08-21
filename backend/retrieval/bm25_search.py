@@ -30,6 +30,7 @@ class IndicBM25Searcher:
         self.corpus_chunks = chunks
         tokenized_corpus = []
 
+
         for c in chunks:
             text = c["text"]
             lang = c.get("language", "auto")
@@ -56,7 +57,7 @@ class IndicBM25Searcher:
         try:
             with open(self.index_path, "rb") as f:
                 data = pickle.load(f)
-                self.corpus_chunks = data["corpus_chunks"]
+                self.corpus_chunks = data.get("corpus_chunks") or data.get("doc_store") or []
                 self.bm25 = data["bm25"]
             return True
         except Exception as e:

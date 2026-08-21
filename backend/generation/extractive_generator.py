@@ -56,10 +56,14 @@ class DatasetAnswerExtractor:
                 sent_tokens = set(indic_tokenize(sent_clean, remove_stopwords=False, lang=src.get("language", detected_lang)))
                 overlap = len(query_tokens.intersection(sent_tokens))
                 
+                # Only consider sentences with actual non-trivial keyword overlap
+                if overlap == 0:
+                    continue
+
                 # Bonus for exact key terms matching and top source position
                 source_weight = 1.0 / (src_idx + 1)
                 position_weight = 1.0 / (s_idx + 1)
-                score = (overlap * 2.0) + (source_weight * 1.5) + (position_weight * 0.5)
+                score = (overlap * 3.0) + (source_weight * 1.5) + (position_weight * 0.5)
 
                 scored_sentences.append({
                     "sentence": sent_clean,
@@ -69,10 +73,14 @@ class DatasetAnswerExtractor:
                 })
 
         if not scored_sentences:
-            best_source = retrieved_sources[0].get("text", "")
-            ans = best_source[:300] + "..." if len(best_source) > 300 else best_source
+            if detected_lang == "hi":
+                ans = "मुझे इस प्रश्न का उत्तर देने के लिए उपलब्ध ज्ञानकोष में पर्याप्त जानकारी नहीं मिली।"
+            elif detected_lang == "mr":
+                ans = "या प्रश्नाचे उत्तर देण्यासाठी उपलब्ध ज्ञानकोशात पुरेशी माहिती उपलब्ध नाही."
+            else:
+                ans = "I couldn't find sufficient information in the provided knowledge base to answer that reliably."
             latency_ms = (time.perf_counter() - start_time) * 1000.0
-            return ans, latency_ms, "dataset_passage_slice"
+            return ans, latency_ms, "extractive_refusal"
 
         # Sort by relevance score and deduplicate
         scored_sentences.sort(key=lambda x: x["score"], reverse=True)

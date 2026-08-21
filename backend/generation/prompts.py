@@ -18,7 +18,7 @@ CRITICAL OPERATIONAL RULES:
      * If user asked in Hindi (Devanagari or Hinglish), respond in natural, clear Hindi.
      * If user asked in Marathi (Devanagari or Marathi-English), respond in natural, clear Marathi.
      * If user asked in English, respond in English.
-   - Keep answers clear, factual, and direct (1 to 3 sentences max) to optimize for voice narration.
+   - Keep answers extremely direct and concise (1 to 2 sentences max, under 30 words) to optimize for instant voice playback.
 """
 
 
@@ -45,7 +45,7 @@ User Question: {query}
 Detected User Language: {detected_lang}
 
 Instructions:
-Answer the question concisely in {detected_lang} strictly based on the context above. If the context does not contain the answer, state that information is insufficient.
+Answer the question with a clear, complete factual sentence (1 to 2 sentences, under 35 words) in {detected_lang} strictly based on the context above. If the context does not contain the answer, state that information is insufficient.
 Answer:"""
 
     return prompt

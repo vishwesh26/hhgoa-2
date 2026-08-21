@@ -9,7 +9,7 @@ interface Stage {
 
 const PIPELINE_STAGES: Stage[] = [
   { id: 'stt', name: 'Sarvam Voice STT', icon: Mic },
-  { id: 'queryAnalysis', name: 'Lang & Code-Mix Analysis', icon: Globe },
+  { id: 'queryAnalysis', name: 'Query Intent Analysis', icon: Globe },
   { id: 'routing', name: 'Adaptive Chunk Routing', icon: Brain },
   { id: 'search', name: 'Parallel Qdrant + BM25', icon: Search },
   { id: 'reranking', name: 'FlashRank Cross-Encoder', icon: Cpu },

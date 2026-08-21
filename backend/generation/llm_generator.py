@@ -46,8 +46,22 @@ class GroundedLLMGenerator:
             import google.generativeai as genai
 
             # Try primary model first (gemini-2.5-flash / gemini-2.5-pro)
+            # Try model fallback candidates in prioritized order
+            # Try candidate models in prioritized fast order
+            candidate_models = [
+                self.model_name,
+                "gemini-2.5-flash",
+                "gemini-1.5-flash",
+                "gemini-2.0-flash",
+                "gemini-3.5-flash",
+                self.fallback_model,
+            ]
+            seen_models = set()
             import asyncio
-            for model_candidate in [self.model_name, self.fallback_model, "gemini-2.5-flash", "gemini-2.5-pro"]:
+            for model_candidate in candidate_models:
+                if not model_candidate or model_candidate in seen_models:
+                    continue
+                seen_models.add(model_candidate)
                 try:
                     model = genai.GenerativeModel(
                         model_name=model_candidate,
@@ -61,27 +75,31 @@ class GroundedLLMGenerator:
                     response = await asyncio.to_thread(model.generate_content, user_prompt)
                     latency_ms = (time.perf_counter() - start_time) * 1000.0
                     
-                    if response and response.text:
-                        return response.text.strip(), latency_ms, model_candidate
+                    answer_text = ""
+                    if response:
+                        try:
+                            if hasattr(response, "text") and response.text:
+                                answer_text = response.text.strip()
+                        except Exception:
+                            pass
+                        if not answer_text and hasattr(response, "candidates") and response.candidates:
+                            candidate = response.candidates[0]
+                            if hasattr(candidate, "content") and hasattr(candidate.content, "parts"):
+                                parts_text = [p.text for p in candidate.content.parts if hasattr(p, "text") and p.text]
+                                if parts_text:
+                                    answer_text = "".join(parts_text).strip()
+                    
+                    if answer_text:
+                        return answer_text, latency_ms, model_candidate
                 except Exception as e:
-                    print(f"[WARN] Error with model {model_candidate}: {e}. Retrying fallback...")
+                    print(f"[WARN] Gemini model {model_candidate} error: {e}. Retrying next candidate...")
 
-        # 2. Heuristic extraction fallback when API key is not supplied or offline
-        fallback_answer = self._extractive_grounded_fallback(query, retrieved_sources, detected_lang)
+        # 2. Honest refusal fallback when LLM is unavailable
         latency_ms = (time.perf_counter() - start_time) * 1000.0
-        return fallback_answer, latency_ms, "grounded_extractive_fallback"
-
-    def _extractive_grounded_fallback(
-        self,
-        query: str,
-        sources: List[Dict[str, Any]],
-        lang: str
-    ) -> str:
-        """
-        Deterministic, grounded fallback that extracts the most relevant verified
-        factual sentences directly from retrieved sources without hallucination.
-        """
-        from backend.generation.extractive_generator import DatasetAnswerExtractor
-        extractor = DatasetAnswerExtractor()
-        ans, _, _ = extractor.extract_answer(query, sources, detected_lang=lang, max_sentences=2)
-        return ans
+        if detected_lang == "hi":
+            fallback_answer = "दिए गए संदर्भ में इस प्रश्न का उत्तर देने के लिए पर्याप्त जानकारी उपलब्ध नहीं है।"
+        elif detected_lang == "mr":
+            fallback_answer = "दिलेल्या संदर्भात या प्रश्नाचे उत्तर देण्यासाठी पुरेशी माहिती उपलब्ध नाही."
+        else:
+            fallback_answer = "I don't have enough information in the provided knowledge base to answer that reliably."
+        return fallback_answer, latency_ms, "honest_refusal_fallback"

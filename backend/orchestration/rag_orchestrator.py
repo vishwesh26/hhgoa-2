@@ -37,15 +37,17 @@ class RAGOrchestrator:
 
         # Cache of initialized searchers per collection
         self.vector_searchers = {
-            "sentence": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_sentence"),
+            "passage": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_passage"),
             "sliding": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_sliding"),
             "semantic": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_semantic"),
+            "sentence": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_sentence"),
             "combined": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_combined"),
         }
         self.bm25_searchers = {
-            "sentence": IndicBM25Searcher("sentence"),
-            "sliding": IndicBM25Searcher("sliding_window"),
+            "passage": IndicBM25Searcher("passage"),
+            "sliding": IndicBM25Searcher("sliding"),
             "semantic": IndicBM25Searcher("semantic"),
+            "sentence": IndicBM25Searcher("sentence"),
             "combined": IndicBM25Searcher("combined"),
         }
 
@@ -86,22 +88,43 @@ class RAGOrchestrator:
         # 3. Parallel Retrieval: Qdrant Vector + BM25 Lexical
         vec_searcher = self.vector_searchers.get(target_collection, self.vector_searchers["combined"])
         bm25_searcher = self.bm25_searchers.get(target_collection, self.bm25_searchers["combined"])
+        bm25_combined = self.bm25_searchers.get("combined", self.bm25_searchers["sentence"])
 
-        t_vec_start = time.perf_counter()
-        # Run Qdrant and BM25 concurrently using asyncio
+        # Run Qdrant and BM25 concurrently using asyncio with individual timers
         loop = asyncio.get_event_loop()
-        vec_task = loop.run_in_executor(None, vec_searcher.search, sanitized_query, strategy["top_k"])
-        bm25_task = loop.run_in_executor(None, bm25_searcher.search, sanitized_query, strategy["top_k"])
 
-        vector_results, bm25_results = await asyncio.gather(vec_task, bm25_task)
-        tracker.record_stage("vectorSearch", (time.perf_counter() - t_vec_start) * 1000.0)
-        tracker.record_stage("bm25Search", (time.perf_counter() - t_vec_start) * 1000.0)
+        def _timed_vec():
+            t0 = time.perf_counter()
+            res = vec_searcher.search(sanitized_query, strategy["top_k"])
+            return res, (time.perf_counter() - t0) * 1000.0
+
+        def _timed_bm25():
+            t0 = time.perf_counter()
+            res1 = bm25_searcher.search(sanitized_query, strategy["top_k"])
+            res2 = bm25_combined.search(sanitized_query, strategy["top_k"])
+            return (res1, res2), (time.perf_counter() - t0) * 1000.0
+
+        (vector_results, vec_lat_ms), ((bm25_results, bm25_comb_res), bm25_lat_ms) = await asyncio.gather(
+            loop.run_in_executor(None, _timed_vec),
+            loop.run_in_executor(None, _timed_bm25)
+        )
+        tracker.record_stage("vectorSearch", vec_lat_ms)
+        tracker.record_stage("bm25Search", bm25_lat_ms)
+
+        # Merge BM25 specific and combined results
+        seen_bm25_chunks = set()
+        merged_bm25 = []
+        for r in (bm25_results or []) + (bm25_comb_res or []):
+            cid = r.get("chunk_id")
+            if cid and cid not in seen_bm25_chunks:
+                seen_bm25_chunks.add(cid)
+                merged_bm25.append(r)
 
         # 4. Reciprocal Rank Fusion (RRF)
         with tracker.measure("fusion"):
             fused_candidates = reciprocal_rank_fusion(
                 vector_results=vector_results,
-                bm25_results=bm25_results,
+                bm25_results=merged_bm25,
                 vector_weight=vector_weight,
                 bm25_weight=bm25_weight,
                 rrf_k=settings.RRF_K,
@@ -135,27 +158,17 @@ class RAGOrchestrator:
                 "latency": tracker.get_summary()
             }
 
-        # 7. Answer Generation (Extractive Dataset Direct vs LLM Synthesis)
+        # 7. Answer Generation via Grounded LLM
         t_gen_start = time.perf_counter()
         # Sanitize any injection patterns in retrieved texts
         for s in reranked_sources:
             s["text"] = self.injection_filter.sanitize_retrieved_passage(s.get("text", ""))
 
-        # Check if identity / meta query
-        is_capability_query = any(k in sanitized_query.lower() for k in ["language", "languages", "भाषा", "speak", "capabilities", "who are you", "what can you do"])
-
-        if settings.ANSWER_GENERATION_MODE in ["extractive", "extractive_first"] and not is_capability_query:
-            answer_text, gen_lat_ms, model_used = self.dataset_extractor.extract_answer(
-                query=sanitized_query,
-                retrieved_sources=reranked_sources,
-                detected_lang=lang
-            )
-        else:
-            answer_text, gen_lat_ms, model_used = await self.llm_generator.generate_grounded_answer(
-                query=sanitized_query,
-                retrieved_sources=reranked_sources,
-                detected_lang=lang
-            )
+        answer_text, gen_lat_ms, model_used = await self.llm_generator.generate_grounded_answer(
+            query=sanitized_query,
+            retrieved_sources=reranked_sources,
+            detected_lang=lang
+        )
         tracker.record_stage("generation", gen_lat_ms)
 
         # 8. Grounding Verification

@@ -51,16 +51,12 @@ class CrossEncoderReranker:
                     meta = res["meta"]
                     raw_res_score = float(res["score"])
                     base_rrf_score = float(meta.get("score", 0.5))
-                    # Check keyword overlap using Indic tokenization and synonyms
-                    text_lower = meta.get("text", "").lower()
-                    overlap_count = sum(1 for t in q_terms if t in text_lower)
-                    overlap_boost = min(0.60, 0.15 * overlap_count)
-                    # Calibrated blend of cross-encoder confidence, hybrid retrieval rank, and lexical match
-                    blended_score = round(0.30 * base_rrf_score + 0.30 * min(1.0, raw_res_score * 3.0) + overlap_boost, 3)
+                    # True cross-encoder score blended with base RRF rank
+                    calibrated_score = round(0.75 * raw_res_score + 0.25 * base_rrf_score, 3)
                     reranked_docs.append({
                         **meta,
                         "rerank_score": raw_res_score,
-                        "score": max(min(blended_score, 1.0), 0.05)
+                        "score": calibrated_score
                     })
                 
                 reranked_docs.sort(key=lambda x: x["score"], reverse=True)

@@ -4,6 +4,8 @@ import { PerformanceAnalytics } from './components/PerformanceAnalytics';
 import { DocumentationView } from './components/DocumentationView';
 import { ProfileSettings } from './components/ProfileSettings';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 export const App: React.FC = () => {
   const [activeScreen, setActiveScreen] = useState<'dashboard' | 'analytics' | 'docs' | 'settings'>('dashboard');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,7 +16,7 @@ export const App: React.FC = () => {
 
   // Fetch benchmark data on load
   useEffect(() => {
-    fetch('/api/benchmark/results')
+    fetch(`${API_BASE_URL}/api/benchmark/results`)
       .then((res) => res.json())
       .then((data) => setBenchmarkData(data))
       .catch(() => {});
@@ -24,7 +26,7 @@ export const App: React.FC = () => {
     setIsLoading(true);
     setErrorMessage(null);
     try {
-      const res = await fetch('/api/rag/query', {
+      const res = await fetch(`${API_BASE_URL}/api/rag/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
@@ -36,7 +38,7 @@ export const App: React.FC = () => {
         setErrorMessage(data.detail || 'Query execution failed.');
       }
     } catch (err: any) {
-      setErrorMessage(err.message || 'Network error connecting to VAANI backend.');
+      setErrorMessage(err.message || 'Network error connecting to backend.');
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +51,7 @@ export const App: React.FC = () => {
       const formData = new FormData();
       formData.append('file', audioBlob, filename);
 
-      const res = await fetch('/api/voice/query', {
+      const res = await fetch(`${API_BASE_URL}/api/voice/query`, {
         method: 'POST',
         body: formData,
       });
@@ -69,7 +71,7 @@ export const App: React.FC = () => {
   const handleRunBenchmark = async () => {
     setBenchmarkLoading(true);
     try {
-      const res = await fetch('/api/benchmark/run', { method: 'POST' });
+      const res = await fetch(`${API_BASE_URL}/api/benchmark/run`, { method: 'POST' });
       const data = await res.json();
       setBenchmarkData(data);
     } catch (err) {
@@ -235,7 +237,7 @@ export const App: React.FC = () => {
         <span className="font-bold">© 2026 KINETIC.AI | SYSTEM STATUS: OPTIMAL</span>
         <div className="flex gap-4">
           <span>LATENCY TARGET: &lt;200MS</span>
-          <span>LANGUAGES: EN | HI | MR</span>
+          <span>LANGUAGE: ENGLISH (EN)</span>
           <span className="text-neon-green font-bold">ONLINE</span>
         </div>
       </footer>

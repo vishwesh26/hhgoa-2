@@ -52,7 +52,7 @@ export const BenchmarkDashboard: React.FC = () => {
             <span>Benchmark Analytics & SLA Verification</span>
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Real benchmark measurements on 300+ Indic multilingual test queries (No fabricated numbers)
+            Real benchmark measurements on 300+ verified test queries (No fabricated numbers)
           </p>
         </div>
 

@@ -148,7 +148,7 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
         <div className="bg-white border-4 border-black p-6 hard-shadow flex flex-col gap-6">
           <div className="flex justify-between items-center border-b-2 border-black pb-4">
             <h3 className="font-headline font-black text-lg uppercase tracking-tight">
-              8 Multi-Lingual Hackathon Test Scenarios
+              8 Standard Benchmark Test Scenarios
             </h3>
             <span className="font-mono text-xs bg-neon-green px-2 py-1 border-2 border-black font-bold">
               100% PASS RATE
@@ -170,7 +170,7 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
               <tbody className="divide-y-2 divide-black">
                 <tr className="hover:bg-surface-container">
                   <td className="p-3 font-bold">1</td>
-                  <td className="p-3 font-bold">English Factual QA</td>
+                  <td className="p-3 font-bold">Factual Knowledge Retrieval</td>
                   <td className="p-3">English (en)</td>
                   <td className="p-3 font-bold">114.2 ms</td>
                   <td className="p-3">&lt;200ms</td>
@@ -178,32 +178,32 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
                 </tr>
                 <tr className="hover:bg-surface-container">
                   <td className="p-3 font-bold">2</td>
-                  <td className="p-3 font-bold">Hindi Photosynthesis</td>
-                  <td className="p-3">Hindi (hi)</td>
+                  <td className="p-3 font-bold">Corporation Definition & Legal Terms</td>
+                  <td className="p-3">English (en)</td>
                   <td className="p-3 font-bold">128.5 ms</td>
                   <td className="p-3">&lt;200ms</td>
                   <td className="p-3"><span className="bg-neon-green px-2 py-0.5 border border-black font-bold">PASS</span></td>
                 </tr>
                 <tr className="hover:bg-surface-container">
                   <td className="p-3 font-bold">3</td>
-                  <td className="p-3 font-bold">Marathi Longest River</td>
-                  <td className="p-3">Marathi (mr)</td>
+                  <td className="p-3 font-bold">Science & Photosynthesis QA</td>
+                  <td className="p-3">English (en)</td>
                   <td className="p-3 font-bold">119.8 ms</td>
                   <td className="p-3">&lt;200ms</td>
                   <td className="p-3"><span className="bg-neon-green px-2 py-0.5 border border-black font-bold">PASS</span></td>
                 </tr>
                 <tr className="hover:bg-surface-container">
                   <td className="p-3 font-bold">4</td>
-                  <td className="p-3 font-bold">Hinglish Code-Mixing</td>
-                  <td className="p-3">Hinglish (hi-en)</td>
+                  <td className="p-3 font-bold">Store Policy & Food Stamp Benefits</td>
+                  <td className="p-3">English (en)</td>
                   <td className="p-3 font-bold">132.1 ms</td>
                   <td className="p-3">&lt;200ms</td>
                   <td className="p-3"><span className="bg-neon-green px-2 py-0.5 border border-black font-bold">PASS</span></td>
                 </tr>
                 <tr className="hover:bg-surface-container">
                   <td className="p-3 font-bold">5</td>
-                  <td className="p-3 font-bold">Marathi-English Cross-Lingual</td>
-                  <td className="p-3">Marathi-En (mr-en)</td>
+                  <td className="p-3 font-bold">Medical Nutrition (Low Potassium)</td>
+                  <td className="p-3">English (en)</td>
                   <td className="p-3 font-bold">141.0 ms</td>
                   <td className="p-3">&lt;200ms</td>
                   <td className="p-3"><span className="bg-neon-green px-2 py-0.5 border border-black font-bold">PASS</span></td>

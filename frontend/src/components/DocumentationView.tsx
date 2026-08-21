@@ -9,11 +9,11 @@ export const DocumentationView: React.FC = () => {
         <div className="flex items-center gap-3 mb-2">
           <span className="material-symbols-outlined text-primary text-3xl">menu_book</span>
           <h2 className="font-headline font-black text-2xl tracking-tight uppercase">
-            VAANI — Polyglot Voice RAG Engine Documentation
+            VAANI — Voice RAG Engine Documentation
           </h2>
         </div>
         <p className="font-mono text-xs text-slate-600">
-          Complete production architecture, offline multi-strategy chunking, Indic NLP pipeline, and benchmark metrics.
+          Complete production architecture, offline multi-strategy chunking, low-latency search pipeline, and benchmark metrics.
         </p>
       </div>
 
@@ -26,15 +26,15 @@ export const DocumentationView: React.FC = () => {
         <div className="bg-slate-900 text-white p-4 font-mono text-xs border-2 border-black overflow-x-auto leading-relaxed">
           <pre>{`Voice Input (Web Audio / MediaRecorder @ 250ms chunks)
     ↓
-Sarvam AI STT (Model: saarika:v2.5, Auto-Detect Indian Languages)
+Sarvam AI STT (High-accuracy Speech-to-Text)
     ↓
 Security & Injection Gate (Heuristic Pattern & Delimiter Sanitizer: 0.02ms)
     ↓
-Query Analyzer & Adaptive Router (Devanagari/Latin Script + Lexical Intent: 0.05ms)
+Query Analyzer & Adaptive Router (Intent Classification & Strategy Weighting: 0.05ms)
     ↓
 Parallel Hybrid Retrieval (asyncio.gather: ~3.2ms)
-    ├── Qdrant Dense Vector Search (paraphrase-multilingual-mpnet-base-v2)
-    └── Indic BM25 Lexical Matching (Language-Aware Tokenizer + Synonyms)
+    ├── Qdrant Dense Vector Search (ONNX Transformer Embeddings)
+    └── BM25 Lexical Matching (Token-level BM25 Indexing)
     ↓
 Reciprocal Rank Fusion (RRF k=60: 0.04ms)
     ↓
@@ -50,7 +50,7 @@ Final Grounded Answer & Nanosecond Stage Telemetry`}</pre>
         </div>
       </div>
 
-      {/* Section 2: 4 Offline Indic Chunking Strategies */}
+      {/* Section 2: 4 Offline Chunking Strategies */}
       <div className="bg-white border-4 border-black p-6 hard-shadow flex flex-col gap-4">
         <h3 className="font-headline font-black text-lg uppercase tracking-tight flex items-center gap-2 border-b-2 border-black pb-2">
           <span className="material-symbols-outlined text-primary">segment</span>
@@ -61,7 +61,7 @@ Final Grounded Answer & Nanosecond Stage Telemetry`}</pre>
           <div className="p-4 bg-surface border-2 border-black">
             <h4 className="font-headline font-bold text-sm uppercase text-primary mb-1">1. Sentence Chunking</h4>
             <p className="font-mono text-xs text-slate-700 leading-relaxed">
-              Splits text by full stops (<code className="bg-white px-1 border border-black font-bold">.</code>) and Devanagari dandas (<code className="bg-white px-1 border border-black font-bold">।</code>, <code className="bg-white px-1 border border-black font-bold">॥</code>). Ideal for concise factual QA like dates, numbers, and definitions.
+              Splits text by full stops (<code className="bg-white px-1 border border-black font-bold">.</code>) and question marks (<code className="bg-white px-1 border border-black font-bold">?</code>, <code className="bg-white px-1 border border-black font-bold">!</code>). Ideal for concise factual QA like dates, numbers, and definitions.
             </p>
           </div>
 
@@ -82,7 +82,7 @@ Final Grounded Answer & Nanosecond Stage Telemetry`}</pre>
           <div className="p-4 bg-surface border-2 border-black">
             <h4 className="font-headline font-bold text-sm uppercase text-primary mb-1">4. Hierarchical Chunking</h4>
             <p className="font-mono text-xs text-slate-700 leading-relaxed">
-              Preserves parent document title, language metadata, and child passage hierarchy, enabling multi-level context retrieval with parent document enrichment.
+              Preserves parent document title and child passage hierarchy, enabling multi-level context retrieval with parent document enrichment.
             </p>
           </div>
         </div>
@@ -110,7 +110,7 @@ Final Grounded Answer & Nanosecond Stage Telemetry`}</pre>
               <span className="bg-neon-green text-black font-bold px-2 py-0.5 border border-black">POST</span>
               <span className="font-bold text-black">/api/rag/query</span>
             </div>
-            <p className="text-slate-600 mb-2">Executes multilingual hybrid RAG for text queries.</p>
+            <p className="text-slate-600 mb-2">Executes hybrid RAG for text queries.</p>
             <span className="text-slate-500">Payload: <code className="bg-white px-1 border border-black">{`{"query": "string"}`}</code></span>
           </div>
 

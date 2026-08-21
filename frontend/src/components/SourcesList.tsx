@@ -19,15 +19,8 @@ export const SourcesList: React.FC<SourcesListProps> = ({ sources }) => {
     return null;
   }
 
-  const getLangBadge = (lang: string) => {
-    switch (lang.toLowerCase()) {
-      case 'hi':
-        return <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-semibold">🇮🇳 Hindi</span>;
-      case 'mr':
-        return <span className="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-[11px] font-semibold">🇮🇳 Marathi</span>;
-      default:
-        return <span className="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[11px] font-semibold">🇬🇧 English</span>;
-    }
+  const getLangBadge = (_lang: string) => {
+    return <span className="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-[11px] font-semibold">English</span>;
   };
 
   return (
@@ -39,7 +32,7 @@ export const SourcesList: React.FC<SourcesListProps> = ({ sources }) => {
         </div>
         <span className="text-xs text-slate-400 flex items-center space-x-1">
           <CheckCircle className="w-3.5 h-3.5 text-brand-400" />
-          <span>Cross-Lingual Index Verified</span>
+          <span>Grounded Evidence Verified</span>
         </span>
       </div>
 

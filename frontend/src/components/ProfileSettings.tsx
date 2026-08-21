@@ -57,7 +57,7 @@ export const ProfileSettings: React.FC = () => {
                 onChange={(e) => setSarvamModel(e.target.value)}
                 className="p-3 bg-surface border-2 border-black font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary font-bold"
               >
-                <option value="saarika:v2.5">saarika:v2.5 (Flagship Multilingual STT - Recommended)</option>
+                <option value="saarika:v2.5">saarika:v2.5 (High-Accuracy English STT - Recommended)</option>
                 <option value="saaras:v3">saaras:v3 (Streaming Low-Latency)</option>
                 <option value="saarika:flash">saarika:flash (Ultra-Fast Batch)</option>
               </select>
@@ -141,7 +141,7 @@ export const ProfileSettings: React.FC = () => {
               </div>
               <div className="flex justify-between border-b border-slate-200 pb-1.5">
                 <span className="text-slate-600">Embedding Model:</span>
-                <span className="font-bold">paraphrase-multilingual-mpnet-base-v2</span>
+                <span className="font-bold">MiniLM-L12-v2 Transformer (FastEmbed ONNX)</span>
               </div>
               <div className="flex justify-between border-b border-slate-200 pb-1.5">
                 <span className="text-slate-600">Indexed Collections:</span>

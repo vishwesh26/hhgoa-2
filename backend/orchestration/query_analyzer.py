@@ -128,27 +128,27 @@ class QueryAnalyzer:
         """
         if query_type == "factual":
             return {
-                "target_collection": "sentence",
-                "vector_weight": 0.40,
-                "bm25_weight": 0.60,
+                "target_collection": "passage",
+                "vector_weight": 0.60,
+                "bm25_weight": 0.40,
                 "top_k": 20,
-                "rationale": "Factual query prioritizes high-precision sentence chunks and lexical BM25 matching."
+                "rationale": "Factual and definition queries prioritize intact candidate passages and dense semantic vector retrieval."
             }
         elif query_type == "conceptual":
             return {
                 "target_collection": "semantic",
-                "vector_weight": 0.80,
-                "bm25_weight": 0.20,
+                "vector_weight": 0.70,
+                "bm25_weight": 0.30,
                 "top_k": 20,
                 "rationale": "Conceptual query prioritizes semantic topical chunks and dense multilingual vector similarity."
             }
         elif query_type == "exact_entity":
             return {
-                "target_collection": "sentence",
-                "vector_weight": 0.30,
-                "bm25_weight": 0.70,
-                "top_k": 15,
-                "rationale": "Exact entity query maximizes BM25 lexical keyword scoring."
+                "target_collection": "passage",
+                "vector_weight": 0.40,
+                "bm25_weight": 0.60,
+                "top_k": 20,
+                "rationale": "Exact entity and terminology queries utilize passage-level BM25 and dense hybrid matching."
             }
         elif is_code_mixed:
             return {
@@ -161,8 +161,8 @@ class QueryAnalyzer:
         else:
             return {
                 "target_collection": "sliding",
-                "vector_weight": 0.50,
-                "bm25_weight": 0.50,
+                "vector_weight": 0.55,
+                "bm25_weight": 0.45,
                 "top_k": 20,
                 "rationale": "Balanced hybrid retrieval with sliding-window contextual chunks."
             }

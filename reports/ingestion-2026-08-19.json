@@ -1,0 +1,30 @@
+{
+  "title": "MSMARCO-XI INGESTION REPORT",
+  "timestamp": "2026-08-19T23:59:16.238454",
+  "elapsed_seconds": 599.35,
+  "languages": [
+    "en",
+    "hi"
+  ],
+  "records_processed": 1000,
+  "records_skipped": 1,
+  "duplicates_removed": 34,
+  "documents_kept": 9955,
+  "chunks_created": {
+    "total": 58170,
+    "by_strategy": {
+      "sentence": 37167,
+      "sliding": 10948,
+      "semantic": 10055
+    }
+  },
+  "embeddings_created": 58170,
+  "qdrant_points_indexed": 58170,
+  "bm25_documents_indexed": 58170,
+  "estimated_storage": {
+    "vectors_mb": 170.42,
+    "payloads_mb": 22.19,
+    "bm25_mb": 8.321,
+    "total_estimated_mb": 200.931
+  }
+}

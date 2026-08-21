@@ -45,16 +45,61 @@ def get_shared_qdrant_client() -> QdrantClient:
 
 
 def get_embedding_model():
+    """
+    Loads high-performance multilingual embedding model.
+    Prioritizes FastEmbed ONNX for <10ms latency, falling back to SentenceTransformer.
+    Raises RuntimeError if neither is available (FAIL FAST - NO FAKE HASHES).
+    """
     global _EMBED_MODEL
     if _EMBED_MODEL is None:
+        # 1. Try FastEmbed ONNX
+        try:
+            from fastembed import TextEmbedding
+            print(f"[INFO] Initializing FastEmbed ONNX Multilingual Model: {settings.EMBEDDING_MODEL_NAME}...")
+            _EMBED_MODEL = TextEmbedding(model_name=settings.EMBEDDING_MODEL_NAME)
+            print(f"[HEALTH] Embedding Model READY (FastEmbed ONNX, Dim: {settings.EMBEDDING_DIMENSION})")
+            return _EMBED_MODEL
+        except Exception as e_fast:
+            print(f"[WARN] FastEmbed load failed: {e_fast}. Trying SentenceTransformer...")
+
+        # 2. Try SentenceTransformers
         try:
             from sentence_transformers import SentenceTransformer
-            print(f"[INFO] Loading multilingual embedding model: {settings.EMBEDDING_MODEL_NAME}...")
+            print(f"[INFO] Initializing SentenceTransformer: {settings.EMBEDDING_MODEL_NAME}...")
             _EMBED_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_NAME)
-        except Exception as e:
-            print(f"[WARN] Could not load SentenceTransformer: {e}. Using deterministic multilingual fallback.")
-            _EMBED_MODEL = "fallback"
+            print(f"[HEALTH] Embedding Model READY (SentenceTransformer, Dim: {settings.EMBEDDING_DIMENSION})")
+            return _EMBED_MODEL
+        except Exception as e_st:
+            print(f"[ERROR] SentenceTransformer load failed: {e_st}")
+
+        # FAIL FAST - NEVER USE FAKE HASHES
+        raise RuntimeError(
+            "Embedding model is NOT AVAILABLE. Production RAG requires a valid multilingual embedding model. "
+            "Please ensure fastembed or sentence-transformers is installed."
+        )
     return _EMBED_MODEL
+
+
+def check_embedding_health() -> Dict[str, Any]:
+    """Startup health check for embedding engine."""
+    try:
+        model = get_embedding_model()
+        test_vec = compute_query_embedding("स्वास्थ्य परीक्षण")
+        return {
+            "status": "READY",
+            "model_name": settings.EMBEDDING_MODEL_NAME,
+            "dimension": len(test_vec),
+            "engine": type(model).__name__,
+            "error": None
+        }
+    except Exception as e:
+        return {
+            "status": "NOT AVAILABLE",
+            "model_name": settings.EMBEDDING_MODEL_NAME,
+            "dimension": settings.EMBEDDING_DIMENSION,
+            "engine": None,
+            "error": str(e)
+        }
 
 
 def compute_query_embedding(query: str) -> List[float]:
@@ -69,13 +114,19 @@ def compute_query_embedding(query: str) -> List[float]:
         return _QUERY_EMBED_CACHE[query_hash]
 
     model = get_embedding_model()
-    if model != "fallback" and model is not None:
+    if hasattr(model, "embed"):
+        # FastEmbed interface
+        embeddings = list(model.embed([query_norm]))
+        vec = embeddings[0]
+        norm = np.linalg.norm(vec)
+        if norm > 0:
+            vec = vec / norm
+        embedding = vec.tolist()
+    elif hasattr(model, "encode"):
+        # SentenceTransformer interface
         embedding = model.encode(query_norm, normalize_embeddings=True).tolist()
     else:
-        # High-dimension pseudo-semantic hashing fallback for unit testing / low-resource env
-        np.random.seed(int(query_hash[:8], 16) % (2**31))
-        vec = np.random.randn(settings.EMBEDDING_DIMENSION)
-        embedding = (vec / np.linalg.norm(vec)).tolist()
+        raise RuntimeError("Loaded embedding model has unrecognized interface.")
 
     if settings.ENABLE_QUERY_CACHE:
         _QUERY_EMBED_CACHE[query_hash] = embedding
@@ -136,15 +187,16 @@ class QdrantVectorSearcher:
 
         texts = [c["text"] for c in chunks]
         embed_model = get_embedding_model()
-        if embed_model != "fallback" and embed_model is not None:
+        if hasattr(embed_model, "embed"):
+            raw_vecs = list(embed_model.embed(texts))
+            vectors = []
+            for v in raw_vecs:
+                norm = np.linalg.norm(v)
+                vectors.append((v / norm).tolist() if norm > 0 else v.tolist())
+        elif hasattr(embed_model, "encode"):
             vectors = embed_model.encode(texts, batch_size=settings.EMBEDDING_BATCH_SIZE, normalize_embeddings=True).tolist()
         else:
-            vectors = []
-            for t in texts:
-                h = hashlib.sha256(t.encode()).hexdigest()
-                np.random.seed(int(h[:8], 16) % (2**31))
-                v = np.random.randn(settings.EMBEDDING_DIMENSION)
-                vectors.append((v / np.linalg.norm(v)).tolist())
+            raise RuntimeError("No valid embedding model available to populate collection.")
 
         points = []
         for idx, (chunk, vec) in enumerate(zip(chunks, vectors)):
@@ -219,7 +271,7 @@ class QdrantVectorSearcher:
                 payload = hit.payload or {}
                 results.append({
                     "chunk_id": payload.get("chunk_id", str(hit.id)),
-                    "doc_id": payload.get("doc_id", ""),
+                    "doc_id": payload.get("document_id", payload.get("doc_id", "")),
                     "text": payload.get("text", ""),
                     "language": payload.get("language", "en"),
                     "chunk_strategy": payload.get("chunk_strategy", "sentence"),

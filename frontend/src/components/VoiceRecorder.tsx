@@ -59,11 +59,15 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         const audioBlob = new Blob(audioChunksRef.current, { type: cleanMime });
         const filename = `recording_${Date.now()}.${extension}`;
         
-        onAudioSubmit(audioBlob, filename);
+        if (audioBlob.size > 1000) {
+          onAudioSubmit(audioBlob, filename);
+        } else {
+          console.warn('Audio recording too small or empty');
+        }
         stream.getTracks().forEach((track) => track.stop());
       };
 
-      mediaRecorder.start(250);
+      mediaRecorder.start(100);
       setIsRecording(true);
       setRecordingTime(0);
       timerRef.current = window.setInterval(() => {
@@ -77,7 +81,10 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
+      if (mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.requestData();
+        mediaRecorderRef.current.stop();
+      }
       setIsRecording(false);
       if (timerRef.current) clearInterval(timerRef.current);
     }

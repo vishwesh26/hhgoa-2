@@ -44,8 +44,18 @@ class SarvamSTTClient:
             "api-subscription-key": self.api_key
         }
 
-        # Determine MIME type from filename
-        mime_type = mimetypes.guess_type(filename)[0] or "audio/webm"
+        # Determine correct audio MIME type
+        lower_fn = filename.lower()
+        if lower_fn.endswith(".webm"):
+            mime_type = "audio/webm"
+        elif lower_fn.endswith(".wav"):
+            mime_type = "audio/wav"
+        elif lower_fn.endswith(".mp3"):
+            mime_type = "audio/mpeg"
+        elif lower_fn.endswith(".ogg"):
+            mime_type = "audio/ogg"
+        else:
+            mime_type = "audio/webm"
 
         files = {
             "file": (filename, audio_bytes, mime_type)

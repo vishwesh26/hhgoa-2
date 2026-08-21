@@ -19,29 +19,29 @@ class Settings(BaseSettings):
     # Google Gemini LLM Settings
     GEMINI_API_KEY: str = Field(default="")
     GEMINI_MODEL: str = "gemini-2.5-flash"
-    GEMINI_FALLBACK_MODEL: str = "gemini-2.5-pro"
+    GEMINI_FALLBACK_MODEL: str = "gemini-1.5-flash"
     LLM_TIMEOUT_SECONDS: float = 8.0
-    MAX_GENERATION_TOKENS: int = 80
+    MAX_GENERATION_TOKENS: int = 256
     TEMPERATURE: float = 0.0
-    ANSWER_GENERATION_MODE: str = "generative"  # 'generative', 'extractive_first', 'extractive'
+    ANSWER_GENERATION_MODE: str = "generative"  # 'generative', 'extractive'
 
     # Qdrant Vector Database
     QDRANT_HOST: str = "localhost"
     QDRANT_PORT: int = 6333
     QDRANT_API_KEY: Optional[str] = None
-    QDRANT_COLLECTION_PREFIX: str = "vaani_msmarco"
+    QDRANT_COLLECTION_PREFIX: str = "msmarco_xi_v2"
     QDRANT_USE_EMBEDDED: bool = True
     QDRANT_STORAGE_PATH: str = "./data/qdrant_storage"
 
-    # Embedding Model Settings
-    EMBEDDING_MODEL_NAME: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
-    EMBEDDING_DIMENSION: int = 768
+    # Embedding Model Settings (FastEmbed Multilingual ONNX)
+    EMBEDDING_MODEL_NAME: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    EMBEDDING_DIMENSION: int = 384
     EMBEDDING_USE_ONNX: bool = True
-    EMBEDDING_BATCH_SIZE: int = 32
+    EMBEDDING_BATCH_SIZE: int = 64
 
     # Reranker Settings
     RERANKER_MODEL_NAME: str = "ms-marco-MiniLM-L-12-v2"
-    RERANKER_TOP_K: int = 5
+    RERANKER_TOP_K: int = 4
     FINAL_CONTEXT_K: int = 2
     RERANKER_TIMEOUT_SECONDS: float = 2.0
 
