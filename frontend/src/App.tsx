@@ -113,6 +113,26 @@ export const App: React.FC = () => {
           </div>
         </div>
 
+        {/* Quick Backend URL Connection Bar */}
+        <div className="hidden md:flex items-center gap-2 font-mono text-xs">
+          <span className="font-bold flex items-center gap-1 text-slate-700">
+            <span className="material-symbols-outlined text-sm text-primary">cloud_sync</span>
+            Backend URL:
+          </span>
+          <input
+            type="text"
+            value={apiUrl}
+            onChange={(e) => handleApiUrlChange(e.target.value)}
+            placeholder="https://kinetic-voice-rag-backend.onrender.com"
+            className="w-64 lg:w-80 p-1.5 border-2 border-black font-mono text-xs bg-surface focus:outline-none focus:ring-2 focus:ring-primary font-bold"
+          />
+          <span className={`px-2 py-1 border-2 border-black font-bold text-[10px] ${
+            apiUrl ? 'bg-neon-green text-black' : 'bg-neon-yellow text-black'
+          }`}>
+            {apiUrl ? 'CONNECTED' : 'DEFAULT'}
+          </span>
+        </div>
+
         {/* Top Action Icons */}
         <div className="flex items-center gap-2">
           <button
