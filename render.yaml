@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: kinetic-voice-rag-backend
+    runtime: python
+    buildCommand: pip install --no-cache-dir -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: ANSWER_GENERATION_MODE
+        value: generative
