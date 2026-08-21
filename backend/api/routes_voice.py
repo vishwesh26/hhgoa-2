@@ -51,3 +51,27 @@ async def voice_query_base64(
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Voice base64 processing failed: {str(e)}")
+
+
+@router.post("/transcribe")
+async def voice_transcribe_only(
+    file: UploadFile = File(...),
+    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+) -> Dict[str, Any]:
+    """
+    Direct Speech-to-Text transcription without executing RAG retrieval.
+    """
+    try:
+        audio_bytes = await file.read()
+        transcript, lang, latency, meta = await orchestrator.sarvam_client.transcribe(
+            audio_bytes, filename=file.filename or "audio.wav"
+        )
+        return {
+            "transcript": transcript,
+            "language": lang,
+            "stt_latency_ms": latency,
+            "meta": meta
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"STT transcription failed: {str(e)}")
+

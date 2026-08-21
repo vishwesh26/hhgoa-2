@@ -76,13 +76,22 @@ class SarvamSTTClient:
                     res_json = response.json()
                     transcript = res_json.get("transcript", "")
                     detected_lang = res_json.get("language_code", language_code or "unknown")
-                    print(f"[SUCCESS] Sarvam STT transcribed in {latency_ms:.1f}ms: \"{transcript}\" (Lang: {detected_lang})")
+                    try:
+                        print(f"[SUCCESS] Sarvam STT transcribed in {latency_ms:.1f}ms: \"{transcript}\" (Lang: {detected_lang})")
+                    except UnicodeEncodeError:
+                        print(f"[SUCCESS] Sarvam STT transcribed in {latency_ms:.1f}ms (Lang: {detected_lang})")
                     return transcript.strip(), detected_lang, round(latency_ms, 2), res_json
                 else:
                     error_msg = f"Sarvam API status {response.status_code}: {response.text}"
-                    print(f"[ERROR] {error_msg}")
+                    try:
+                        print(f"[ERROR] {error_msg}")
+                    except UnicodeEncodeError:
+                        print(f"[ERROR] Sarvam API returned status {response.status_code}")
                     return "", "en", round(latency_ms, 2), {"error": error_msg}
             except Exception as e:
                 latency_ms = (time.perf_counter() - start_time) * 1000.0
-                print(f"[ERROR] Sarvam STT request exception: {e}")
+                try:
+                    print(f"[ERROR] Sarvam STT request exception: {e}")
+                except UnicodeEncodeError:
+                    print(f"[ERROR] Sarvam STT request failed")
                 return "", "en", round(latency_ms, 2), {"error": str(e)}

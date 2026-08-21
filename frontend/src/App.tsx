@@ -75,7 +75,9 @@ export const App: React.FC = () => {
       const data = await res.json();
       setResponse(data);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Network error during voice query processing.');
+      setErrorMessage(
+        err.message || 'Unable to reach voice backend. Make sure FastAPI is running on port 8000.'
+      );
     } finally {
       setIsLoading(false);
     }
