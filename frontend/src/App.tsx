@@ -123,7 +123,7 @@ export const App: React.FC = () => {
             type="text"
             value={apiUrl}
             onChange={(e) => handleApiUrlChange(e.target.value)}
-            placeholder="https://kinetic-voice-rag-backend.onrender.com"
+            placeholder="e.g. https://xxxx.onrender.com or https://xxxx.ngrok-free.app"
             className="w-64 lg:w-80 p-1.5 border-2 border-black font-mono text-xs bg-surface focus:outline-none focus:ring-2 focus:ring-primary font-bold"
           />
           <span className={`px-2 py-1 border-2 border-black font-bold text-[10px] ${
