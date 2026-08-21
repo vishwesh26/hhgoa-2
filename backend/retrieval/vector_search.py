@@ -22,61 +22,91 @@ _SHARED_QDRANT_CLIENT = None
 def get_shared_qdrant_client() -> QdrantClient:
     global _SHARED_QDRANT_CLIENT
     if _SHARED_QDRANT_CLIENT is None:
-        if settings.QDRANT_USE_EMBEDDED:
-            try:
-                _SHARED_QDRANT_CLIENT = QdrantClient(path=settings.QDRANT_STORAGE_PATH)
-            except Exception:
-                lock_file = os.path.join(settings.QDRANT_STORAGE_PATH, ".lock")
-                if os.path.exists(lock_file):
+        with _INIT_LOCK:
+            if _SHARED_QDRANT_CLIENT is None:
+                try:
+                    import psutil
+                    rss_before = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
+                    print(f"[MEMORY] Before Qdrant client init: {rss_before} MB")
+                except Exception:
+                    pass
+
+                print(f"[INFO] Initializing Qdrant client (embedded={settings.QDRANT_USE_EMBEDDED})...")
+                if settings.QDRANT_USE_EMBEDDED:
                     try:
-                        os.remove(lock_file)
                         _SHARED_QDRANT_CLIENT = QdrantClient(path=settings.QDRANT_STORAGE_PATH)
                     except Exception:
-                        _SHARED_QDRANT_CLIENT = QdrantClient(":memory:")
+                        lock_file = os.path.join(settings.QDRANT_STORAGE_PATH, ".lock")
+                        if os.path.exists(lock_file):
+                            try:
+                                os.remove(lock_file)
+                                _SHARED_QDRANT_CLIENT = QdrantClient(path=settings.QDRANT_STORAGE_PATH)
+                            except Exception:
+                                _SHARED_QDRANT_CLIENT = QdrantClient(":memory:")
+                        else:
+                            _SHARED_QDRANT_CLIENT = QdrantClient(":memory:")
                 else:
-                    _SHARED_QDRANT_CLIENT = QdrantClient(":memory:")
-        else:
-            _SHARED_QDRANT_CLIENT = QdrantClient(
-                host=settings.QDRANT_HOST,
-                port=settings.QDRANT_PORT,
-                api_key=settings.QDRANT_API_KEY
-            )
+                    _SHARED_QDRANT_CLIENT = QdrantClient(
+                        host=settings.QDRANT_HOST,
+                        port=settings.QDRANT_PORT,
+                        api_key=settings.QDRANT_API_KEY
+                    )
+
+                try:
+                    import psutil
+                    rss_after = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
+                    print(f"[MEMORY] After Qdrant client init: {rss_after} MB")
+                except Exception:
+                    pass
+
     return _SHARED_QDRANT_CLIENT
+
+
+import threading
+
+# Thread lock for safe single-initialization
+_INIT_LOCK = threading.Lock()
 
 
 def get_embedding_model():
     """
-    Loads high-performance multilingual embedding model.
-    Prioritizes FastEmbed ONNX for <10ms latency, falling back to SentenceTransformer.
-    Raises RuntimeError if neither is available (FAIL FAST - NO FAKE HASHES).
+    Loads high-performance multilingual embedding model as a thread-safe singleton.
+    Configures ONNX Runtime with conservative single-thread execution for low-memory environments.
     """
     global _EMBED_MODEL
     if _EMBED_MODEL is None:
-        # 1. Try FastEmbed ONNX
-        try:
-            from fastembed import TextEmbedding
-            print(f"[INFO] Initializing FastEmbed ONNX Multilingual Model: {settings.EMBEDDING_MODEL_NAME}...")
-            _EMBED_MODEL = TextEmbedding(model_name=settings.EMBEDDING_MODEL_NAME)
-            print(f"[HEALTH] Embedding Model READY (FastEmbed ONNX, Dim: {settings.EMBEDDING_DIMENSION})")
-            return _EMBED_MODEL
-        except Exception as e_fast:
-            print(f"[WARN] FastEmbed load failed: {e_fast}. Trying SentenceTransformer...")
+        with _INIT_LOCK:
+            if _EMBED_MODEL is None:
+                try:
+                    import psutil
+                    rss_before = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
+                    print(f"[MEMORY] Before embedding model init: {rss_before} MB")
+                except Exception:
+                    pass
 
-        # 2. Try SentenceTransformers
-        try:
-            from sentence_transformers import SentenceTransformer
-            print(f"[INFO] Initializing SentenceTransformer: {settings.EMBEDDING_MODEL_NAME}...")
-            _EMBED_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_NAME)
-            print(f"[HEALTH] Embedding Model READY (SentenceTransformer, Dim: {settings.EMBEDDING_DIMENSION})")
-            return _EMBED_MODEL
-        except Exception as e_st:
-            print(f"[ERROR] SentenceTransformer load failed: {e_st}")
+                print(f"[INFO] Initializing FastEmbed ONNX Multilingual Model: {settings.EMBEDDING_MODEL_NAME}...")
+                try:
+                    from fastembed import TextEmbedding
+                    # threads=1 conserves thread pool allocations on low-memory Render containers
+                    _EMBED_MODEL = TextEmbedding(model_name=settings.EMBEDDING_MODEL_NAME, threads=1)
+                    print(f"[HEALTH] Embedding Model READY (FastEmbed ONNX, Dim: {settings.EMBEDDING_DIMENSION})")
+                except Exception as e_fast:
+                    print(f"[WARN] FastEmbed init exception: {e_fast}")
+                    try:
+                        from sentence_transformers import SentenceTransformer
+                        _EMBED_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_NAME)
+                    except Exception as e_st:
+                        raise RuntimeError(
+                            f"Embedding model unavailable (FastEmbed: {e_fast}, SentenceTransformer: {e_st})"
+                        )
 
-        # FAIL FAST - NEVER USE FAKE HASHES
-        raise RuntimeError(
-            "Embedding model is NOT AVAILABLE. Production RAG requires a valid multilingual embedding model. "
-            "Please ensure fastembed or sentence-transformers is installed."
-        )
+                try:
+                    import psutil
+                    rss_after = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
+                    print(f"[MEMORY] After embedding model init: {rss_after} MB")
+                except Exception:
+                    pass
+
     return _EMBED_MODEL
 
 

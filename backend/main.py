@@ -77,8 +77,15 @@ if FRONTEND_DIST.exists():
 
 @app.on_event("startup")
 async def on_startup():
+    try:
+        import psutil
+        current_rss = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
+    except Exception:
+        current_rss = 0.0
+
     print("=" * 60)
     print(f"  {settings.APP_NAME} v{settings.APP_VERSION}")
+    print(f"  [MEMORY] Process RSS at startup: {current_rss} MB")
     print(f"  Gemini Model:    {settings.GEMINI_MODEL}")
     print(f"  Sarvam STT:      {settings.SARVAM_STT_MODEL}")
     print(f"  Embedding Model: {settings.EMBEDDING_MODEL_NAME}")
