@@ -1,7 +1,6 @@
-import os
+import time
 from pathlib import Path
-from fastapi import FastAPI, Request, Response
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from backend.config import settings
@@ -16,40 +15,41 @@ app = FastAPI(
     description="Voice-Enabled Adaptive RAG Engine (HH Goa 2026)"
 )
 
-# Custom HTTP Middleware guaranteeing CORS headers on every response, OPTIONS preflight, and error
-@app.middleware("http")
-async def cors_middleware(request: Request, call_next):
-    origin = request.headers.get("origin", "*")
-    if request.method == "OPTIONS":
-        response = Response(status_code=200)
-        response.headers["Access-Control-Allow-Origin"] = origin
-        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-        response.headers["Access-Control-Allow-Headers"] = "*"
-        response.headers["Access-Control-Allow-Credentials"] = "true"
-        return response
-
-    try:
-        response = await call_next(request)
-    except Exception as exc:
-        response = JSONResponse(status_code=500, content={"detail": str(exc)})
-
-    response.headers["Access-Control-Allow-Origin"] = origin
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-    response.headers["Access-Control-Allow-Headers"] = "*"
-    response.headers["Access-Control-Allow-Credentials"] = "true"
-    return response
-
-# Also register standard CORSMiddleware
+# 1. Official FastAPI CORS Middleware (Registered immediately after app creation)
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r".*",
+    allow_origins=[
+        "https://kineticai-hhgoa.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://localhost:8000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"],
 )
 
-# Register API Routers
+# 2. Safe Request & Error Logging Middleware (No secrets/tokens logged)
+@app.middleware("http")
+async def request_logger_middleware(request: Request, call_next):
+    start_time = time.perf_counter()
+    method = request.method
+    path = request.url.path
+    origin = request.headers.get("origin", "no-origin")
+    print(f">>> {method} {path} (Origin: {origin})")
+
+    try:
+        response = await call_next(request)
+        duration_ms = (time.perf_counter() - start_time) * 1000.0
+        print(f"<<< {method} {path} STATUS: {response.status_code} ({duration_ms:.1f}ms)")
+        return response
+    except Exception as exc:
+        duration_ms = (time.perf_counter() - start_time) * 1000.0
+        print(f"!!! ERROR {method} {path} ({duration_ms:.1f}ms): {exc}")
+        raise
+
+# 3. Register API Routers
 app.include_router(health_router)
 app.include_router(rag_router)
 app.include_router(voice_router)
