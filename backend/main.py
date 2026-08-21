@@ -57,7 +57,9 @@ app.include_router(benchmark_router)
 
 
 @app.get("/")
+@app.head("/")
 @app.get("/health")
+@app.head("/health")
 async def root_health():
     return {
         "status": "healthy",
