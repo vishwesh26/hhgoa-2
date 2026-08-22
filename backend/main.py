@@ -108,9 +108,11 @@ async def on_startup():
     print(f"  Qdrant Storage:  {settings.QDRANT_STORAGE_PATH}")
     print("=" * 60)
 
-    # Pre-warm embedding and reranker in background executor so user queries are instant
+    # Pre-warm embedding and reranker in background thread AFTER port is bound
     import asyncio
     def _warmup_sync():
+        import time as _t
+        _t.sleep(5)  # Wait for Render port scan to detect the open port first
         try:
             from backend.retrieval.vector_search import compute_query_embedding
             compute_query_embedding("warmup")

@@ -3,7 +3,6 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
 from typing import Dict, Any, Optional
 from backend.api.routes_rag import get_orchestrator
-from backend.orchestration.rag_orchestrator import RAGOrchestrator
 
 router = APIRouter(prefix="/api/benchmark", tags=["Benchmark"])
 
@@ -35,7 +34,7 @@ async def get_benchmark_results() -> Dict[str, Any]:
 async def trigger_benchmark(
     background_tasks: BackgroundTasks,
     sample_size: int = 50,
-    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+    orchestrator = Depends(get_orchestrator)
 ) -> Dict[str, Any]:
     """
     Triggers an asynchronous benchmark run on the Indic RAG dataset.

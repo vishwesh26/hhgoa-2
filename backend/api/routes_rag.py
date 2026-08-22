@@ -1,17 +1,17 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional, List
-from backend.orchestration.rag_orchestrator import RAGOrchestrator
 
 router = APIRouter(prefix="/api/rag", tags=["RAG"])
 
-# Singleton orchestrator
-_orchestrator: Optional[RAGOrchestrator] = None
+# Singleton orchestrator (lazy-loaded to avoid slow imports blocking port binding)
+_orchestrator = None
 
 
-def get_orchestrator() -> RAGOrchestrator:
+def get_orchestrator():
     global _orchestrator
     if _orchestrator is None:
+        from backend.orchestration.rag_orchestrator import RAGOrchestrator
         _orchestrator = RAGOrchestrator()
     return _orchestrator
 
@@ -25,7 +25,7 @@ class TextQueryRequest(BaseModel):
 @router.post("/query/")
 async def query_rag(
     request: TextQueryRequest,
-    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+    orchestrator = Depends(get_orchestrator)
 ) -> Dict[str, Any]:
     """
     Processes an incoming text query through the Adaptive Multilingual RAG pipeline.

@@ -4,7 +4,6 @@ from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from pydantic import BaseModel
 from typing import Dict, Any, Optional
 from backend.api.routes_rag import get_orchestrator
-from backend.orchestration.rag_orchestrator import RAGOrchestrator
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/voice", tags=["Voice"])
@@ -19,7 +18,7 @@ class Base64VoiceRequest(BaseModel):
 @router.post("/query/")
 async def voice_query_upload(
     file: UploadFile = File(...),
-    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+    orchestrator = Depends(get_orchestrator)
 ) -> Dict[str, Any]:
     """
     Accepts direct multipart audio upload (WAV/WebM/MP3) for Sarvam STT and Adaptive RAG.
@@ -41,7 +40,7 @@ async def voice_query_upload(
 @router.post("/query-base64")
 async def voice_query_base64(
     request: Base64VoiceRequest,
-    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+    orchestrator = Depends(get_orchestrator)
 ) -> Dict[str, Any]:
     """
     Accepts Base64 encoded audio from client Web Audio recorder.
@@ -65,7 +64,7 @@ async def voice_query_base64(
 @router.post("/transcribe")
 async def voice_transcribe_only(
     file: UploadFile = File(...),
-    orchestrator: RAGOrchestrator = Depends(get_orchestrator)
+    orchestrator = Depends(get_orchestrator)
 ) -> Dict[str, Any]:
     """
     Direct Speech-to-Text transcription without executing RAG retrieval.
