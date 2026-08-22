@@ -568,8 +568,19 @@
     "chunk_id": "mar_pq_1185869_7_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 29,
-    "text": "आर्मी कॉर्प्स ऑफ इंजिनिअर्सचे मेजर जनरल लेस्ली ग्रोव्ह्ज यांच्या दिशेने होता. अणुवैज्ञानिक रॉबर्ट ओपेनहायमर हे लॉस अलामोस प्रयोगशाळेचे संचालक होते ज्यांनी वास्तविक बॉम्ब तयार केले. या प्रकल्पाच्या आर्मी घटकाला"
+    "word_count": 25,
+    "text": "आर्मी कॉर्प्स ऑफ इंजिनिअर्सचे मेजर जनरल लेस्ली ग्रोव्ह्ज यांच्या दिशेने होता. अणुवैज्ञानिक रॉबर्ट ओपेनहायमर हे लॉस अलामोस प्रयोगशाळेचे संचालक होते ज्यांनी वास्तविक बॉम्ब तयार केले."
+  },
+  {
+    "doc_id": "mar_pq_1185869_7",
+    "language": "mr",
+    "title": "मॅनहॅटन प्रकल्पाच्या यशाचा तात्काळ काय परिणाम झाला?",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_1185869_7_sent_3",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "या प्रकल्पाच्या आर्मी घटकाला"
   },
   {
     "doc_id": "mar_pq_1185869_8",
@@ -2284,8 +2295,19 @@
     "chunk_id": "mar_pq_623214_7_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 40,
-    "text": "संबंधित नोट, जर तुमच्या प्राध्यापकांपैकी एकाने दुसऱ्या विद्यार्थ्याला गर्भवती केले, तर खेळा आणि बेबी शॉवरला जा. बेबी शॉवरला उपस्थित राहणे हे त्यांच्या वर्तनाचे समर्थन नाही, पण शॉवरला वगळणे हा संदेश देते की तुम्ही टीमचे खेळाडू नाही. प्रत्येक वर्ग सत्राला जा."
+    "word_count": 36,
+    "text": "संबंधित नोट, जर तुमच्या प्राध्यापकांपैकी एकाने दुसऱ्या विद्यार्थ्याला गर्भवती केले, तर खेळा आणि बेबी शॉवरला जा. बेबी शॉवरला उपस्थित राहणे हे त्यांच्या वर्तनाचे समर्थन नाही, पण शॉवरला वगळणे हा संदेश देते की तुम्ही टीमचे खेळाडू नाही."
+  },
+  {
+    "doc_id": "mar_pq_623214_7",
+    "language": "mr",
+    "title": "पदवीधर विद्यार्थी वर्गात काय घालतात",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_623214_7_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "प्रत्येक वर्ग सत्राला जा."
   },
   {
     "doc_id": "mar_pq_623214_8",
@@ -2581,8 +2603,19 @@
     "chunk_id": "mar_pq_1164716_4_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 9,
-    "text": "कर तयारी शुल्क... इतर खर्च... 2% मर्यादेतील वजावट नाही."
+    "word_count": 5,
+    "text": "कर तयारी शुल्क... इतर खर्च..."
+  },
+  {
+    "doc_id": "mar_pq_1164716_4",
+    "language": "mr",
+    "title": "तुम्ही राज्य लेखापरीक्षण संस्थेला दिलेल्या आयटमायझ्ड डिडक्शन फॉर्मवर सी.पी.ए. शुल्क दावा करू शकता का?",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_1164716_4_sent_3",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "2% मर्यादेतील वजावट नाही."
   },
   {
     "doc_id": "mar_pq_1164716_5",
@@ -3835,8 +3868,19 @@
     "chunk_id": "mar_pq_322283_9_sent_4",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 16,
-    "text": "1 जोखीम ही मंत्रालयासोबत नोंदणीकृत प्रशिक्षण संस्था आहे. 28 वर्षे उद्योग अनुभव. 24/7 प्रशिक्षण आभासी वर्गात."
+    "word_count": 12,
+    "text": "1 जोखीम ही मंत्रालयासोबत नोंदणीकृत प्रशिक्षण संस्था आहे. 28 वर्षे उद्योग अनुभव."
+  },
+  {
+    "doc_id": "mar_pq_322283_9",
+    "language": "mr",
+    "title": "डरहम ऑन्टारियोमध्ये सुरक्षा अधिकाऱ्याला नोकरीवर घेण्यासाठी किती लागते",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_322283_9_sent_5",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "24/7 प्रशिक्षण आभासी वर्गात."
   },
   {
     "doc_id": "mar_pq_642081_0",
@@ -4660,8 +4704,19 @@
     "chunk_id": "mar_pq_741900_3_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 27,
-    "text": "टीव्हीओ सोबत, तुम्ही जितके टीव्ही कनेक्ट केले आहेत तितके कमी किंमत द्यावी लागते. तुम्ही एचडी अँटेना वापरत असल्यास, तुम्ही आणखी जास्त बचत करता. फ्री एचडी चॅनेल पहा."
+    "word_count": 23,
+    "text": "टीव्हीओ सोबत, तुम्ही जितके टीव्ही कनेक्ट केले आहेत तितके कमी किंमत द्यावी लागते. तुम्ही एचडी अँटेना वापरत असल्यास, तुम्ही आणखी जास्त बचत करता."
+  },
+  {
+    "doc_id": "mar_pq_741900_3",
+    "language": "mr",
+    "title": "डीव्हीआर सेवा म्हणजे काय?",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_741900_3_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "फ्री एचडी चॅनेल पहा."
   },
   {
     "doc_id": "mar_pq_741900_4",
@@ -4924,8 +4979,8 @@
     "chunk_id": "mar_pq_1164715_1_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 13,
-    "text": "लक्षणांमध्ये हे समाविष्ट असू शकते: १. दुखणे किंवा कडकपणा. तीव्र वेदना. स्नायू आकडणे."
+    "word_count": 9,
+    "text": "लक्षणांमध्ये हे समाविष्ट असू शकते: १. दुखणे किंवा कडकपणा."
   },
   {
     "doc_id": "mar_pq_1164715_1",
@@ -4933,6 +4988,17 @@
     "title": "काय मधल्या पाठदुखीचे कारण आहे",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_1164715_1_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "तीव्र वेदना. स्नायू आकडणे."
+  },
+  {
+    "doc_id": "mar_pq_1164715_1",
+    "language": "mr",
+    "title": "काय मधल्या पाठदुखीचे कारण आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_1164715_1_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 12,
@@ -4943,7 +5009,7 @@
     "language": "mr",
     "title": "काय मधल्या पाठदुखीचे कारण आहे",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_1164715_1_sent_2",
+    "chunk_id": "mar_pq_1164715_1_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 1,
     "word_count": 14,
@@ -5232,8 +5298,19 @@
     "chunk_id": "mar_pq_602237_4_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 9,
-    "text": "(256) 878-3533. रूम्स आणि दर. विवाह, कुटुंब, बालक आणि..."
+    "word_count": 5,
+    "text": "(256) 878-3533. रूम्स आणि दर."
+  },
+  {
+    "doc_id": "mar_pq_602237_4",
+    "language": "mr",
+    "title": "अल्बर्टव्हिल कोणत्या काउंटीमध्ये आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_602237_4_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "विवाह, कुटुंब, बालक आणि..."
   },
   {
     "doc_id": "mar_pq_602237_5",
@@ -5529,8 +5606,19 @@
     "chunk_id": "mar_pq_171942_9_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 47,
-    "text": "यापैकी कोणतेही कोपे मोठे खर्च नाहीत, परंतु तुम्ही डॉक्टरांच्या कार्यालयात किंवा रुग्णालयात जाता तेव्हा तुम्हाला मिळणार्‍या बिलांची तुम्हाला अजूनही जाणीव असायला हवी. हे सर्व तुमच्या डोक्यात घालणे सोपे करण्यासाठी, मेडिगॅप योजना एन अंतर्गत तुम्हाला मिळणारे अतिरिक्त कव्हरेज असे आहे: मेडिकेअर भाग अ वजावटयोग्य. मेडिकेअर भाग अ विमा."
+    "word_count": 43,
+    "text": "यापैकी कोणतेही कोपे मोठे खर्च नाहीत, परंतु तुम्ही डॉक्टरांच्या कार्यालयात किंवा रुग्णालयात जाता तेव्हा तुम्हाला मिळणार्‍या बिलांची तुम्हाला अजूनही जाणीव असायला हवी. हे सर्व तुमच्या डोक्यात घालणे सोपे करण्यासाठी, मेडिगॅप योजना एन अंतर्गत तुम्हाला मिळणारे अतिरिक्त कव्हरेज असे आहे: मेडिकेअर भाग अ वजावटयोग्य."
+  },
+  {
+    "doc_id": "mar_pq_171942_9",
+    "language": "mr",
+    "title": "पूरक आराखडा एन वजावटीचा समावेश करतो का",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_171942_9_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "मेडिकेअर भाग अ विमा."
   },
   {
     "doc_id": "mar_pq_160376_0",
@@ -5738,8 +5826,19 @@
     "chunk_id": "mar_pq_587547_3_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 41,
-    "text": "खालील औषधे, औषधे, पदार्थ किंवा विषारी पदार्थ ही यकृत वाढण्याची काही संभाव्य कारणे आहेत. तुम्ही वापरत असलेली कोणतीही औषधे किंवा उपचार, ज्यात प्रिस्क्रिप्शन, ओव्हर-द-काउंटर, पूरक, औषधी वनस्पती किंवा पर्यायी उपचारांचा समावेश आहे, त्याबद्दल नेहमी तुमच्या डॉक्टरांना सांगा. जीवनसत्व ए. चे अतिप्रमाण."
+    "word_count": 37,
+    "text": "खालील औषधे, औषधे, पदार्थ किंवा विषारी पदार्थ ही यकृत वाढण्याची काही संभाव्य कारणे आहेत. तुम्ही वापरत असलेली कोणतीही औषधे किंवा उपचार, ज्यात प्रिस्क्रिप्शन, ओव्हर-द-काउंटर, पूरक, औषधी वनस्पती किंवा पर्यायी उपचारांचा समावेश आहे, त्याबद्दल नेहमी तुमच्या डॉक्टरांना सांगा."
+  },
+  {
+    "doc_id": "mar_pq_587547_3",
+    "language": "mr",
+    "title": "यकृत वाढण्याचे कारण काय आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_587547_3_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "जीवनसत्व ए. चे अतिप्रमाण."
   },
   {
     "doc_id": "mar_pq_587547_4",
@@ -6497,8 +6596,8 @@
     "chunk_id": "mar_pq_393087_7_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 15,
-    "text": "७ काळ्या राष्ट्रवादाचा उदय. ८ १९६० च्या दशकानंतरची नागरी हक्क चळवळ. ९ मुद्रण. १० प्रस्तावना."
+    "word_count": 11,
+    "text": "७ काळ्या राष्ट्रवादाचा उदय. ८ १९६० च्या दशकानंतरची नागरी हक्क चळवळ."
   },
   {
     "doc_id": "mar_pq_393087_7",
@@ -6506,6 +6605,17 @@
     "title": "नागरी हक्क चळवळीतील महत्त्वाची नावे",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_393087_7_sent_4",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "९ मुद्रण. १० प्रस्तावना."
+  },
+  {
+    "doc_id": "mar_pq_393087_7",
+    "language": "mr",
+    "title": "नागरी हक्क चळवळीतील महत्त्वाची नावे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_393087_7_sent_5",
     "chunk_strategy": "sentence",
     "sentence_count": 1,
     "word_count": 28,
@@ -6761,8 +6871,8 @@
     "chunk_id": "mar_pq_703719_9_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 10,
-    "text": "काही मूर्ख किंवा इतर. कोणत्याही गोष्टीचा. टोंटो ब्लिथरिंग. मूर्ख ब्लिथरिंग."
+    "word_count": 6,
+    "text": "काही मूर्ख किंवा इतर. कोणत्याही गोष्टीचा."
   },
   {
     "doc_id": "mar_pq_703719_9",
@@ -6770,6 +6880,17 @@
     "title": "टोंटो जपानी म्हणजे काय?",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_703719_9_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "टोंटो ब्लिथरिंग. मूर्ख ब्लिथरिंग."
+  },
+  {
+    "doc_id": "mar_pq_703719_9",
+    "language": "mr",
+    "title": "टोंटो जपानी म्हणजे काय?",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_703719_9_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 14,
@@ -6780,7 +6901,7 @@
     "language": "mr",
     "title": "टोंटो जपानी म्हणजे काय?",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_703719_9_sent_3",
+    "chunk_id": "mar_pq_703719_9_sent_4",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 23,
@@ -6791,7 +6912,7 @@
     "language": "mr",
     "title": "टोंटो जपानी म्हणजे काय?",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_703719_9_sent_4",
+    "chunk_id": "mar_pq_703719_9_sent_5",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 6,
@@ -6802,7 +6923,7 @@
     "language": "mr",
     "title": "टोंटो जपानी म्हणजे काय?",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_703719_9_sent_5",
+    "chunk_id": "mar_pq_703719_9_sent_6",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 6,
@@ -7157,8 +7278,19 @@
     "chunk_id": "mar_pq_654757_9_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 30,
-    "text": "अंतर्दृष्टीपूर्ण म्हणजे अशी एखादी व्यक्ती किंवा गोष्ट जी अत्यंत संवेदनशील असते किंवा खोल समज दर्शवते. अंतर्दृष्टीचे एक उदाहरण म्हणजे चतुर निरीक्षण, जे एखाद्या समस्येच्या मुळाशी जाते. अंतर्दृष्टी असणे किंवा दर्शवणे."
+    "word_count": 26,
+    "text": "अंतर्दृष्टीपूर्ण म्हणजे अशी एखादी व्यक्ती किंवा गोष्ट जी अत्यंत संवेदनशील असते किंवा खोल समज दर्शवते. अंतर्दृष्टीचे एक उदाहरण म्हणजे चतुर निरीक्षण, जे एखाद्या समस्येच्या मुळाशी जाते."
+  },
+  {
+    "doc_id": "mar_pq_654757_9",
+    "language": "mr",
+    "title": "खूप अंतर्दृष्टी असणे म्हणजे काय",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_654757_9_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "अंतर्दृष्टी असणे किंवा दर्शवणे."
   },
   {
     "doc_id": "mar_pq_627848_0",
@@ -7861,8 +7993,19 @@
     "chunk_id": "mar_pq_531105_7_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 26,
-    "text": "अधिक माहितीसाठी, खाली हवामान अंदाज आणि आमची सरासरी हवामान माहिती (ग्राफमध्ये महिन्यानुसार) पहा. *सर्वात जवळच्या हवामान स्थानकाची माहिती: बर्गन, नॉर्वे (०.० किमी). १० दिवसांचा हवामान अंदाज."
+    "word_count": 22,
+    "text": "अधिक माहितीसाठी, खाली हवामान अंदाज आणि आमची सरासरी हवामान माहिती (ग्राफमध्ये महिन्यानुसार) पहा. *सर्वात जवळच्या हवामान स्थानकाची माहिती: बर्गन, नॉर्वे (०.० किमी)."
+  },
+  {
+    "doc_id": "mar_pq_531105_7",
+    "language": "mr",
+    "title": "ऑगस्टमध्ये नॉर्वेच्या बोगेनसाठी विशिष्ट हवामान",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_531105_7_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "१० दिवसांचा हवामान अंदाज."
   },
   {
     "doc_id": "mar_pq_531105_8",
@@ -10017,8 +10160,19 @@
     "chunk_id": "mar_pq_1173741_7_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 23,
-    "text": "बानी या नावाबद्दल विचित्र गोष्टी: उलट्या क्रमाने तुमचे नाव इनाब आहे. तुमच्या नावातील अक्षरांची यादृच्छिक पुनर्रचना (अ‍ॅनाग्राम) अबिन देईल. तुम्ही ते कसे उच्चारता?"
+    "word_count": 19,
+    "text": "बानी या नावाबद्दल विचित्र गोष्टी: उलट्या क्रमाने तुमचे नाव इनाब आहे. तुमच्या नावातील अक्षरांची यादृच्छिक पुनर्रचना (अ‍ॅनाग्राम) अबिन देईल."
+  },
+  {
+    "doc_id": "mar_pq_1173741_7",
+    "language": "mr",
+    "title": "अरबी भाषेतील बानीचा अर्थ",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_1173741_7_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "तुम्ही ते कसे उच्चारता?"
   },
   {
     "doc_id": "mar_pq_1173741_8",
@@ -10072,8 +10226,30 @@
     "chunk_id": "mar_pq_694128_0_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 26,
-    "text": "जे बालरोगतज्ञ अतिरिक्त प्रशिक्षण पूर्ण करतात ते खालील क्षेत्रांमध्ये प्रमाणपत्रे देखील मिळवू शकतात: १. हॉस्पिस आणि पॅलिएटिव्ह मेडिसिन. न्यूरोडेव्हलपमेंटल डिसएबिलिटीज. स्लीप मेडिसिन. स्पोर्ट्स मेडिसिन. ट्रान्सप्लांट हेपॅटोलॉजी."
+    "word_count": 18,
+    "text": "जे बालरोगतज्ञ अतिरिक्त प्रशिक्षण पूर्ण करतात ते खालील क्षेत्रांमध्ये प्रमाणपत्रे देखील मिळवू शकतात: १. हॉस्पिस आणि पॅलिएटिव्ह मेडिसिन."
+  },
+  {
+    "doc_id": "mar_pq_694128_0",
+    "language": "mr",
+    "title": "बालरोगतज्ज्ञ म्हणजे काय",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_694128_0_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "न्यूरोडेव्हलपमेंटल डिसएबिलिटीज. स्लीप मेडिसिन."
+  },
+  {
+    "doc_id": "mar_pq_694128_0",
+    "language": "mr",
+    "title": "बालरोगतज्ज्ञ म्हणजे काय",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_694128_0_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "स्पोर्ट्स मेडिसिन. ट्रान्सप्लांट हेपॅटोलॉजी."
   },
   {
     "doc_id": "mar_pq_694128_1",
@@ -10589,8 +10765,8 @@
     "chunk_id": "mar_pq_543110_5_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 12,
-    "text": "इस्लामाबाद, पाकिस्तानचा सध्याचा हवामान अहवाल. १३/०८/१६ १७:०० पी.के.टी. इस्लामाबाद, पाकिस्तान. वातावरण: ३५°से."
+    "word_count": 8,
+    "text": "इस्लामाबाद, पाकिस्तानचा सध्याचा हवामान अहवाल. १३/०८/१६ १७:०० पी.के.टी."
   },
   {
     "doc_id": "mar_pq_543110_5",
@@ -10598,6 +10774,17 @@
     "title": "इस्लामाबादमधील हवामानाचा अंदाज सेल्सिअसमध्ये",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_543110_5_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "इस्लामाबाद, पाकिस्तान. वातावरण: ३५°से."
+  },
+  {
+    "doc_id": "mar_pq_543110_5",
+    "language": "mr",
+    "title": "इस्लामाबादमधील हवामानाचा अंदाज सेल्सिअसमध्ये",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_543110_5_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 5,
@@ -10608,7 +10795,7 @@
     "language": "mr",
     "title": "इस्लामाबादमधील हवामानाचा अंदाज सेल्सिअसमध्ये",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_543110_5_sent_2",
+    "chunk_id": "mar_pq_543110_5_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 6,
@@ -15110,8 +15297,19 @@
     "chunk_id": "mar_pq_315246_4_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 29,
-    "text": "माझ्याकडे स्टेज मेकअपचा अनुभव नसल्याने, मी स्पर्धेच्या सकाळी माझा मेकअप करण्यासाठी कोणालातरी $50 ने नोकरीवर ठेवले. मी एका केशभूषाकारालाही नोकरीवर ठेवले ज्याने माझे केस वाढवले. एकूण खर्च $120 होता."
+    "word_count": 25,
+    "text": "माझ्याकडे स्टेज मेकअपचा अनुभव नसल्याने, मी स्पर्धेच्या सकाळी माझा मेकअप करण्यासाठी कोणालातरी $50 ने नोकरीवर ठेवले. मी एका केशभूषाकारालाही नोकरीवर ठेवले ज्याने माझे केस वाढवले."
+  },
+  {
+    "doc_id": "mar_pq_315246_4",
+    "language": "mr",
+    "title": "शरीर सौष्ठव स्पर्धेत प्रवेश करण्यासाठी किती खर्च येतो?",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_315246_4_sent_3",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "एकूण खर्च $120 होता."
   },
   {
     "doc_id": "mar_pq_315246_5",
@@ -16573,8 +16771,19 @@
     "chunk_id": "mar_pq_443892_8_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 11,
-    "text": "३ अनपेक्षित वजन कमी होणे. ४ ताप. ५ थंडी. ६ खाज."
+    "word_count": 7,
+    "text": "३ अनपेक्षित वजन कमी होणे. ४ ताप."
+  },
+  {
+    "doc_id": "mar_pq_443892_8",
+    "language": "mr",
+    "title": "लिम्फोमाची सुरुवातीची लक्षणे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_443892_8_sent_4",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "५ थंडी. ६ खाज."
   },
   {
     "doc_id": "mar_pq_443892_9",
@@ -19950,8 +20159,19 @@
     "chunk_id": "mar_pq_524706_8_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 38,
-    "text": "ओव्हरहँड ग्रिपसह (शरीरापासून हातांच्या तळव्यांपासून दूर) बारबेल घ्या आणि ते डोक्याच्या वर पकडा जेणेकरून हात वजनाला आधार देतील. १२ वाजता हात सरळ चेहऱ्यावर धरू नका, तर १० वाजता ३ वाजता पायांसह असा कोनात धरा. सर्व वजन ट्रायसेप्सवर असावे."
+    "word_count": 34,
+    "text": "ओव्हरहँड ग्रिपसह (शरीरापासून हातांच्या तळव्यांपासून दूर) बारबेल घ्या आणि ते डोक्याच्या वर पकडा जेणेकरून हात वजनाला आधार देतील. १२ वाजता हात सरळ चेहऱ्यावर धरू नका, तर १० वाजता ३ वाजता पायांसह असा कोनात धरा."
+  },
+  {
+    "doc_id": "mar_pq_524706_8",
+    "language": "mr",
+    "title": "किती वजन त्रिकोणी दाबतात ते",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_524706_8_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "सर्व वजन ट्रायसेप्सवर असावे."
   },
   {
     "doc_id": "mar_pq_524706_9",
@@ -21215,8 +21435,19 @@
     "chunk_id": "mar_pq_615971_3_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 40,
-    "text": "तव्याचा थर पोहोचवा आणि सुमारे १२ ते १५ मिनिटे उकळत राहू द्या, जोपर्यंत कोंबडी शिजत नाही. कोंबडी 'चांगली उकळली' झाल्यावर (तव्याच्या वर तेल तरंगत असले पाहिजे), त्यात जिरे आणि हळद पावडर घाला आणि स्टोव बंद करा. सर्व मिसळून वाढू द्या."
+    "word_count": 36,
+    "text": "तव्याचा थर पोहोचवा आणि सुमारे १२ ते १५ मिनिटे उकळत राहू द्या, जोपर्यंत कोंबडी शिजत नाही. कोंबडी 'चांगली उकळली' झाल्यावर (तव्याच्या वर तेल तरंगत असले पाहिजे), त्यात जिरे आणि हळद पावडर घाला आणि स्टोव बंद करा."
+  },
+  {
+    "doc_id": "mar_pq_615971_3",
+    "language": "mr",
+    "title": "कोणती भाजी गरम आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_615971_3_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "सर्व मिसळून वाढू द्या."
   },
   {
     "doc_id": "mar_pq_615971_4",
@@ -23283,8 +23514,8 @@
     "chunk_id": "mar_pq_441889_8_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 18,
-    "text": "सूर्य: ०५:५० AM ↓ ०८:०८ PM (१४ तास १८ मिनिटे) अधिक माहिती. १ टोकियो। २ बीजिंग. ३ मॉस्को."
+    "word_count": 14,
+    "text": "सूर्य: ०५:५० AM ↓ ०८:०८ PM (१४ तास १८ मिनिटे) अधिक माहिती. १ टोकियो।"
   },
   {
     "doc_id": "mar_pq_441889_8",
@@ -23292,6 +23523,17 @@
     "title": "लंडनची वेळ भारतीय वेळ",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_441889_8_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "२ बीजिंग. ३ मॉस्को."
+  },
+  {
+    "doc_id": "mar_pq_441889_8",
+    "language": "mr",
+    "title": "लंडनची वेळ भारतीय वेळ",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_441889_8_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 7,
@@ -24614,8 +24856,19 @@
     "chunk_id": "mar_pq_457962_2_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 43,
-    "text": "इतर पुरुषांच्या उपांत्य फेरीत अँडी मरे रॉजर फेडररशी सामना करणार आहे, जिथे मरे ११/४ आणि अद्ययावत आकडेवारीनुसार फेडरर ४/१ असेल. फेडररने त्याच्या कारकिर्दीत सात वेळा विम्बल्डन जिंकले आहे, अगदी अलीकडे २०१२ मध्ये जेव्हा त्याने अंतिम फेरीत मरे यांना हरवले. मरेने २०१३ मध्ये जिंकले."
+    "word_count": 39,
+    "text": "इतर पुरुषांच्या उपांत्य फेरीत अँडी मरे रॉजर फेडररशी सामना करणार आहे, जिथे मरे ११/४ आणि अद्ययावत आकडेवारीनुसार फेडरर ४/१ असेल. फेडररने त्याच्या कारकिर्दीत सात वेळा विम्बल्डन जिंकले आहे, अगदी अलीकडे २०१२ मध्ये जेव्हा त्याने अंतिम फेरीत मरे यांना हरवले."
+  },
+  {
+    "doc_id": "mar_pq_457962_2",
+    "language": "mr",
+    "title": "विम्बल्डन जिंकणाऱ्या सर्वात आवडत्या महिला",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_457962_2_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "मरेने २०१३ मध्ये जिंकले."
   },
   {
     "doc_id": "mar_pq_457962_3",
@@ -24812,8 +25065,19 @@
     "chunk_id": "mar_pq_656232_4_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 23,
-    "text": "कानातील मेणबत्तीचे वातावरणामुळे: १ कानातील मेणबत्तीचे वातावरण. २ चेहऱ्यावर, केसांवर, डोक्यावर, कानाच्या नलिकेत, कानाच्या पडद्यावर आणि मधल्या कानात जळजळ. ३ कानाच्या पडद्याचे छिद्र."
+    "word_count": 19,
+    "text": "कानातील मेणबत्तीचे वातावरणामुळे: १ कानातील मेणबत्तीचे वातावरण. २ चेहऱ्यावर, केसांवर, डोक्यावर, कानाच्या नलिकेत, कानाच्या पडद्यावर आणि मधल्या कानात जळजळ."
+  },
+  {
+    "doc_id": "mar_pq_656232_4",
+    "language": "mr",
+    "title": "कानात काय वॅक्सिंग केले जाते",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_656232_4_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "३ कानाच्या पडद्याचे छिद्र."
   },
   {
     "doc_id": "mar_pq_656232_5",
@@ -26055,8 +26319,8 @@
     "chunk_id": "mar_pq_1164707_1_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 21,
-    "text": "२ ओ.ओ.पी.एस., मी जी.आय. रक्तस्राव केला आणि ते आधीच पोस्ट केले गेले आहे हे लक्षात आले नाही. गँग्रीनबद्दल काय? ३ ओ.आर."
+    "word_count": 17,
+    "text": "२ ओ.ओ.पी.एस., मी जी.आय. रक्तस्राव केला आणि ते आधीच पोस्ट केले गेले आहे हे लक्षात आले नाही."
   },
   {
     "doc_id": "mar_pq_1164707_1",
@@ -26064,6 +26328,17 @@
     "title": "मज्जासंस्थेचा श्वास कशामुळे होतो",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_1164707_1_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "गँग्रीनबद्दल काय? ३ ओ.आर."
+  },
+  {
+    "doc_id": "mar_pq_1164707_1",
+    "language": "mr",
+    "title": "मज्जासंस्थेचा श्वास कशामुळे होतो",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_1164707_1_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 10,
@@ -26074,7 +26349,7 @@
     "language": "mr",
     "title": "मज्जासंस्थेचा श्वास कशामुळे होतो",
     "source": "MSMARCO-XI",
-    "chunk_id": "mar_pq_1164707_1_sent_3",
+    "chunk_id": "mar_pq_1164707_1_sent_4",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 9,
@@ -28431,8 +28706,19 @@
     "chunk_id": "mar_pq_287770_2_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 21,
-    "text": "लिनक्स आणि मॅकओएसवर एसक्यूएल सर्व्हरसाठी मायक्रोसॉफ्ट ओडीबीसी ड्रायव्हर स्थापित करणे. 01/19/2017; वाचण्यासाठी 8 मिनिटे; या लेखात योगदानकर्ते. ओडीबीसी ड्रायव्हर डाउनलोड करा."
+    "word_count": 17,
+    "text": "लिनक्स आणि मॅकओएसवर एसक्यूएल सर्व्हरसाठी मायक्रोसॉफ्ट ओडीबीसी ड्रायव्हर स्थापित करणे. 01/19/2017; वाचण्यासाठी 8 मिनिटे; या लेखात योगदानकर्ते."
+  },
+  {
+    "doc_id": "mar_pq_287770_2",
+    "language": "mr",
+    "title": "किती लिनक्स ओ.डी.सी. ड्रायव्हर व्यवस्थापक आहेत",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_287770_2_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "ओडीबीसी ड्रायव्हर डाउनलोड करा."
   },
   {
     "doc_id": "mar_pq_287770_3",
@@ -29817,8 +30103,8 @@
     "chunk_id": "mar_pq_400840_5_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 13,
-    "text": "रोटिसरी चिकनमधील घटक आहेत: १ संपूर्ण चिकन. २ पाणी. ३ मीठ. सोडियम फॉस्फेट."
+    "word_count": 9,
+    "text": "रोटिसरी चिकनमधील घटक आहेत: १ संपूर्ण चिकन. २ पाणी."
   },
   {
     "doc_id": "mar_pq_400840_5",
@@ -29828,8 +30114,30 @@
     "chunk_id": "mar_pq_400840_5_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 12,
-    "text": "सुधारित अन्न १ स्टार्च. २ कॅरेजेनन. सोया लेसिथिन. ३ स्वाद. झॅन्थान गम."
+    "word_count": 4,
+    "text": "३ मीठ. सोडियम फॉस्फेट."
+  },
+  {
+    "doc_id": "mar_pq_400840_5",
+    "language": "mr",
+    "title": "रोटिसरी चिकन आरोग्यदायी आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_400840_5_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 6,
+    "text": "सुधारित अन्न १ स्टार्च. २ कॅरेजेनन."
+  },
+  {
+    "doc_id": "mar_pq_400840_5",
+    "language": "mr",
+    "title": "रोटिसरी चिकन आरोग्यदायी आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_400840_5_sent_3",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 6,
+    "text": "सोया लेसिथिन. ३ स्वाद. झॅन्थान गम."
   },
   {
     "doc_id": "mar_pq_400840_6",
@@ -32578,8 +32886,8 @@
     "chunk_id": "mar_pq_581533_0_sent_0",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 20,
-    "text": "दातदुखी म्हणजे दातात किंवा दाताच्या आसपास होणारे दुखणे, जे पुढील कारणांमुळे होऊ शकते: १. दात किडणे. गळू दात. दात फ्रॅक्चर."
+    "word_count": 16,
+    "text": "दातदुखी म्हणजे दातात किंवा दाताच्या आसपास होणारे दुखणे, जे पुढील कारणांमुळे होऊ शकते: १. दात किडणे."
   },
   {
     "doc_id": "mar_pq_581533_0",
@@ -32587,6 +32895,17 @@
     "title": "दात दुखण्याचे कारण काय असू शकते",
     "source": "MSMARCO-XI",
     "chunk_id": "mar_pq_581533_0_sent_1",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "गळू दात. दात फ्रॅक्चर."
+  },
+  {
+    "doc_id": "mar_pq_581533_0",
+    "language": "mr",
+    "title": "दात दुखण्याचे कारण काय असू शकते",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_581533_0_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
     "word_count": 15,
@@ -32743,8 +33062,19 @@
     "chunk_id": "mar_pq_581533_8_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 9,
-    "text": "दातांचा रोग. दात घासणे (ब्रुक्सिझम). दातांवर आघात. असामान्य चावा."
+    "word_count": 5,
+    "text": "दातांचा रोग. दात घासणे (ब्रुक्सिझम)."
+  },
+  {
+    "doc_id": "mar_pq_581533_8",
+    "language": "mr",
+    "title": "दात दुखण्याचे कारण काय असू शकते",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_581533_8_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "दातांवर आघात. असामान्य चावा."
   },
   {
     "doc_id": "mar_pq_581533_9",
@@ -33051,8 +33381,19 @@
     "chunk_id": "mar_pq_5301_3_sent_2",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 14,
-    "text": "तंत्र फिटनेस रिचमंड. १०४०-९१११ बेकविथ रोड, रिचमंड बीसी, व्ही६एक्स १व्ही.७. फोन: ६०४-७३८-७६५३, ईमेल: रिचमंड@तंत्रफिटनेस.कॉम."
+    "word_count": 10,
+    "text": "तंत्र फिटनेस रिचमंड. १०४०-९१११ बेकविथ रोड, रिचमंड बीसी, व्ही६एक्स १व्ही.७."
+  },
+  {
+    "doc_id": "mar_pq_5301_3",
+    "language": "mr",
+    "title": "निकोल जोसेफ व्हँकुव्हर बीसी फोन नंबर",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_5301_3_sent_3",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "फोन: ६०४-७३८-७६५३, ईमेल: रिचमंड@तंत्रफिटनेस.कॉम."
   },
   {
     "doc_id": "mar_pq_5301_4",
@@ -33447,8 +33788,19 @@
     "chunk_id": "mar_pq_639428_0_sent_1",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 9,
-    "text": "५२१; १ हॉक. १, सी. ६९, एस. ८; बॅक."
+    "word_count": 5,
+    "text": "५२१; १ हॉक. १, सी."
+  },
+  {
+    "doc_id": "mar_pq_639428_0",
+    "language": "mr",
+    "title": "ऑडिटमध्ये इमॅटेरियलचा अर्थ काय आहे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_639428_0_sent_2",
+    "chunk_strategy": "sentence",
+    "sentence_count": 2,
+    "word_count": 4,
+    "text": "६९, एस. ८; बॅक."
   },
   {
     "doc_id": "mar_pq_639428_1",
@@ -33876,8 +34228,19 @@
     "chunk_id": "mar_pq_440431_4_sent_3",
     "chunk_strategy": "sentence",
     "sentence_count": 2,
-    "word_count": 27,
-    "text": "या संबंधित लक्षणांच्या कारणांचा शोध घ्या जे लक्षण लिपिड लक्षणांसारखे किंवा संबंधित आहेत: 1 उच्च कोलेस्टेरॉल (40 कारणे). 2 उच्च रक्तदाब (398 कारणे). 3 अबेटालिपोप्रोटीनेमिया (2 कारणे)."
+    "word_count": 23,
+    "text": "या संबंधित लक्षणांच्या कारणांचा शोध घ्या जे लक्षण लिपिड लक्षणांसारखे किंवा संबंधित आहेत: 1 उच्च कोलेस्टेरॉल (40 कारणे). 2 उच्च रक्तदाब (398 कारणे)."
+  },
+  {
+    "doc_id": "mar_pq_440431_4",
+    "language": "mr",
+    "title": "लिपिड ए कारणीभूत असलेली खालील लक्षणे",
+    "source": "MSMARCO-XI",
+    "chunk_id": "mar_pq_440431_4_sent_4",
+    "chunk_strategy": "sentence",
+    "sentence_count": 1,
+    "word_count": 4,
+    "text": "3 अबेटालिपोप्रोटीनेमिया (2 कारणे)."
   },
   {
     "doc_id": "mar_pq_440431_5",

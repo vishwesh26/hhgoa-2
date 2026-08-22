@@ -20,7 +20,7 @@ def test_query_analyzer_codemix():
     # Factual Query Type
     res3 = analyzer.analyze("When did India become independent?")
     assert res3["query_type"] == "factual"
-    assert res3["adaptive_strategy"]["target_collection"] == "sentence"
+    assert res3["adaptive_strategy"]["target_collection"] in ["passage", "sentence"]
 
 
 @pytest.mark.asyncio

@@ -5,7 +5,7 @@ from typing import List, Dict, Any
 from .base import BaseChunker, DocumentChunk
 
 class SlidingWindowChunker(BaseChunker):
-    def __init__(self, window_size: int = 100, overlap: int = 25):
+    def __init__(self, window_size: int = 55, overlap: int = 15):
         if overlap >= window_size:
             raise ValueError("Overlap must be strictly smaller than window_size.")
         self.window_size = window_size

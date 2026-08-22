@@ -12,8 +12,8 @@ class SemanticChunker:
     def __init__(
         self,
         similarity_threshold: float = 0.65,
-        max_chunk_words: int = 250,
-        min_chunk_words: int = 25,
+        max_chunk_words: int = 70,
+        min_chunk_words: int = 15,
         embedder=None
     ):
         self.similarity_threshold = similarity_threshold

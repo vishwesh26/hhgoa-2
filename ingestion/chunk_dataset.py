@@ -1,6 +1,11 @@
+import os
+import sys
 import json
 from pathlib import Path
 from typing import Dict, List, Any
+
+sys.path.insert(0, os.path.abspath("."))
+
 from backend.chunking.hierarchical import MultiStrategyChunker
 from ingestion.clean_indic import normalize_indic_text
 

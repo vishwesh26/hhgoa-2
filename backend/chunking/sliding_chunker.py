@@ -7,7 +7,7 @@ class SlidingWindowChunker:
     Preserves context across sentence boundaries.
     """
 
-    def __init__(self, window_size: int = 120, overlap: int = 40):
+    def __init__(self, window_size: int = 60, overlap: int = 15):
         self.window_size = window_size
         self.overlap = overlap
         self.step = max(1, window_size - overlap)

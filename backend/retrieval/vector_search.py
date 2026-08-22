@@ -179,11 +179,13 @@ class QdrantVectorSearcher:
     def _ensure_collection_populated(self):
         try:
             if not self.client.collection_exists(self.collection_name):
-                self._populate_collection()
-            else:
-                info = self.client.get_collection(self.collection_name)
-                if (info.points_count or 0) < 5:
-                    self._populate_collection()
+                self.client.create_collection(
+                    collection_name=self.collection_name,
+                    vectors_config=models.VectorParams(
+                        size=settings.EMBEDDING_DIMENSION,
+                        distance=models.Distance.COSINE
+                    )
+                )
         except Exception:
             pass
 
@@ -206,6 +208,10 @@ class QdrantVectorSearcher:
 
         with open(chunk_file, "r", encoding="utf-8") as f:
             chunks = json.load(f)
+
+        # Cap fallback initialization to 250 key representative chunks for instant startup
+        if len(chunks) > 250:
+            chunks = chunks[:250]
 
         self.client.create_collection(
             collection_name=self.collection_name,

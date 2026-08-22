@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 from .base import BaseChunker, DocumentChunk
 
 class SemanticChunker(BaseChunker):
-    def __init__(self, target_chunk_size: int = 150, min_chunk_size: int = 40):
+    def __init__(self, target_chunk_size: int = 65, min_chunk_size: int = 20):
         self.target_chunk_size = target_chunk_size
         self.min_chunk_size = min_chunk_size
         self._sent_re = re.compile(r'([.?!।॥\n\r]+)')

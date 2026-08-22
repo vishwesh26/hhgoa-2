@@ -158,17 +158,24 @@ class RAGOrchestrator:
                 "latency": tracker.get_summary()
             }
 
-        # 7. Answer Generation via Grounded LLM
+        # 7. Answer Generation (Extractive for sub-200ms ultra-low latency or Grounded LLM)
         t_gen_start = time.perf_counter()
         # Sanitize any injection patterns in retrieved texts
         for s in reranked_sources:
             s["text"] = self.injection_filter.sanitize_retrieved_passage(s.get("text", ""))
 
-        answer_text, gen_lat_ms, model_used = await self.llm_generator.generate_grounded_answer(
-            query=sanitized_query,
-            retrieved_sources=reranked_sources,
-            detected_lang=lang
-        )
+        if "extractive" in str(settings.ANSWER_GENERATION_MODE).lower():
+            answer_text, gen_lat_ms, model_used = self.dataset_extractor.extract_answer(
+                query=sanitized_query,
+                retrieved_sources=reranked_sources,
+                detected_lang=lang
+            )
+        else:
+            answer_text, gen_lat_ms, model_used = await self.llm_generator.generate_grounded_answer(
+                query=sanitized_query,
+                retrieved_sources=reranked_sources,
+                detected_lang=lang
+            )
         tracker.record_stage("generation", gen_lat_ms)
 
         # 8. Grounding Verification

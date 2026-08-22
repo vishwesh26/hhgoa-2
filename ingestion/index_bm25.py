@@ -1,5 +1,10 @@
+import os
+import sys
 import json
 from pathlib import Path
+
+sys.path.insert(0, os.path.abspath("."))
+
 from backend.retrieval.bm25_search import IndicBM25Searcher
 from ingestion.chunk_dataset import (
     CHUNKS_SENTENCE_PATH,

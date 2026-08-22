@@ -43,10 +43,11 @@ async def run_benchmark():
         all_latencies.append(total_time)
 
         lat = resp.get("latency", {})
-        vec_ms = lat.get("vectorSearchMs", 0)
-        bm25_ms = lat.get("bm25SearchMs", 0)
-        rerank_ms = lat.get("rerankMs", 0)
-        lang = resp.get("metadata", {}).get("detected_language", "en")
+        stages = lat.get("stages", {})
+        vec_ms = stages.get("vectorSearch", 0.0)
+        bm25_ms = stages.get("bm25Search", 0.0)
+        rerank_ms = stages.get("reranking", 0.0)
+        lang = resp.get("language", "en")
         badge = "⚡ UNDER 200MS" if total_time < 200 else "⚠️ EXCEEDS 200MS"
 
         print(f"{q[:44]:<45} | {lang:<4} | {vec_ms:5.1f} | {bm25_ms:5.1f} | {rerank_ms:6.1f} | {total_time:6.1f} ms | [{badge}]")

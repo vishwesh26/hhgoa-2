@@ -24,11 +24,23 @@ from backend.retrieval.bm25_search import indic_tokenize
 class CrossEncoderReranker:
     """
     Ultra-low latency cross-encoder reranker. Evaluates query-passage relevance
-    over top candidate passages in 15-25ms.
+    over top candidate passages in 10-25ms.
     """
 
     def __init__(self, top_k: int = settings.FINAL_CONTEXT_K):
         self.top_k = top_k
+        # Warmup ranker once on init
+        self._warmup()
+
+    def _warmup(self):
+        try:
+            ranker = get_reranker_client()
+            if ranker != "heuristic" and ranker is not None:
+                from flashrank import RerankRequest
+                dummy = [{"id": 0, "text": "warmup sentence", "meta": {}}]
+                ranker.rerank(RerankRequest(query="warmup", passages=dummy))
+        except Exception:
+            pass
 
     def rerank(self, query: str, candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if not candidates:
@@ -37,12 +49,12 @@ class CrossEncoderReranker:
         # Take up to RERANKER_TOP_K candidates
         candidate_subset = candidates[:settings.RERANKER_TOP_K]
         ranker = get_reranker_client()
-        q_terms = indic_tokenize(query, remove_stopwords=True)
 
         if ranker != "heuristic" and ranker is not None:
             try:
                 from flashrank import RerankRequest
-                passages = [{"id": i, "text": c["text"], "meta": c} for i, c in enumerate(candidate_subset)]
+                # Limit passage length to 350 chars for ultra-fast ONNX inference
+                passages = [{"id": i, "text": c["text"][:350], "meta": c} for i, c in enumerate(candidate_subset)]
                 rerank_req = RerankRequest(query=query, passages=passages)
                 results = ranker.rerank(rerank_req)
 

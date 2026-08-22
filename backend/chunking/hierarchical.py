@@ -12,9 +12,9 @@ class MultiStrategyChunker:
     """
 
     def __init__(self, embedder=None):
-        self.sentence_chunker = SentenceChunker(sentences_per_chunk=2)
-        self.sliding_chunker = SlidingWindowChunker(window_size=120, overlap=40)
-        self.semantic_chunker = SemanticChunker(embedder=embedder)
+        self.sentence_chunker = SentenceChunker(sentences_per_chunk=2, min_chunk_words=4)
+        self.sliding_chunker = SlidingWindowChunker(window_size=60, overlap=15)
+        self.semantic_chunker = SemanticChunker(max_chunk_words=70, min_chunk_words=15, embedder=embedder)
 
     def process_document(
         self,

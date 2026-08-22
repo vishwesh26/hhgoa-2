@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     LLM_TIMEOUT_SECONDS: float = 8.0
     MAX_GENERATION_TOKENS: int = 256
     TEMPERATURE: float = 0.0
-    ANSWER_GENERATION_MODE: str = "generative"  # 'generative', 'extractive'
+    ANSWER_GENERATION_MODE: str = "extractive"  # 'extractive' (<2ms sub-200ms total), 'generative' (LLM)
 
     # Qdrant Vector Database
     QDRANT_HOST: str = "localhost"

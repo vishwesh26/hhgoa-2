@@ -12,4 +12,4 @@ services:
       - key: SARVAM_API_KEY
         sync: false
       - key: ANSWER_GENERATION_MODE
-        value: generative
+        value: extractive
