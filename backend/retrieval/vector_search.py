@@ -1,6 +1,7 @@
 import os
 import hashlib
 import time
+import threading
 from typing import List, Dict, Any, Optional
 from cachetools import LRUCache
 import numpy as np
@@ -8,6 +9,10 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from backend.config import settings
 
+# Limit OpenMP / BLAS threads to 1 to conserve RAM and prevent thread pool explosion on Render
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 # Global LRU cache for query embeddings: query_hash -> list of floats
 _QUERY_EMBED_CACHE = LRUCache(maxsize=settings.CACHE_MAX_SIZE)
@@ -18,20 +23,15 @@ _EMBED_MODEL = None
 # Global shared Qdrant client instance
 _SHARED_QDRANT_CLIENT = None
 
+# Thread lock for safe single-initialization
+_INIT_LOCK = threading.Lock()
+
 
 def get_shared_qdrant_client() -> QdrantClient:
     global _SHARED_QDRANT_CLIENT
     if _SHARED_QDRANT_CLIENT is None:
         with _INIT_LOCK:
             if _SHARED_QDRANT_CLIENT is None:
-                try:
-                    import psutil
-                    rss_before = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
-                    print(f"[MEMORY] Before Qdrant client init: {rss_before} MB")
-                except Exception:
-                    pass
-
-                print(f"[INFO] Initializing Qdrant client (embedded={settings.QDRANT_USE_EMBEDDED})...")
                 if settings.QDRANT_USE_EMBEDDED:
                     try:
                         _SHARED_QDRANT_CLIENT = QdrantClient(path=settings.QDRANT_STORAGE_PATH)
@@ -52,46 +52,22 @@ def get_shared_qdrant_client() -> QdrantClient:
                         api_key=settings.QDRANT_API_KEY
                     )
 
-                try:
-                    import psutil
-                    rss_after = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
-                    print(f"[MEMORY] After Qdrant client init: {rss_after} MB")
-                except Exception:
-                    pass
-
     return _SHARED_QDRANT_CLIENT
-
-
-import threading
-
-# Thread lock for safe single-initialization
-_INIT_LOCK = threading.Lock()
 
 
 def get_embedding_model():
     """
     Loads high-performance multilingual embedding model as a thread-safe singleton.
-    Configures ONNX Runtime with conservative single-thread execution for low-memory environments.
+    Configures single-thread execution for low-memory environments.
     """
     global _EMBED_MODEL
     if _EMBED_MODEL is None:
         with _INIT_LOCK:
             if _EMBED_MODEL is None:
                 try:
-                    import psutil
-                    rss_before = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
-                    print(f"[MEMORY] Before embedding model init: {rss_before} MB")
-                except Exception:
-                    pass
-
-                print(f"[INFO] Initializing FastEmbed ONNX Multilingual Model: {settings.EMBEDDING_MODEL_NAME}...")
-                try:
                     from fastembed import TextEmbedding
-                    # threads=1 conserves thread pool allocations on low-memory Render containers
                     _EMBED_MODEL = TextEmbedding(model_name=settings.EMBEDDING_MODEL_NAME, threads=1)
-                    print(f"[HEALTH] Embedding Model READY (FastEmbed ONNX, Dim: {settings.EMBEDDING_DIMENSION})")
                 except Exception as e_fast:
-                    print(f"[WARN] FastEmbed init exception: {e_fast}")
                     try:
                         from sentence_transformers import SentenceTransformer
                         _EMBED_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_NAME)
@@ -99,13 +75,6 @@ def get_embedding_model():
                         raise RuntimeError(
                             f"Embedding model unavailable (FastEmbed: {e_fast}, SentenceTransformer: {e_st})"
                         )
-
-                try:
-                    import psutil
-                    rss_after = round(psutil.Process().memory_info().rss / 1024 / 1024, 1)
-                    print(f"[MEMORY] After embedding model init: {rss_after} MB")
-                except Exception:
-                    pass
 
     return _EMBED_MODEL
 
@@ -134,34 +103,39 @@ def check_embedding_health() -> Dict[str, Any]:
 
 def compute_query_embedding(query: str) -> List[float]:
     """
-    Computes normalized embedding for a search query.
-    Utilizes in-memory caching to achieve <0.2ms for cached queries.
+    Computes normalized embedding vector for an input query string.
+    Employs fast hashing and LRU caching for instant lookup of repeated queries.
     """
-    query_norm = query.strip().lower()
-    query_hash = hashlib.sha256(query_norm.encode("utf-8")).hexdigest()
+    try:
+        from ingestion.clean_indic import normalize_indic_text
+        query_norm = normalize_indic_text(query)
+        if not query_norm:
+            return [0.0] * settings.EMBEDDING_DIMENSION
 
-    if settings.ENABLE_QUERY_CACHE and query_hash in _QUERY_EMBED_CACHE:
-        return _QUERY_EMBED_CACHE[query_hash]
+        query_hash = hashlib.sha256(query_norm.encode("utf-8")).hexdigest()
+        if settings.ENABLE_QUERY_CACHE and query_hash in _QUERY_EMBED_CACHE:
+            return _QUERY_EMBED_CACHE[query_hash]
 
-    model = get_embedding_model()
-    if hasattr(model, "embed"):
-        # FastEmbed interface
-        embeddings = list(model.embed([query_norm]))
-        vec = embeddings[0]
-        norm = np.linalg.norm(vec)
-        if norm > 0:
-            vec = vec / norm
-        embedding = vec.tolist()
-    elif hasattr(model, "encode"):
-        # SentenceTransformer interface
-        embedding = model.encode(query_norm, normalize_embeddings=True).tolist()
-    else:
-        raise RuntimeError("Loaded embedding model has unrecognized interface.")
+        model = get_embedding_model()
+        if hasattr(model, "embed"):
+            embeddings = list(model.embed([query_norm]))
+            vec = embeddings[0]
+            norm = np.linalg.norm(vec)
+            if norm > 0:
+                vec = vec / norm
+            embedding = vec.tolist()
+        elif hasattr(model, "encode"):
+            embedding = model.encode(query_norm, normalize_embeddings=True).tolist()
+        else:
+            return [0.0] * settings.EMBEDDING_DIMENSION
 
-    if settings.ENABLE_QUERY_CACHE:
-        _QUERY_EMBED_CACHE[query_hash] = embedding
+        if settings.ENABLE_QUERY_CACHE:
+            _QUERY_EMBED_CACHE[query_hash] = embedding
 
-    return embedding
+        return embedding
+    except Exception as e:
+        print(f"[WARN] Embedding computation fallback: {e}")
+        return [0.0] * settings.EMBEDDING_DIMENSION
 
 
 class QdrantVectorSearcher:
@@ -179,13 +153,7 @@ class QdrantVectorSearcher:
     def _ensure_collection_populated(self):
         try:
             if not self.client.collection_exists(self.collection_name):
-                self.client.create_collection(
-                    collection_name=self.collection_name,
-                    vectors_config=models.VectorParams(
-                        size=settings.EMBEDDING_DIMENSION,
-                        distance=models.Distance.COSINE
-                    )
-                )
+                self._populate_collection()
         except Exception:
             pass
 
@@ -209,47 +177,50 @@ class QdrantVectorSearcher:
         with open(chunk_file, "r", encoding="utf-8") as f:
             chunks = json.load(f)
 
-        # Cap fallback initialization to 250 key representative chunks for instant startup
         if len(chunks) > 250:
             chunks = chunks[:250]
 
-        self.client.create_collection(
-            collection_name=self.collection_name,
-            vectors_config=models.VectorParams(
-                size=settings.EMBEDDING_DIMENSION,
-                distance=models.Distance.COSINE
-            )
-        )
-
-        texts = [c["text"] for c in chunks]
-        embed_model = get_embedding_model()
-        if hasattr(embed_model, "embed"):
-            raw_vecs = list(embed_model.embed(texts))
-            vectors = []
-            for v in raw_vecs:
-                norm = np.linalg.norm(v)
-                vectors.append((v / norm).tolist() if norm > 0 else v.tolist())
-        elif hasattr(embed_model, "encode"):
-            vectors = embed_model.encode(texts, batch_size=settings.EMBEDDING_BATCH_SIZE, normalize_embeddings=True).tolist()
-        else:
-            raise RuntimeError("No valid embedding model available to populate collection.")
-
-        points = []
-        for idx, (chunk, vec) in enumerate(zip(chunks, vectors)):
-            points.append(
-                models.PointStruct(
-                    id=idx,
-                    vector=vec,
-                    payload=chunk
+        try:
+            self.client.create_collection(
+                collection_name=self.collection_name,
+                vectors_config=models.VectorParams(
+                    size=settings.EMBEDDING_DIMENSION,
+                    distance=models.Distance.COSINE
                 )
             )
 
-        batch_size = 64
-        for i in range(0, len(points), batch_size):
-            self.client.upsert(
-                collection_name=self.collection_name,
-                points=points[i : i + batch_size]
-            )
+            texts = [c["text"] for c in chunks]
+            model = get_embedding_model()
+            if hasattr(model, "embed"):
+                embeddings = list(model.embed(texts, batch_size=settings.EMBEDDING_BATCH_SIZE))
+            else:
+                embeddings = model.encode(texts, batch_size=settings.EMBEDDING_BATCH_SIZE, normalize_embeddings=True)
+
+            points = []
+            for i, (chunk, emb) in enumerate(zip(chunks, embeddings)):
+                points.append(
+                    models.PointStruct(
+                        id=i,
+                        vector=emb.tolist() if hasattr(emb, "tolist") else list(emb),
+                        payload={
+                            "chunk_id": chunk["chunk_id"],
+                            "document_id": chunk["doc_id"],
+                            "text": chunk["text"],
+                            "language": chunk.get("language", "en"),
+                            "chunk_strategy": chunk.get("chunk_strategy", "sentence"),
+                            "source": chunk.get("source", "MSMARCO-XI")
+                        }
+                    )
+                )
+
+            batch_size = 100
+            for i in range(0, len(points), batch_size):
+                self.client.upsert(
+                    collection_name=self.collection_name,
+                    points=points[i : i + batch_size]
+                )
+        except Exception as e:
+            print(f"[WARN] Error populating collection {self.collection_name}: {e}")
 
     def search(
         self,
@@ -261,28 +232,29 @@ class QdrantVectorSearcher:
         """
         Executes dense vector search in Qdrant using cosine similarity.
         """
-        query_vector = compute_query_embedding(query)
-
-        # Build payload filters if specified
-        filter_conditions = []
-        if lang_filter:
-            filter_conditions.append(
-                models.FieldCondition(
-                    key="language",
-                    match=models.MatchValue(value=lang_filter)
-                )
-            )
-        if strategy_filter:
-            filter_conditions.append(
-                models.FieldCondition(
-                    key="chunk_strategy",
-                    match=models.MatchValue(value=strategy_filter)
-                )
-            )
-
-        query_filter = models.Filter(must=filter_conditions) if filter_conditions else None
-
         try:
+            query_vector = compute_query_embedding(query)
+            if not query_vector or sum(query_vector) == 0.0:
+                return []
+
+            filter_conditions = []
+            if lang_filter:
+                filter_conditions.append(
+                    models.FieldCondition(
+                        key="language",
+                        match=models.MatchValue(value=lang_filter)
+                    )
+                )
+            if strategy_filter:
+                filter_conditions.append(
+                    models.FieldCondition(
+                        key="chunk_strategy",
+                        match=models.MatchValue(value=strategy_filter)
+                    )
+                )
+
+            query_filter = models.Filter(must=filter_conditions) if filter_conditions else None
+
             hits = []
             if hasattr(self.client, "query_points"):
                 response = self.client.query_points(
@@ -317,5 +289,5 @@ class QdrantVectorSearcher:
                 })
             return results
         except Exception as e:
-            print(f"[WARN] Qdrant search error on collection '{self.collection_name}': {e}")
+            print(f"[WARN] Qdrant search fallback on collection '{self.collection_name}': {e}")
             return []
