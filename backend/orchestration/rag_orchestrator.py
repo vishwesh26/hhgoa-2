@@ -35,21 +35,19 @@ class RAGOrchestrator:
         self.sarvam_client = SarvamSTTClient()
         self.audio_processor = AudioProcessor()
 
-        # Cache of initialized searchers per collection
-        self.vector_searchers = {
-            "passage": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_passage"),
-            "sliding": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_sliding"),
-            "semantic": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_semantic"),
-            "sentence": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_sentence"),
-            "combined": QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_combined"),
-        }
-        self.bm25_searchers = {
-            "passage": IndicBM25Searcher("passage"),
-            "sliding": IndicBM25Searcher("sliding"),
-            "semantic": IndicBM25Searcher("semantic"),
-            "sentence": IndicBM25Searcher("sentence"),
-            "combined": IndicBM25Searcher("combined"),
-        }
+        # Lazy-loaded cache of initialized searchers per collection (saves ~350MB RAM)
+        self._vector_searchers: Dict[str, QdrantVectorSearcher] = {}
+        self._bm25_searchers: Dict[str, IndicBM25Searcher] = {}
+
+    def get_vector_searcher(self, collection_name: str) -> QdrantVectorSearcher:
+        if collection_name not in self._vector_searchers:
+            self._vector_searchers[collection_name] = QdrantVectorSearcher(f"{settings.QDRANT_COLLECTION_PREFIX}_{collection_name}")
+        return self._vector_searchers[collection_name]
+
+    def get_bm25_searcher(self, collection_name: str) -> IndicBM25Searcher:
+        if collection_name not in self._bm25_searchers:
+            self._bm25_searchers[collection_name] = IndicBM25Searcher(collection_name)
+        return self._bm25_searchers[collection_name]
 
     async def execute_rag(self, query: str, stt_latency_ms: float = 0.0, transcript_meta: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         tracker = LatencyTracker()
@@ -65,8 +63,7 @@ class RAGOrchestrator:
                     "transcript": query,
                     "language": "en",
                     "codeMixed": False,
-                    "retrievalStrategy": "blocked",
-                    "chunkStrategy": "none",
+                    "queryType": "adversarial",
                     "sources": [],
                     "confidence": 0.0,
                     "grounded": False,
@@ -74,7 +71,7 @@ class RAGOrchestrator:
                     "latency": tracker.get_summary()
                 }
 
-        # 2. Query Understanding & Adaptive Strategy Selection
+        # 2. Query Analysis & Dynamic Strategy Selection
         with tracker.measure("queryAnalysis"):
             analysis = self.query_analyzer.analyze(sanitized_query)
             lang = analysis["language"]
@@ -85,10 +82,10 @@ class RAGOrchestrator:
             vector_weight = strategy["vector_weight"]
             bm25_weight = strategy["bm25_weight"]
 
-        # 3. Parallel Retrieval: Qdrant Vector + BM25 Lexical
-        vec_searcher = self.vector_searchers.get(target_collection, self.vector_searchers["combined"])
-        bm25_searcher = self.bm25_searchers.get(target_collection, self.bm25_searchers["combined"])
-        bm25_combined = self.bm25_searchers.get("combined", self.bm25_searchers["sentence"])
+        # 3. Parallel Retrieval: Qdrant Vector + BM25 Lexical (Lazy-loaded on-demand)
+        vec_searcher = self.get_vector_searcher(target_collection)
+        bm25_searcher = self.get_bm25_searcher(target_collection)
+        bm25_combined = self.get_bm25_searcher("combined")
 
         # Run Qdrant and BM25 concurrently using asyncio with individual timers
         loop = asyncio.get_event_loop()
