@@ -108,24 +108,8 @@ async def on_startup():
     print(f"  Qdrant Storage:  {settings.QDRANT_STORAGE_PATH}")
     print("=" * 60)
 
-    # Pre-warm embedding and reranker in background thread AFTER port is bound
-    import asyncio
-    def _warmup_sync():
-        import time as _t
-        _t.sleep(5)  # Wait for Render port scan to detect the open port first
-        try:
-            from backend.retrieval.vector_search import compute_query_embedding
-            compute_query_embedding("warmup")
-            from backend.retrieval.reranker import get_reranker_client
-            get_reranker_client()
-            print("[HEALTH] Background model pre-warming complete.")
-        except Exception as e:
-            print(f"[WARN] Startup background warmup: {e}")
-
-    try:
-        asyncio.get_event_loop().run_in_executor(None, _warmup_sync)
-    except Exception:
-        pass
+    # Keep startup lean (<50MB RAM) — models load on-demand during first query
+    pass
 
 
 if __name__ == "__main__":
