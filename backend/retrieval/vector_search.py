@@ -64,17 +64,21 @@ def get_embedding_model():
     if _EMBED_MODEL is None:
         with _INIT_LOCK:
             if _EMBED_MODEL is None:
+                os.makedirs(settings.FASTEMBED_CACHE_PATH, exist_ok=True)
                 try:
                     from fastembed import TextEmbedding
-                    _EMBED_MODEL = TextEmbedding(model_name=settings.EMBEDDING_MODEL_NAME, threads=1)
+                    _EMBED_MODEL = TextEmbedding(
+                        model_name=settings.EMBEDDING_MODEL_NAME,
+                        cache_dir=settings.FASTEMBED_CACHE_PATH,
+                        threads=1
+                    )
                 except Exception as e_fast:
                     try:
                         from sentence_transformers import SentenceTransformer
                         _EMBED_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_NAME)
                     except Exception as e_st:
-                        raise RuntimeError(
-                            f"Embedding model unavailable (FastEmbed: {e_fast}, SentenceTransformer: {e_st})"
-                        )
+                        print(f"[WARN] Embedding model init fallback: {e_fast}, {e_st}")
+                        _EMBED_MODEL = None
 
     return _EMBED_MODEL
 

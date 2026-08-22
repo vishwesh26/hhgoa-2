@@ -92,13 +92,21 @@ class RAGOrchestrator:
 
         def _timed_vec():
             t0 = time.perf_counter()
-            res = vec_searcher.search(sanitized_query, strategy["top_k"])
+            try:
+                res = vec_searcher.search(sanitized_query, strategy["top_k"])
+            except Exception as e:
+                print(f"[WARN] Vector retrieval fallback: {e}")
+                res = []
             return res, (time.perf_counter() - t0) * 1000.0
 
         def _timed_bm25():
             t0 = time.perf_counter()
-            res1 = bm25_searcher.search(sanitized_query, strategy["top_k"])
-            res2 = bm25_combined.search(sanitized_query, strategy["top_k"])
+            try:
+                res1 = bm25_searcher.search(sanitized_query, strategy["top_k"])
+                res2 = bm25_combined.search(sanitized_query, strategy["top_k"])
+            except Exception as e:
+                print(f"[WARN] BM25 retrieval fallback: {e}")
+                res1, res2 = [], []
             return (res1, res2), (time.perf_counter() - t0) * 1000.0
 
         (vector_results, vec_lat_ms), ((bm25_results, bm25_comb_res), bm25_lat_ms) = await asyncio.gather(

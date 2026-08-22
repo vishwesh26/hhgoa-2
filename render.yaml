@@ -18,4 +18,4 @@ services:
       - key: ANSWER_GENERATION_MODE
         value: extractive
       - key: FASTEMBED_CACHE_PATH
-        value: /opt/render/project/.fastembed_cache
+        value: ./data/models
