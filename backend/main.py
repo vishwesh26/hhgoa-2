@@ -108,6 +108,23 @@ async def on_startup():
     print(f"  Qdrant Storage:  {settings.QDRANT_STORAGE_PATH}")
     print("=" * 60)
 
+    # Pre-warm embedding and reranker in background executor so user queries are instant
+    import asyncio
+    def _warmup_sync():
+        try:
+            from backend.retrieval.vector_search import compute_query_embedding
+            compute_query_embedding("warmup")
+            from backend.retrieval.reranker import get_reranker_client
+            get_reranker_client()
+            print("[HEALTH] Background model pre-warming complete.")
+        except Exception as e:
+            print(f"[WARN] Startup background warmup: {e}")
+
+    try:
+        asyncio.get_event_loop().run_in_executor(None, _warmup_sync)
+    except Exception:
+        pass
+
 
 if __name__ == "__main__":
     import uvicorn
