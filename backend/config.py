@@ -33,8 +33,8 @@ class Settings(BaseSettings):
     QDRANT_USE_EMBEDDED: bool = True
     QDRANT_STORAGE_PATH: str = "./data/qdrant_storage"
 
-    # Embedding Model Settings (FastEmbed Multilingual ONNX)
-    EMBEDDING_MODEL_NAME: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    # Embedding Model Settings (FastEmbed Ultra-Lightweight ONNX, 60MB RAM)
+    EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
     EMBEDDING_DIMENSION: int = 384
     EMBEDDING_USE_ONNX: bool = True
     EMBEDDING_BATCH_SIZE: int = 64
