@@ -182,6 +182,38 @@ class RAGOrchestrator:
         with tracker.measure("grounding"):
             is_grounded, support_score, ground_msg = self.grounding_verifier.verify(answer_text, reranked_sources)
 
+        # Strict Dataset-Only Gate: If grounding verification fails, refuse to return ungrounded text
+        if not is_grounded:
+            refusal_text = self._get_refusal_text(lang)
+            return {
+                "answer": refusal_text,
+                "transcript": query,
+                "language": lang,
+                "codeMixed": is_code_mixed,
+                "queryType": query_type,
+                "retrievalStrategy": "adaptive_hybrid",
+                "chunkStrategy": target_collection,
+                "strategyRationale": strategy.get("rationale", ""),
+                "sources": [
+                    {
+                        "chunkId": s.get("chunk_id", ""),
+                        "docId": s.get("doc_id", ""),
+                        "language": s.get("language", "en"),
+                        "chunkStrategy": s.get("chunk_strategy", "standard"),
+                        "score": round(s.get("score", 0.0), 3),
+                        "text": s.get("text", "")
+                    }
+                    for s in reranked_sources[:settings.FINAL_CONTEXT_K]
+                ],
+                "confidence": confidence_score,
+                "grounded": False,
+                "groundingScore": support_score,
+                "modelUsed": model_used,
+                "refused": True,
+                "refusalReason": ground_msg,
+                "latency": tracker.get_summary()
+            }
+
         return {
             "answer": answer_text,
             "transcript": query,
@@ -203,7 +235,7 @@ class RAGOrchestrator:
                 for s in reranked_sources[:settings.FINAL_CONTEXT_K]
             ],
             "confidence": confidence_score,
-            "grounded": is_grounded,
+            "grounded": True,
             "groundingScore": support_score,
             "modelUsed": model_used,
             "refused": False,

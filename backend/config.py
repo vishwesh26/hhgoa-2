@@ -41,7 +41,7 @@ class Settings(BaseSettings):
 
     # Reranker Settings
     RERANKER_MODEL_NAME: str = "ms-marco-MiniLM-L-12-v2"
-    RERANKER_TOP_K: int = 4
+    RERANKER_TOP_K: int = 6
     FINAL_CONTEXT_K: int = 2
     RERANKER_TIMEOUT_SECONDS: float = 1.0
 
@@ -58,8 +58,8 @@ class Settings(BaseSettings):
     DEFAULT_BM25_WEIGHT: float = 0.85
 
     # Guardrails & Calibrated Thresholds
-    RETRIEVAL_CONFIDENCE_THRESHOLD: float = 0.38
-    GROUNDING_VERIFICATION_THRESHOLD: float = 0.50
+    RETRIEVAL_CONFIDENCE_THRESHOLD: float = 0.45
+    GROUNDING_VERIFICATION_THRESHOLD: float = 0.55
 
     # Performance & Caching
     PORT: int = 8000
