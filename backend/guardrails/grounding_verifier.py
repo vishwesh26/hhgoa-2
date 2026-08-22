@@ -6,11 +6,12 @@ from ingestion.clean_indic import indic_tokenize
 class GroundingVerifier:
     """
     Verifies that the generated answer is strictly grounded in the retrieved sources.
-    Performs fast Indic-aware N-gram containment and lexical overlap checks (<3ms).
+    Performs fast Indic-aware N-gram containment, cross-lingual synonym alignment,
+    and lexical overlap checks (<3ms).
     Prevents hallucinations by enforcing that the answer content originates from dataset passages.
     """
 
-    def __init__(self, min_support_ratio: float = 0.55):
+    def __init__(self, min_support_ratio: float = 0.50):
         self.min_support_ratio = min_support_ratio
 
     def _get_ngrams(self, tokens: List[str], n: int) -> List[str]:
@@ -18,9 +19,14 @@ class GroundingVerifier:
             return []
         return [" ".join(tokens[i : i + n]) for i in range(len(tokens) - n + 1)]
 
-    def verify(self, answer: str, sources: List[Dict[str, Any]]) -> Tuple[bool, float, str]:
+    def verify(
+        self,
+        answer: str,
+        sources: List[Dict[str, Any]],
+        is_cross_lingual: bool = False
+    ) -> Tuple[bool, float, str]:
         """
-        Calculates lexical entailment, N-gram containment, and content word support ratio.
+        Calculates lexical entailment, cross-lingual entity alignment, and support ratio.
         Returns: (is_grounded, support_score, status_message)
         """
         if not answer or not sources:
@@ -40,9 +46,9 @@ class GroundingVerifier:
         if any(marker in ans_lower for marker in refusal_markers):
             return True, 1.0, "Answer is a valid knowledge-base refusal."
 
-        # Tokenize answer and aggregate source texts
-        raw_answer_tokens = indic_tokenize(answer, remove_stopwords=False)
-        content_answer_tokens = set(indic_tokenize(answer, remove_stopwords=True))
+        # Tokenize answer and aggregate source texts with cross-lingual synonym expansion
+        raw_answer_tokens = indic_tokenize(answer, remove_stopwords=False, expand_synonyms=True)
+        content_answer_tokens = set(indic_tokenize(answer, remove_stopwords=True, expand_synonyms=True))
         
         if not content_answer_tokens:
             return True, 1.0, "Answer contains only conversational or functional tokens."
@@ -52,14 +58,19 @@ class GroundingVerifier:
         aggregated_source_text = " ".join([src.get("text", "").lower() for src in sources])
         
         for src in sources:
-            tokens = indic_tokenize(src.get("text", ""), remove_stopwords=True)
+            tokens = indic_tokenize(src.get("text", ""), remove_stopwords=True, expand_synonyms=True)
             source_content_tokens.update(tokens)
 
-        # 1. Lexical Content Word Overlap Check
+        # 1. Lexical & Synonym Overlap Check
         supported_tokens = content_answer_tokens.intersection(source_content_tokens)
         support_ratio = len(supported_tokens) / len(content_answer_tokens)
         
-        # 2. N-Gram Containment Check (Verify that 2-word phrases exist in the source)
+        # 2. Digit / Year / Number Alignment
+        answer_digits = set(re.findall(r"\b\d+\b", answer))
+        source_digits = set(re.findall(r"\b\d+\b", aggregated_source_text))
+        digit_match = bool(answer_digits.intersection(source_digits)) if answer_digits else True
+
+        # 3. N-Gram Containment Check
         bigrams = self._get_ngrams(raw_answer_tokens, 2)
         bigram_matches = 0
         if bigrams:
@@ -70,11 +81,12 @@ class GroundingVerifier:
         else:
             bigram_ratio = 1.0
 
-        # Combined grounding score
+        # Calibrated support threshold: For cross-lingual synthesis (e.g. English answer from Marathi context),
+        # threshold is 0.20 with entity/synonym alignment; for mono-lingual, it is 0.50.
+        effective_min_ratio = 0.20 if is_cross_lingual else self.min_support_ratio
         support_score = round(0.7 * support_ratio + 0.3 * bigram_ratio, 3)
 
-        # Hard Gate: Require high content word support
-        is_grounded = support_ratio >= self.min_support_ratio
+        is_grounded = (support_ratio >= effective_min_ratio) and digit_match
         
         if not is_grounded:
             status = f"Potential hallucination: Only {len(supported_tokens)}/{len(content_answer_tokens)} ({support_ratio:.1%}) content words supported by dataset."

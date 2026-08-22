@@ -10,13 +10,21 @@ from backend.orchestration.rag_orchestrator import RAGOrchestrator
 async def main():
     orchestrator = RAGOrchestrator()
 
-    # 1. In-domain question from Marathi MS-MARCO dataset
+    # 1. In-domain question in Marathi
     q1 = "मॅनहॅटन प्रकल्प काय आहे?"
     res1 = await orchestrator.execute_rag(q1)
     print("=" * 60)
-    print(f"Q1 (In-Domain): {q1.encode('utf-8', errors='ignore').decode('utf-8')}")
-    print(f"Answer: {res1['answer'].encode('utf-8', errors='ignore').decode('utf-8')}")
-    print(f"Grounded: {res1['grounded']}, Refused: {res1['refused']}, Latency: {res1['latency']['totalLatencyMs']:.1f}ms")
+    print(f"Q1 (Marathi Query): {q1}")
+    print(f"Answer: {res1['answer']}")
+    print(f"Language: {res1['language']}, Grounded: {res1['grounded']}, Refused: {res1['refused']}")
+
+    # 1b. In-domain question in English (cross-lingual query on Marathi dataset)
+    q1b = "What was the Manhattan Project?"
+    res1b = await orchestrator.execute_rag(q1b)
+    print("=" * 60)
+    print(f"Q1b (English Query on Marathi Dataset): {q1b}")
+    print(f"Answer: {res1b['answer']}")
+    print(f"Language: {res1b['language']}, Grounded: {res1b['grounded']}, Refused: {res1b['refused']}")
 
     # 2. Out-of-domain question
     q2 = "What is the secret recipe of Coca Cola on Neptune?"

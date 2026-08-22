@@ -164,7 +164,9 @@ class RAGOrchestrator:
         for s in reranked_sources:
             s["text"] = self.injection_filter.sanitize_retrieved_passage(s.get("text", ""))
 
-        if "extractive" in str(settings.ANSWER_GENERATION_MODE).lower():
+        # For Marathi queries in extractive mode, extract directly from dataset (<1ms)
+        # For English / Hindi queries, generate grounded answer in user's exact language
+        if "extractive" in str(settings.ANSWER_GENERATION_MODE).lower() and lang == "mr":
             answer_text, gen_lat_ms, model_used = self.dataset_extractor.extract_answer(
                 query=sanitized_query,
                 retrieved_sources=reranked_sources,
@@ -178,9 +180,12 @@ class RAGOrchestrator:
             )
         tracker.record_stage("generation", gen_lat_ms)
 
-        # 8. Grounding Verification
+        # 8. Grounding Verification (Supports Cross-Lingual EN/HI answering on MR dataset)
+        is_cross_lingual = (lang != "mr")
         with tracker.measure("grounding"):
-            is_grounded, support_score, ground_msg = self.grounding_verifier.verify(answer_text, reranked_sources)
+            is_grounded, support_score, ground_msg = self.grounding_verifier.verify(
+                answer_text, reranked_sources, is_cross_lingual=is_cross_lingual
+            )
 
         # Strict Dataset-Only Gate: If grounding verification fails, refuse to return ungrounded text
         if not is_grounded:
