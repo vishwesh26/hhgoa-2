@@ -15,6 +15,8 @@ app = FastAPI(
     description="Voice-Enabled Adaptive RAG Engine (HH Goa 2026)"
 )
 
+from fastapi.responses import JSONResponse
+
 # 1. Official FastAPI CORS Middleware (Registered immediately after app creation)
 app.add_middleware(
     CORSMiddleware,
@@ -22,8 +24,9 @@ app.add_middleware(
         "https://kineticai-hhgoa.vercel.app",
         "http://localhost:5173",
         "http://localhost:3000",
-        "http://localhost:8000"
+        "http://localhost:8000",
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app|https://.*\.onrender\.com|http://localhost:.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -47,7 +50,20 @@ async def request_logger_middleware(request: Request, call_next):
     except Exception as exc:
         duration_ms = (time.perf_counter() - start_time) * 1000.0
         print(f"!!! ERROR {method} {path} ({duration_ms:.1f}ms): {exc}")
-        raise
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Internal server error: {str(exc)}"},
+            headers={"Access-Control-Allow-Origin": origin if origin != "no-origin" else "*"}
+        )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    origin = request.headers.get("origin", "*")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"Internal Server Error: {str(exc)}"},
+        headers={"Access-Control-Allow-Origin": origin}
+    )
 
 # 3. Register API Routers
 app.include_router(health_router)
